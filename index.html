@@ -742,6 +742,130 @@
     .divider-top {
       border-top: 1px solid var(--border);
     }
+
+    /* ========================================
+       SEARCH OVERLAY
+       ======================================== */
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(5, 5, 5, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease);
+    }
+    .search-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .search-box {
+      width: 90%;
+      max-width: 640px;
+      margin-top: 12vh;
+    }
+    .search-box input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem 1.1rem 3.5rem;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      caret-color: var(--accent);
+      transition: border-color 0.3s var(--ease);
+    }
+    .search-box input:focus {
+      border-color: var(--accent);
+    }
+    .search-box input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+    .search-icon-inner {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .search-results {
+      width: 90%;
+      max-width: 640px;
+      max-height: 55vh;
+      overflow-y: auto;
+      margin-top: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212,175,55,0.3) transparent;
+    }
+    .search-results::-webkit-scrollbar { width: 4px; }
+    .search-results::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 2px; }
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-result-item:hover, .search-result-item.active {
+      background: var(--surface);
+    }
+    .search-result-item .sr-icon {
+      color: var(--accent);
+      flex-shrink: 0;
+      width: 20px;
+      text-align: center;
+    }
+    .search-result-item .sr-section {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .search-result-item .sr-title {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .search-hint {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+      text-align: center;
+    }
+    .search-hint kbd {
+      display: inline-block;
+      padding: 2px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-family: var(--font-body);
+      margin: 0 2px;
+    }
+    .navbar-search-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .navbar-search-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
   </style>
 </head>
 
@@ -775,12 +899,27 @@
         <li><a href="#contacto" class="label text-text-muted hover:text-accent transition-colors duration-300" data-hover>Contacto</a></li>
       </ul>
 
-      <!-- Mobile Menu Toggle -->
-      <button class="lg:hidden text-text-main" id="menuBtn" data-hover aria-label="Abrir menú">
-        <iconify-icon icon="mdi:menu" width="28"></iconify-icon>
-      </button>
+      <!-- Search + Mobile Menu Toggle -->
+      <div class="flex items-center gap-3">
+        <button class="navbar-search-btn text-text-main" id="searchBtn" aria-label="Buscar">
+          <iconify-icon icon="mdi:magnify" width="20"></iconify-icon>
+        </button>
+        <button class="lg:hidden text-text-main" id="menuBtn" data-hover aria-label="Abrir menú">
+          <iconify-icon icon="mdi:menu" width="28"></iconify-icon>
+        </button>
+      </div>
     </div>
   </nav>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <span class="search-icon-inner"><iconify-icon icon="mdi:magnify" width="20"></iconify-icon></span>
+      <input type="text" id="searchInput" placeholder="Buscar servicios, portfolio, contacto..." autocomplete="off">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+    <p class="search-hint">Presioná <kbd>ESC</kbd> para cerrar &middot; <kbd>Ctrl</kbd>+<kbd>K</kbd> para buscar</p>
+  </div>
 
   <!-- ===== MOBILE MENU OVERLAY ===== -->
   <div class="menu-overlay" id="menuOverlay">
@@ -837,35 +976,35 @@
        ========================================== -->
   <div class="overflow-hidden border-y border-border py-5" style="background: var(--surface);">
     <div class="marquee-track">
-      <span class="label text-text-muted mx-8">Desarrollo Web</span>
+      <a href="#servicios" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Desarrollo Web</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Aplicaciones Móviles</span>
+      <a href="#servicios" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Aplicaciones Móviles</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Invitaciones Virtuales</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Invitaciones Virtuales</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Edición de Fotos</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Edición de Fotos</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Edición de Videos</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Edición de Videos</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Diseño Gráfico</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Diseño Gráfico</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Branding</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Branding</a>
       <span class="text-accent mx-3">✦</span>
 
       <!-- Duplicate for seamless loop -->
-      <span class="label text-text-muted mx-8">Desarrollo Web</span>
+      <a href="#servicios" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Desarrollo Web</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Aplicaciones Móviles</span>
+      <a href="#servicios" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Aplicaciones Móviles</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Invitaciones Virtuales</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Invitaciones Virtuales</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Edición de Fotos</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Edición de Fotos</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Edición de Videos</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Edición de Videos</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Diseño Gráfico</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Diseño Gráfico</a>
       <span class="text-accent mx-3">✦</span>
-      <span class="label text-text-muted mx-8">Branding</span>
+      <a href="#portfolio" class="label text-text-muted mx-8 hover:text-accent transition-colors duration-300">Branding</a>
       <span class="text-accent mx-3">✦</span>
     </div>
   </div>
@@ -889,64 +1028,64 @@
       <!-- Service Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- 1. Desarrollo Web -->
-        <div class="service-card reveal" data-hover>
+        <a href="./portfolio/ecommerce.html" class="service-card reveal" data-hover>
           <div class="flex items-start justify-between mb-6">
             <iconify-icon icon="mdi:web" width="36" class="s-icon"></iconify-icon>
             <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
           </div>
           <h3 class="heading-md mb-3">Desarrollo Web</h3>
           <p class="text-text-muted text-sm leading-relaxed">Sitios web modernos, rápidos y responsivos. Desde landing pages hasta tiendas online completas con las últimas tecnologías.</p>
-        </div>
+        </a>
 
         <!-- 2. Apps Móviles -->
-        <div class="service-card reveal reveal-delay-1" data-hover>
+        <a href="./portfolio/fitness-app.html" class="service-card reveal reveal-delay-1" data-hover>
           <div class="flex items-start justify-between mb-6">
             <iconify-icon icon="mdi:cellphone" width="36" class="s-icon"></iconify-icon>
             <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
           </div>
           <h3 class="heading-md mb-3">Apps Móviles</h3>
           <p class="text-text-muted text-sm leading-relaxed">Aplicaciones nativas y multiplataforma con experiencias fluidas. iOS, Android y PWA para llegar a todos tus usuarios.</p>
-        </div>
+        </a>
 
         <!-- 3. Invitaciones Virtuales -->
-        <div class="service-card reveal reveal-delay-2" data-hover>
+        <a href="./portfolio/boda-romantica.html" class="service-card reveal reveal-delay-2" data-hover>
           <div class="flex items-start justify-between mb-6">
             <iconify-icon icon="mdi:card-account-mail" width="36" class="s-icon"></iconify-icon>
             <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
           </div>
           <h3 class="heading-md mb-3">Invitaciones Virtuales</h3>
           <p class="text-text-muted text-sm leading-relaxed">Invitaciones interactivas para bodas, cumpleaños y eventos. Diseños únicos con animaciones, RSVP y galería de fotos.</p>
-        </div>
+        </a>
 
         <!-- 4. Edición de Fotos -->
-        <div class="service-card reveal" data-hover>
+        <a href="./portfolio/fashion-editorial.html" class="service-card reveal" data-hover>
           <div class="flex items-start justify-between mb-6">
             <iconify-icon icon="mdi:image-edit" width="36" class="s-icon"></iconify-icon>
             <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
           </div>
           <h3 class="heading-md mb-3">Edición de Fotos</h3>
           <p class="text-text-muted text-sm leading-relaxed">Retoque profesional, composición, manipulación digital y optimización para redes sociales o impresión de alta calidad.</p>
-        </div>
+        </a>
 
         <!-- 5. Edición de Video -->
-        <div class="service-card reveal reveal-delay-1" data-hover>
+        <a href="./portfolio/spot-publicitario.html" class="service-card reveal reveal-delay-1" data-hover>
           <div class="flex items-start justify-between mb-6">
             <iconify-icon icon="mdi:movie-edit" width="36" class="s-icon"></iconify-icon>
             <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
           </div>
           <h3 class="heading-md mb-3">Edición de Video</h3>
           <p class="text-text-muted text-sm leading-relaxed">Montaje cinematográfico, motion graphics, color grading y efectos especiales para contenido que impacta y conecta.</p>
-        </div>
+        </a>
 
         <!-- 6. Diseño & Branding -->
-        <div class="service-card reveal reveal-delay-2" data-hover>
+        <a href="./portfolio/cafe-artesanal.html" class="service-card reveal reveal-delay-2" data-hover>
           <div class="flex items-start justify-between mb-6">
             <iconify-icon icon="mdi:palette-swatch" width="36" class="s-icon"></iconify-icon>
             <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
           </div>
           <h3 class="heading-md mb-3">Diseño & Branding</h3>
           <p class="text-text-muted text-sm leading-relaxed">Identidad visual completa: logos, paletas, tipografías y guías de marca para destacar en un mercado competitivo.</p>
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -1462,13 +1601,13 @@
         <div>
           <p class="label text-text-muted mb-4">Síguenos</p>
           <div class="flex gap-3">
-            <a href="#" class="footer-social-icon" data-hover aria-label="Instagram">
+            <a href="https://instagram.com/digicraftstudio" target="_blank" rel="noopener noreferrer" class="footer-social-icon" data-hover aria-label="Instagram">
               <iconify-icon icon="mdi:instagram" width="18"></iconify-icon>
             </a>
-            <a href="#" class="footer-social-icon" data-hover aria-label="Twitter">
+            <a href="https://twitter.com/digicraftstudio" target="_blank" rel="noopener noreferrer" class="footer-social-icon" data-hover aria-label="Twitter">
               <iconify-icon icon="mdi:twitter" width="18"></iconify-icon>
             </a>
-            <a href="#" class="footer-social-icon" data-hover aria-label="LinkedIn">
+            <a href="https://linkedin.com/company/digicraftstudio" target="_blank" rel="noopener noreferrer" class="footer-social-icon" data-hover aria-label="LinkedIn">
               <iconify-icon icon="mdi:linkedin" width="18"></iconify-icon>
             </a>
             <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="footer-social-icon" data-hover aria-label="WhatsApp">
@@ -1655,6 +1794,77 @@
 
   })();
   </script>
+
+<script>
+(function(){
+  // ===== SEARCH FUNCTIONALITY =====
+  var searchData = [
+    {title:"Desarrollo Web",section:"Servicio",icon:"mdi:web",href:"#servicios",link:"./portfolio/ecommerce.html"},
+    {title:"Apps Móviles",section:"Servicio",icon:"mdi:cellphone",href:"#servicios",link:"./portfolio/fitness-app.html"},
+    {title:"Invitaciones Virtuales",section:"Servicio",icon:"mdi:card-account-mail",href:"#servicios",link:"./portfolio/boda-romantica.html"},
+    {title:"Edición de Fotos",section:"Servicio",icon:"mdi:image-edit",href:"#servicios",link:"./portfolio/fashion-editorial.html"},
+    {title:"Edición de Video",section:"Servicio",icon:"mdi:movie-edit",href:"#servicios",link:"./portfolio/spot-publicitario.html"},
+    {title:"Diseño & Branding",section:"Servicio",icon:"mdi:palette-swatch",href:"#servicios",link:"./portfolio/cafe-artesanal.html"},
+    {title:"E-Commerce Premium",section:"Portfolio",icon:"mdi:shopping",href:"#portfolio",link:"./portfolio/ecommerce.html"},
+    {title:"Fitness Tracker Pro",section:"Portfolio",icon:"mdi:cellphone",href:"#portfolio",link:"./portfolio/fitness-app.html"},
+    {title:"Tarjetas Virtuales Premium",section:"Portfolio",icon:"mdi:card-account-mail",href:"#portfolio",link:"./portfolio/tarjetas-virtuales.html"},
+    {title:"Boda Romántica",section:"Portfolio",icon:"mdi:heart",href:"#portfolio",link:"./portfolio/boda-romantica.html"},
+    {title:"Spot Publicitario",section:"Portfolio",icon:"mdi:movie-open",href:"#portfolio",link:"./portfolio/spot-publicitario.html"},
+    {title:"Identidad Café Artesanal",section:"Portfolio",icon:"mdi:coffee",href:"#portfolio",link:"./portfolio/cafe-artesanal.html"},
+    {title:"Sesión Fashion Editorial",section:"Portfolio",icon:"mdi:camera",href:"#portfolio",link:"./portfolio/fashion-editorial.html"},
+    {title:"Demo Interactivo - App Logística",section:"Demo",icon:"mdi:monitor-dashboard",href:"#portfolio"},
+    {title:"Consultoría",section:"Precio",icon:"mdi:diamond-stone",href:"#precios"},
+    {title:"Negocio",section:"Precio",icon:"mdi:rocket-launch",href:"#precios"},
+    {title:"Empresarial",section:"Precio",icon:"mdi:crown",href:"#precios"},
+    {title:"Contacto",section:"Sección",icon:"mdi:email-outline",href:"#contacto"},
+    {title:"Proceso de Trabajo",section:"Sección",icon:"mdi:cog",href:"#proceso"},
+    {title:"Empezar Proyecto",section:"Acción",icon:"mdi:arrow-right",href:"#contacto"}
+  ];
+  var overlay = document.getElementById('searchOverlay');
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  var searchBtn = document.getElementById('searchBtn');
+  var activeIdx = -1;
+  function openSearch(){ overlay.classList.add('open'); input.value=''; results.innerHTML=''; input.focus(); activeIdx=-1; document.body.style.overflow='hidden'; }
+  function closeSearch(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+  function doSearch(q){
+    if(!q.trim()){ results.innerHTML=''; activeIdx=-1; return; }
+    var lq = q.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    var filtered = searchData.filter(function(item){
+      var lt = item.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u0300-\u036f]/g,"");
+      var ls = item.section.toLowerCase().normalize("NFD").replace(/[\u0300-\u0300-\u036f]/g,"");
+      return lt.indexOf(lq)!==-1 || ls.indexOf(lq)!==-1;
+    });
+    if(!filtered.length){ results.innerHTML='<p style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.85rem;">Sin resultados para "'+q.replace(/</g,'&lt;')+'"</p>'; return; }
+    activeIdx = -1;
+    results.innerHTML = filtered.map(function(item,i){
+      return '<div class="search-result-item" data-idx="'+i+'" data-href="'+(item.link||item.href)+'"><span class="sr-icon"><iconify-icon icon="'+item.icon+'" width="18"></iconify-icon></span><div><p class="sr-section">'+item.section+'</p><p class="sr-title">'+item.title+'</p></div></div>';
+    }).join('');
+    results.querySelectorAll('.search-result-item').forEach(function(el){
+      el.addEventListener('click',function(){
+        var href = el.getAttribute('data-href');
+        closeSearch();
+        if(href.startsWith('./')){ window.location.href = href; }
+        else { var target = document.querySelector(href); if(target) target.scrollIntoView({behavior:'smooth',block:'start'}); }
+      });
+    });
+  }
+  if(searchBtn) searchBtn.addEventListener('click', openSearch);
+  overlay.addEventListener('click',function(e){ if(e.target===overlay) closeSearch(); });
+  input.addEventListener('input',function(){ doSearch(this.value); });
+  input.addEventListener('keydown',function(e){
+    var items = results.querySelectorAll('.search-result-item');
+    if(e.key==='ArrowDown'){ e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); items.forEach(function(el,i){ el.classList.toggle('active',i===activeIdx); }); if(items[activeIdx]) items[activeIdx].scrollIntoView({block:'nearest'}); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); activeIdx = Math.max(activeIdx-1, 0); items.forEach(function(el,i){ el.classList.toggle('active',i===activeIdx); }); if(items[activeIdx]) items[activeIdx].scrollIntoView({block:'nearest'}); }
+    else if(e.key==='Enter'){ e.preventDefault(); if(activeIdx>=0 && items[activeIdx]) items[activeIdx].click(); }
+    else if(e.key==='Escape'){ closeSearch(); }
+  });
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey) && e.key==='k'){ e.preventDefault(); openSearch(); }
+    if(e.key==='Escape' && overlay.classList.contains('open')){ closeSearch(); }
+  });
+})();
+</script>
 
 </body>
 </html> 
