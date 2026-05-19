@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigiCraft Studio — Servicios Digitales Creativos</title>
+  <meta name="description" content="Estudio digital creativo. Desarrollo web, apps móviles, invitaciones virtuales, edición de fotos, video, diseño gráfico y branding.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Iconify CDN -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0A0A0A',
+            surface: '#171717',
+            'surface-alt': '#0F0F0F',
+            'text-main': '#EDEDED',
+            'text-muted': '#888888',
+            accent: '#D4AF37',
+            'accent-dim': 'rgba(212, 175, 55, 0.1)',
+            border: 'rgba(255, 255, 255, 0.08)',
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['Manrope', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ========================================
+       CSS CUSTOM PROPERTIES
+       ======================================== */
+    :root {
+      --bg: #0A0A0A;
+      --surface: #171717;
+      --surface-alt: #0F0F0F;
+      --text-main: #EDEDED;
+      --text-muted: #888888;
+      --accent: #D4AF37;
+      --accent-dim: rgba(212, 175, 55, 0.1);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Manrope', sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, video { display: block; }
+    input, select, textarea, button { font-family: inherit; border: none; outline: none; background: none; color: inherit; }
+
+    /* ========================================
+       NOISE TEXTURE OVERLAY
+       ======================================== */
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* ========================================
+       SCROLL REVEAL ANIMATION
+       ======================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    .display-xl {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35);
+      transition: color 0.6s var(--ease), -webkit-text-stroke 0.6s var(--ease);
+    }
+    .display-xl:hover,
+    .display-xl.filled {
+      color: var(--text-main);
+      -webkit-text-stroke: 0;
+    }
+
+    .heading-lg {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .heading-md {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    /* ========================================
+       BUTTONS
+       ======================================== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.6s var(--ease);
+    }
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.4s var(--ease), color 0.4s var(--ease);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ========================================
+       NAVBAR
+       ======================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 2rem 3rem;
+      mix-blend-mode: difference;
+      transition: padding 0.4s var(--ease), backdrop-filter 0.4s var(--ease), background 0.4s var(--ease);
+    }
+    .navbar.scrolled {
+      padding: 1rem 3rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(10, 10, 10, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 1.5rem 1.5rem; }
+      .navbar.scrolled { padding: 1rem 1.5rem; }
+    }
+
+    /* ========================================
+       MOBILE MENU OVERLAY
+       ======================================== */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: #050505;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      transform: translateY(-100%);
+      transition: transform 0.8s var(--ease);
+    }
+    .menu-overlay.open {
+      transform: translateY(0);
+    }
+    .menu-overlay a {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: color 0.4s var(--ease), transform 0.4s var(--ease);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .menu-overlay.open a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .menu-overlay.open a:nth-child(1) { transition-delay: 0.1s; }
+    .menu-overlay.open a:nth-child(2) { transition-delay: 0.15s; }
+    .menu-overlay.open a:nth-child(3) { transition-delay: 0.2s; }
+    .menu-overlay.open a:nth-child(4) { transition-delay: 0.25s; }
+    .menu-overlay.open a:nth-child(5) { transition-delay: 0.3s; }
+    .menu-overlay a:hover {
+      color: var(--accent);
+      transform: translateX(20px);
+    }
+
+    /* ========================================
+       HERO
+       ======================================== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 5rem;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: grayscale(100%) contrast(1.25);
+      mix-blend-mode: screen;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 4rem;
+    }
+    @media (max-width: 768px) {
+      .hero-content { padding: 0 1.5rem; }
+    }
+
+    /* ========================================
+       SCROLL INDICATOR
+       ======================================== */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    .scroll-indicator {
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    /* ========================================
+       MARQUEE
+       ======================================== */
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* ========================================
+       SERVICE CARDS
+       ======================================== */
+    .service-card {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s var(--ease), background 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s var(--ease);
+    }
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+    .service-card:hover {
+      border-color: rgba(212, 175, 55, 0.3);
+      background: rgba(23, 23, 23, 0.8);
+      transform: translateY(-4px);
+    }
+    .service-card .s-icon {
+      color: var(--accent);
+      transition: transform 0.4s var(--ease);
+    }
+    .service-card:hover .s-icon {
+      transform: scale(1.1);
+    }
+    .service-card .s-arrow {
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+    .service-card:hover .s-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ========================================
+       STATS
+       ======================================== */
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    /* ========================================
+       PORTFOLIO
+       ======================================== */
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-item img, .portfolio-item video {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: transform 0.7s var(--ease), filter 0.7s var(--ease);
+    }
+    .portfolio-item:hover img, .portfolio-item:hover video {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+    .portfolio-item-video {
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-item-video video {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: transform 0.7s var(--ease), filter 0.7s var(--ease);
+    }
+    .portfolio-item-video:hover video {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+    .portfolio-item-video .portfolio-overlay {
+      opacity: 1;
+    }
+    .portfolio-video-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 60%);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.5s var(--ease);
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    /* ========================================
+       PROCESS STEPS
+       ======================================== */
+    .process-step {
+      position: relative;
+      transition: transform 0.4s var(--ease);
+    }
+    .process-step:hover {
+      transform: translateY(-4px);
+    }
+    .step-number {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 6vw, 5rem);
+      font-weight: 800;
+      color: rgba(212, 175, 55, 0.1);
+      line-height: 1;
+      transition: color 0.4s var(--ease);
+    }
+    .process-step:hover .step-number {
+      color: rgba(212, 175, 55, 0.25);
+    }
+
+    /* ========================================
+       PRICING CARDS
+       ======================================== */
+    .pricing-card {
+      padding: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+    .pricing-card:hover {
+      border-color: rgba(212, 175, 55, 0.2);
+      transform: translateY(-6px);
+    }
+    .pricing-card.featured {
+      border-color: var(--accent);
+    }
+    .pricing-card.featured::after {
+      content: 'POPULAR';
+      position: absolute;
+      top: -1px;
+      right: 1.5rem;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.35rem 0.85rem;
+      text-transform: uppercase;
+    }
+    .pricing-card.featured:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
+    }
+
+    /* ========================================
+       TESTIMONIAL CARDS
+       ======================================== */
+    .testimonial-card {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      transition: border-color 0.4s var(--ease);
+    }
+    .testimonial-card:hover {
+      border-color: rgba(212, 175, 55, 0.2);
+    }
+    .testimonial-card .quote-mark {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      color: var(--accent);
+      opacity: 0.25;
+      line-height: 1;
+      position: absolute;
+      top: 0.5rem;
+      left: 1.5rem;
+      user-select: none;
+    }
+
+    /* ========================================
+       CONTACT FORM
+       ======================================== */
+    .form-field {
+      width: 100%;
+      background: transparent;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.85rem 0;
+      font-size: 0.9rem;
+      transition: border-color 0.4s var(--ease);
+    }
+    .form-field::placeholder {
+      color: rgba(136, 136, 136, 0.4);
+    }
+    .form-field:focus {
+      border-color: var(--accent);
+    }
+    .form-field option {
+      background: var(--surface);
+      color: var(--text-main);
+    }
+
+    /* ========================================
+       TOAST NOTIFICATION
+       ======================================== */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      color: var(--text-main);
+      padding: 1rem 1.5rem;
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      transform: translateY(140%);
+      transition: transform 0.5s var(--ease);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    /* ========================================
+       WHATSAPP FLOATING BUTTON
+       ======================================== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 80;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.8);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), background 0.3s;
+    }
+    .whatsapp-float.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+    .whatsapp-float:hover {
+      background: #20BD5A;
+      transform: scale(1.1);
+    }
+
+    /* ========================================
+       DEMO APP SECTION
+       ======================================== */
+    .demo-section {
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+    }
+    .demo-iframe-container {
+      position: relative;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .demo-iframe-container iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+    .demo-topbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .demo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .demo-url-bar {
+      flex: 1;
+      margin-left: 8px;
+      padding: 6px 14px;
+      background: var(--bg);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      border: 1px solid var(--border);
+    }
+    .demo-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .demo-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    @media (max-width: 768px) {
+      .demo-iframe-container iframe {
+        height: 450px;
+      }
+    }
+
+    /* ========================================
+       CTA BANNER
+       ======================================== */
+    .cta-section {
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer-social-icon {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      transition: border-color 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .footer-social-icon:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ========================================
+       CUSTOM SCROLLBAR
+       ======================================== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ========================================
+       SECTION PADDING
+       ======================================== */
+    .section-padding {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+    @media (max-width: 768px) {
+      .section-padding {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+
+    /* ========================================
+       DIVIDER
+       ======================================== */
+    .divider-top {
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== NOISE TEXTURE ===== -->
+  <div class="noise"></div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast">
+    <iconify-icon icon="mdi:check-circle" width="20" style="color: var(--accent); flex-shrink: 0;"></iconify-icon>
+    <span id="toastMsg"></span>
+  </div>
+
+  <!-- ==========================================
+       NAVBAR
+       ========================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="max-w-[1600px] mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a href="#hero" class="font-display font-bold text-xl tracking-tight uppercase text-text-main hover:text-accent transition-colors duration-150" data-hover>
+        Digi<span class="text-accent">Craft</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <ul class="hidden lg:flex items-center gap-10">
+        <li><a href="#servicios" class="label text-text-muted hover:text-accent transition-colors duration-300" data-hover>Servicios</a></li>
+        <li><a href="#portfolio" class="label text-text-muted hover:text-accent transition-colors duration-300" data-hover>Portfolio</a></li>
+        <li><a href="#proceso" class="label text-text-muted hover:text-accent transition-colors duration-300" data-hover>Proceso</a></li>
+        <li><a href="#precios" class="label text-text-muted hover:text-accent transition-colors duration-300" data-hover>Precios</a></li>
+        <li><a href="#contacto" class="label text-text-muted hover:text-accent transition-colors duration-300" data-hover>Contacto</a></li>
+      </ul>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="lg:hidden text-text-main" id="menuBtn" data-hover aria-label="Abrir menú">
+        <iconify-icon icon="mdi:menu" width="28"></iconify-icon>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== MOBILE MENU OVERLAY ===== -->
+  <div class="menu-overlay" id="menuOverlay">
+    <button class="absolute top-8 right-8 text-text-main" id="menuClose" data-hover aria-label="Cerrar menú">
+      <iconify-icon icon="mdi:close" width="32"></iconify-icon>
+    </button>
+    <a href="#hero" class="menu-link" data-hover>Inicio</a>
+    <a href="#servicios" class="menu-link" data-hover>Servicios</a>
+    <a href="#portfolio" class="menu-link" data-hover>Portfolio</a>
+    <a href="#proceso" class="menu-link" data-hover>Proceso</a>
+    <a href="#precios" class="menu-link" data-hover>Precios</a>
+    <a href="#contacto" class="menu-link" data-hover>Contacto</a>
+  </div>
+
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section id="hero" class="hero">
+    <!-- Background Video -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto"
+      poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Crect fill='%23171717' width='1920' height='1080'/%3E%3C/svg%3E">
+      <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-content max-w-[1600px] mx-auto">
+      <!-- Label -->
+      <p class="label text-accent mb-6 reveal">Estudio Digital Creativo</p>
+
+      <!-- Main Heading -->
+      <h1 class="display-xl filled reveal reveal-delay-1">
+        Creamos<br>Lo Digital
+      </h1>
+
+      <!-- Subtitle + CTA -->
+      <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 reveal reveal-delay-2">
+        <p class="text-text-muted max-w-md text-base leading-relaxed">
+          Transformamos ideas en experiencias digitales extraordinarias. Webs, apps, invitaciones y mucho más.
+        </p>
+        <a href="#contacto" class="btn-primary" data-hover>Empezar Proyecto</a>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="mt-14 flex items-center gap-2 text-text-muted reveal reveal-delay-3">
+        <div class="scroll-indicator">
+          <iconify-icon icon="mdi:chevron-down" width="20"></iconify-icon>
+        </div>
+        <span class="label text-[0.65rem]">Scroll</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MARQUEE
+       ========================================== -->
+  <div class="overflow-hidden border-y border-border py-5" style="background: var(--surface);">
+    <div class="marquee-track">
+      <span class="label text-text-muted mx-8">Desarrollo Web</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Aplicaciones Móviles</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Invitaciones Virtuales</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Edición de Fotos</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Edición de Videos</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Diseño Gráfico</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Branding</span>
+      <span class="text-accent mx-3">✦</span>
+
+      <!-- Duplicate for seamless loop -->
+      <span class="label text-text-muted mx-8">Desarrollo Web</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Aplicaciones Móviles</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Invitaciones Virtuales</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Edición de Fotos</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Edición de Videos</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Diseño Gráfico</span>
+      <span class="text-accent mx-3">✦</span>
+      <span class="label text-text-muted mx-8">Branding</span>
+      <span class="text-accent mx-3">✦</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SERVICES SECTION
+       ========================================== -->
+  <section id="servicios" class="py-24 md:py-32 section-padding">
+    <div class="max-w-[1600px] mx-auto">
+      <!-- Section Header -->
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
+        <div>
+          <p class="label text-accent mb-4 reveal">Lo que hacemos</p>
+          <h2 class="heading-lg reveal reveal-delay-1">Servicios que<br>impulsan tu marca</h2>
+        </div>
+        <p class="text-text-muted max-w-md text-base leading-relaxed reveal reveal-delay-2">
+          Ofrecemos soluciones digitales completas para que tu presencia online sea impecable y profesional.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 1. Desarrollo Web -->
+        <div class="service-card reveal" data-hover>
+          <div class="flex items-start justify-between mb-6">
+            <iconify-icon icon="mdi:web" width="36" class="s-icon"></iconify-icon>
+            <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
+          </div>
+          <h3 class="heading-md mb-3">Desarrollo Web</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Sitios web modernos, rápidos y responsivos. Desde landing pages hasta tiendas online completas con las últimas tecnologías.</p>
+        </div>
+
+        <!-- 2. Apps Móviles -->
+        <div class="service-card reveal reveal-delay-1" data-hover>
+          <div class="flex items-start justify-between mb-6">
+            <iconify-icon icon="mdi:cellphone" width="36" class="s-icon"></iconify-icon>
+            <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
+          </div>
+          <h3 class="heading-md mb-3">Apps Móviles</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Aplicaciones nativas y multiplataforma con experiencias fluidas. iOS, Android y PWA para llegar a todos tus usuarios.</p>
+        </div>
+
+        <!-- 3. Invitaciones Virtuales -->
+        <div class="service-card reveal reveal-delay-2" data-hover>
+          <div class="flex items-start justify-between mb-6">
+            <iconify-icon icon="mdi:card-account-mail" width="36" class="s-icon"></iconify-icon>
+            <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
+          </div>
+          <h3 class="heading-md mb-3">Invitaciones Virtuales</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Invitaciones interactivas para bodas, cumpleaños y eventos. Diseños únicos con animaciones, RSVP y galería de fotos.</p>
+        </div>
+
+        <!-- 4. Edición de Fotos -->
+        <div class="service-card reveal" data-hover>
+          <div class="flex items-start justify-between mb-6">
+            <iconify-icon icon="mdi:image-edit" width="36" class="s-icon"></iconify-icon>
+            <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
+          </div>
+          <h3 class="heading-md mb-3">Edición de Fotos</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Retoque profesional, composición, manipulación digital y optimización para redes sociales o impresión de alta calidad.</p>
+        </div>
+
+        <!-- 5. Edición de Video -->
+        <div class="service-card reveal reveal-delay-1" data-hover>
+          <div class="flex items-start justify-between mb-6">
+            <iconify-icon icon="mdi:movie-edit" width="36" class="s-icon"></iconify-icon>
+            <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
+          </div>
+          <h3 class="heading-md mb-3">Edición de Video</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Montaje cinematográfico, motion graphics, color grading y efectos especiales para contenido que impacta y conecta.</p>
+        </div>
+
+        <!-- 6. Diseño & Branding -->
+        <div class="service-card reveal reveal-delay-2" data-hover>
+          <div class="flex items-start justify-between mb-6">
+            <iconify-icon icon="mdi:palette-swatch" width="36" class="s-icon"></iconify-icon>
+            <iconify-icon icon="mdi:arrow-right" width="20" class="s-arrow text-accent"></iconify-icon>
+          </div>
+          <h3 class="heading-md mb-3">Diseño & Branding</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Identidad visual completa: logos, paletas, tipografías y guías de marca para destacar en un mercado competitivo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       STATS SECTION
+       ========================================== -->
+  <div class="border-y border-border" style="background: var(--surface-alt);">
+    <div class="max-w-[1600px] mx-auto grid grid-cols-2 lg:grid-cols-4" style="padding: 4rem;" id="statsContainer">
+      <div class="text-center reveal" style="border-right: 1px solid var(--border);">
+        <p class="stat-number mb-2" data-target="150" data-suffix="+">0</p>
+        <p class="label text-text-muted">Proyectos Completados</p>
+      </div>
+      <div class="text-center reveal reveal-delay-1" style="border-right: 1px solid var(--border);">
+        <p class="stat-number mb-2" data-target="120" data-suffix="+">0</p>
+        <p class="label text-text-muted">Clientes Felices</p>
+      </div>
+      <div class="text-center reveal reveal-delay-2" style="border-right: 1px solid var(--border);">
+        <p class="stat-number mb-2" data-target="5" data-suffix="">0</p>
+        <p class="label text-text-muted">Años de Experiencia</p>
+      </div>
+      <div class="text-center reveal reveal-delay-3">
+        <p class="stat-number mb-2" data-target="12" data-suffix="">0</p>
+        <p class="label text-text-muted">Países Alcanzados</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PORTFOLIO SECTION
+       ========================================== -->
+  <section id="portfolio" class="py-24 md:py-32 section-padding">
+    <div class="max-w-[1600px] mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <p class="label text-accent mb-4 reveal">Nuestro Trabajo</p>
+        <h2 class="heading-lg reveal reveal-delay-1">Proyectos que hablan<br>por sí solos</h2>
+      </div>
+
+      <!-- Portfolio Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <!-- VIDEO: Tarjetas Virtuales Premium -->
+        <a href="./portfolio/tarjetas-virtuales.html" class="portfolio-item-video reveal lg:col-span-1 md:row-span-2" data-hover>
+          <div class="portfolio-video-badge">
+            <iconify-icon icon="mdi:play" width="20" style="color: #0A0A0A;"></iconify-icon>
+          </div>
+          <video controls autoplay loop muted playsinline preload="auto" poster=""
+            style="width:100%; aspect-ratio:9/16; object-fit:cover;">
+            <source src="./assets/portfolio-video.mp4" type="video/mp4">
+          </video>
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">Invitación Virtual</p>
+              <p class="font-display font-semibold text-lg">Tarjetas Virtuales Premium</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- E-Commerce Premium -->
+        <a href="./portfolio/ecommerce.html" class="portfolio-item reveal" data-hover>
+          <img src="https://picsum.photos/seed/webdesign1/600/450" alt="E-Commerce Premium" loading="lazy">
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">Desarrollo Web</p>
+              <p class="font-display font-semibold text-lg">E-Commerce Premium</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Fitness Tracker Pro -->
+        <a href="./portfolio/fitness-app.html" class="portfolio-item reveal reveal-delay-1" data-hover>
+          <img src="https://picsum.photos/seed/appmobile2/600/450" alt="Fitness Tracker Pro" loading="lazy">
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">App Móvil</p>
+              <p class="font-display font-semibold text-lg">Fitness Tracker Pro</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Boda Romántica -->
+        <a href="./portfolio/boda-romantica.html" class="portfolio-item reveal reveal-delay-2" data-hover>
+          <img src="https://picsum.photos/seed/invitation3/600/450" alt="Boda Romántica" loading="lazy">
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">Invitación Virtual</p>
+              <p class="font-display font-semibold text-lg">Boda Romántica</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Spot Publicitario -->
+        <a href="./portfolio/spot-publicitario.html" class="portfolio-item reveal" data-hover>
+          <img src="https://picsum.photos/seed/videoedit4/600/450" alt="Spot Publicitario" loading="lazy">
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">Edición de Video</p>
+              <p class="font-display font-semibold text-lg">Spot Publicitario</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Identidad Café Artesanal -->
+        <a href="./portfolio/cafe-artesanal.html" class="portfolio-item reveal reveal-delay-1" data-hover>
+          <img src="https://picsum.photos/seed/branding5/600/450" alt="Identidad Café Artesanal" loading="lazy">
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">Branding</p>
+              <p class="font-display font-semibold text-lg">Identidad Café Artesanal</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Sesión Fashion Editorial -->
+        <a href="./portfolio/fashion-editorial.html" class="portfolio-item reveal reveal-delay-2" data-hover>
+          <img src="https://picsum.photos/seed/photoedit6/600/450" alt="Sesión Fashion Editorial" loading="lazy">
+          <div class="portfolio-overlay">
+            <div>
+              <p class="label text-accent mb-1">Edición de Fotos</p>
+              <p class="font-display font-semibold text-lg">Sesión Fashion Editorial</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- DEMO INTERACTIVO -->
+      <div class="mt-20">
+        <div class="text-center mb-10">
+          <p class="label text-accent mb-3 reveal">Demo Interactivo</p>
+          <h3 class="heading-md reveal reveal-delay-1">Explorá una app que desarrollamos</h3>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="demo-iframe-container">
+            <div class="demo-topbar">
+              <div class="demo-dot" style="background: #ff5f57;"></div>
+              <div class="demo-dot" style="background: #ffbd2e;"></div>
+              <div class="demo-dot" style="background: #28c840;"></div>
+              <div class="demo-url-bar">sebasm2kuy.github.io/digicraft/demo</div>
+            </div>
+            <iframe src="./demo/index.html" title="DigiCraft Demo - Centro Logístico" loading="lazy" allow="clipboard-read; clipboard-write"></iframe>
+          </div>
+        </div>
+        <div class="demo-features mt-8">
+          <div class="demo-feature reveal" data-hover>
+            <iconify-icon icon="mdi:chart-bar" width="22" style="color: var(--accent); flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+            <div>
+              <p class="font-display font-semibold text-sm mb-1">Dashboard en Tiempo Real</p>
+              <p class="text-text-muted text-xs">KPIs, métricas y actividad reciente.</p>
+            </div>
+          </div>
+          <div class="demo-feature reveal reveal-delay-1" data-hover>
+            <iconify-icon icon="mdi:package-variant-closed" width="22" style="color: var(--accent); flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+            <div>
+              <p class="font-display font-semibold text-sm mb-1">Gestión de Inventario</p>
+              <p class="text-text-muted text-xs">Pallets, contenedores y mercadería.</p>
+            </div>
+          </div>
+          <div class="demo-feature reveal reveal-delay-2" data-hover>
+            <iconify-icon icon="mdi:truck-delivery" width="22" style="color: var(--accent); flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+            <div>
+              <p class="font-display font-semibold text-sm mb-1">Despachos y Pedidos</p>
+              <p class="text-text-muted text-xs">PDF, WhatsApp y seguimiento.</p>
+            </div>
+          </div>
+          <div class="demo-feature reveal reveal-delay-3" data-hover>
+            <iconify-icon icon="mdi:thermometer" width="22" style="color: var(--accent); flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+            <div>
+              <p class="font-display font-semibold text-sm mb-1">Monitoreo HACCP</p>
+              <p class="text-text-muted text-xs">Cadena de frío en tiempo real.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PROCESS SECTION
+       ========================================== -->
+  <section id="proceso" class="py-24 md:py-32 border-t border-border section-padding" style="background: var(--surface-alt);">
+    <div class="max-w-[1600px] mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-20">
+        <p class="label text-accent mb-4 reveal">Cómo Trabajamos</p>
+        <h2 class="heading-lg reveal reveal-delay-1">Proceso simple,<br>resultados potentes</h2>
+      </div>
+
+      <!-- Steps -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16">
+        <div class="process-step reveal" data-hover>
+          <p class="step-number mb-4">01</p>
+          <h3 class="heading-md mb-4">Descubrimos</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Escuchamos tu idea, analizamos tus objetivos y definimos la estrategia perfecta para tu proyecto. Sin costos ocultos ni sorpresas.</p>
+          <div class="mt-6 w-12 h-px bg-accent"></div>
+        </div>
+
+        <div class="process-step reveal reveal-delay-1" data-hover>
+          <p class="step-number mb-4">02</p>
+          <h3 class="heading-md mb-4">Creamos</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Diseñamos y desarrollamos con los más altos estándares de calidad. Recibes actualizaciones constantes y revisiones ilimitadas.</p>
+          <div class="mt-6 w-12 h-px bg-accent"></div>
+        </div>
+
+        <div class="process-step reveal reveal-delay-2" data-hover>
+          <p class="step-number mb-4">03</p>
+          <h3 class="heading-md mb-4">Entregamos</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Lanzamos tu proyecto al mundo y te damos soporte continuo post-entrega. Tu éxito es nuestra mejor carta de presentación.</p>
+          <div class="mt-6 w-12 h-px bg-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PRICING SECTION
+       ========================================== -->
+  <section id="precios" class="py-24 md:py-32 section-padding">
+    <div class="max-w-[1600px] mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <p class="label text-accent mb-4 reveal">Inversión</p>
+        <h2 class="heading-lg reveal reveal-delay-1">Planes que se adaptan<br>a tu visión</h2>
+        <p class="text-text-muted mt-4 max-w-lg mx-auto text-base leading-relaxed reveal reveal-delay-2">
+          Cada proyecto es único. Estos paquetes son puntos de partida — personalizamos según tus necesidades.
+        </p>
+      </div>
+
+      <!-- Pricing Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <!-- STARTER -->
+        <div class="pricing-card reveal" data-hover>
+          <p class="label text-accent mb-6">Starter</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">$99</span>
+            <span class="text-text-muted text-sm ml-1">USD</span>
+          </div>
+          <p class="text-text-muted text-sm mb-8 pb-8" style="border-bottom: 1px solid var(--border);">
+            Ideal para proyectos personales o pequeños negocios que necesitan presencia digital.
+          </p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Landing page responsiva
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Diseño de 1 invitación virtual
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              5 fotos editadas
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Entrega en 5 días
+            </li>
+            <li class="flex items-center gap-3 text-sm text-text-muted">
+              <iconify-icon icon="mdi:close-circle" class="flex-shrink-0 opacity-30" width="18"></iconify-icon>
+              Revisión ilimitada
+            </li>
+          </ul>
+          <a href="#contacto" class="btn-outline w-full block text-center" data-hover>Elegir Plan</a>
+        </div>
+
+        <!-- PRO (Featured) -->
+        <div class="pricing-card featured reveal reveal-delay-1" data-hover>
+          <p class="label text-accent mb-6">Pro</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">$249</span>
+            <span class="text-text-muted text-sm ml-1">USD</span>
+          </div>
+          <p class="text-text-muted text-sm mb-8 pb-8" style="border-bottom: 1px solid var(--border);">
+            Para negocios en crecimiento que quieren destacarse con profesionalismo.
+          </p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Sitio web multi-página
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              3 invitaciones virtuales
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              15 fotos + 1 video editado
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Entrega en 7 días
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              3 rondas de revisión
+            </li>
+          </ul>
+          <a href="#contacto" class="btn-primary w-full block text-center" data-hover>Elegir Plan</a>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="pricing-card reveal reveal-delay-2" data-hover>
+          <p class="label text-accent mb-6">Premium</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">$499</span>
+            <span class="text-text-muted text-sm ml-1">USD</span>
+          </div>
+          <p class="text-text-muted text-sm mb-8 pb-8" style="border-bottom: 1px solid var(--border);">
+            Solución completa para marcas que quieren dominar el espacio digital.
+          </p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              App o web completa + backend
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Invitaciones ilimitadas
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Paquete foto + video completo
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Branding completo
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <iconify-icon icon="mdi:check-circle" class="text-accent flex-shrink-0" width="18"></iconify-icon>
+              Soporte prioritario 30 días
+            </li>
+          </ul>
+          <a href="#contacto" class="btn-outline w-full block text-center" data-hover>Elegir Plan</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       TESTIMONIALS SECTION
+       ========================================== -->
+  <section class="py-24 md:py-32 border-t border-border section-padding" style="background: var(--surface-alt);">
+    <div class="max-w-[1600px] mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <p class="label text-accent mb-4 reveal">Testimonios</p>
+        <h2 class="heading-lg reveal reveal-delay-1">Lo que dicen<br>nuestros clientes</h2>
+      </div>
+
+      <!-- Testimonial Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="testimonial-card reveal" data-hover>
+          <span class="quote-mark">&ldquo;</span>
+          <p class="text-text-muted text-sm leading-relaxed mb-6 pt-8 relative z-10">
+            La invitación virtual para mi boda fue espectacular. Todos los invitados quedaron impresionados con la animación y la interactividad. ¡100% recomendado!
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--accent-dim);">
+              <iconify-icon icon="mdi:account" class="text-accent" width="20"></iconify-icon>
+            </div>
+            <div>
+              <p class="text-sm font-semibold">María González</p>
+              <p class="text-xs text-text-muted">Invitación Virtual</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1" data-hover>
+          <span class="quote-mark">&ldquo;</span>
+          <p class="text-text-muted text-sm leading-relaxed mb-6 pt-8 relative z-10">
+            Nos desarrollaron la app para nuestro restaurante en tiempo récord. La interfaz es intuitiva y los clientes la aman. Ventas incrementaron un 40%.
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--accent-dim);">
+              <iconify-icon icon="mdi:account" class="text-accent" width="20"></iconify-icon>
+            </div>
+            <div>
+              <p class="text-sm font-semibold">Carlos Mendoza</p>
+              <p class="text-xs text-text-muted">App Móvil</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2" data-hover>
+          <span class="quote-mark">&ldquo;</span>
+          <p class="text-text-muted text-sm leading-relaxed mb-6 pt-8 relative z-10">
+            El video corporativo que crearon para nuestra startup fue clave para conseguir inversión. Profesionales, creativos y siempre puntuales.
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--accent-dim);">
+              <iconify-icon icon="mdi:account" class="text-accent" width="20"></iconify-icon>
+            </div>
+            <div>
+              <p class="text-sm font-semibold">Ana Rodríguez</p>
+              <p class="text-xs text-text-muted">Edición de Video</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CONTACT SECTION
+       ========================================== -->
+  <section id="contacto" class="py-24 md:py-32 border-t border-border section-padding">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+
+        <!-- Left — Info -->
+        <div>
+          <p class="label text-accent mb-4 reveal">Contacto</p>
+          <h2 class="heading-lg mb-6 reveal reveal-delay-1">Hablemos de<br>tu proyecto</h2>
+          <p class="text-text-muted text-base leading-relaxed mb-10 reveal reveal-delay-2">
+            Cuéntanos tu idea y te responderemos en menos de 24 horas con una propuesta personalizada. Sin compromiso.
+          </p>
+
+          <div class="space-y-6 reveal reveal-delay-3">
+            <a href="mailto:hola@digicraft.studio" class="flex items-center gap-4 text-text-muted hover:text-accent transition-colors duration-300 group" data-hover>
+              <iconify-icon icon="mdi:email-outline" width="22" class="text-accent flex-shrink-0"></iconify-icon>
+              <span class="text-sm group-hover:translate-x-1 transition-transform duration-300">hola@digicraft.studio</span>
+            </a>
+            <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-text-muted hover:text-accent transition-colors duration-300 group" data-hover>
+              <iconify-icon icon="mdi:whatsapp" width="22" class="text-accent flex-shrink-0"></iconify-icon>
+              <span class="text-sm group-hover:translate-x-1 transition-transform duration-300">+1 (234) 567-890</span>
+            </a>
+            <a href="#" class="flex items-center gap-4 text-text-muted hover:text-accent transition-colors duration-300 group" data-hover>
+              <iconify-icon icon="mdi:instagram" width="22" class="text-accent flex-shrink-0"></iconify-icon>
+              <span class="text-sm group-hover:translate-x-1 transition-transform duration-300">@digicraft.studio</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right — Form -->
+        <form id="contactForm" class="space-y-8 reveal">
+          <div>
+            <label class="label text-text-muted block mb-2" for="nombre">Nombre</label>
+            <input type="text" id="nombre" class="form-field" placeholder="Tu nombre completo" required>
+          </div>
+          <div>
+            <label class="label text-text-muted block mb-2" for="email">Email</label>
+            <input type="email" id="email" class="form-field" placeholder="tu@email.com" required>
+          </div>
+          <div>
+            <label class="label text-text-muted block mb-2" for="servicio">Servicio</label>
+            <select id="servicio" class="form-field" required style="background: var(--bg); appearance: none;">
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option value="web">Desarrollo Web</option>
+              <option value="app">App Móvil</option>
+              <option value="invitaciones">Invitaciones Virtuales</option>
+              <option value="fotos">Edición de Fotos</option>
+              <option value="videos">Edición de Video</option>
+              <option value="branding">Diseño & Branding</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div>
+            <label class="label text-text-muted block mb-2" for="mensaje">Mensaje</label>
+            <textarea id="mensaje" class="form-field resize-none" rows="4" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" data-hover>Enviar Mensaje</button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CTA FINAL BANNER
+       ========================================== -->
+  <section class="cta-section section-padding" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="max-w-[1600px] mx-auto text-center">
+      <h2 class="display-xl reveal" data-hover>¿Listo?</h2>
+      <p class="text-text-muted mt-6 mb-10 max-w-md mx-auto reveal reveal-delay-1">
+        Tu próximo proyecto digital está a un mensaje de distancia. Creamos algo increíble juntos.
+      </p>
+      <a href="#contacto" class="btn-primary reveal reveal-delay-2" data-hover>Comenzar Ahora</a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="border-t border-border section-padding" style="padding-top: 3rem; padding-bottom: 3rem;">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+
+        <!-- Column 1 — Brand -->
+        <div>
+          <a href="#hero" class="font-display font-bold text-xl uppercase hover:text-accent transition-colors duration-150 inline-block mb-4" data-hover>
+            Digi<span class="text-accent">Craft</span>
+          </a>
+          <p class="text-text-muted text-sm leading-relaxed max-w-xs">
+            Estudio digital creativo. Transformamos ideas en experiencias digitales que importan.
+          </p>
+        </div>
+
+        <!-- Column 2 — Navigation -->
+        <div>
+          <p class="label text-text-muted mb-4">Navegación</p>
+          <div class="space-y-2">
+            <a href="#servicios" class="block text-sm text-text-muted hover:text-accent transition-colors duration-300" data-hover>Servicios</a>
+            <a href="#portfolio" class="block text-sm text-text-muted hover:text-accent transition-colors duration-300" data-hover>Portfolio</a>
+            <a href="#proceso" class="block text-sm text-text-muted hover:text-accent transition-colors duration-300" data-hover>Proceso</a>
+            <a href="#precios" class="block text-sm text-text-muted hover:text-accent transition-colors duration-300" data-hover>Precios</a>
+            <a href="#contacto" class="block text-sm text-text-muted hover:text-accent transition-colors duration-300" data-hover>Contacto</a>
+          </div>
+        </div>
+
+        <!-- Column 3 — Social -->
+        <div>
+          <p class="label text-text-muted mb-4">Síguenos</p>
+          <div class="flex gap-3">
+            <a href="#" class="footer-social-icon" data-hover aria-label="Instagram">
+              <iconify-icon icon="mdi:instagram" width="18"></iconify-icon>
+            </a>
+            <a href="#" class="footer-social-icon" data-hover aria-label="Twitter">
+              <iconify-icon icon="mdi:twitter" width="18"></iconify-icon>
+            </a>
+            <a href="#" class="footer-social-icon" data-hover aria-label="LinkedIn">
+              <iconify-icon icon="mdi:linkedin" width="18"></iconify-icon>
+            </a>
+            <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="footer-social-icon" data-hover aria-label="WhatsApp">
+              <iconify-icon icon="mdi:whatsapp" width="18"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-border gap-4">
+        <p class="text-xs text-text-muted">&copy; 2025 DigiCraft Studio. Todos los derechos reservados.</p>
+        <p class="text-xs text-text-muted">
+          Hecho con <iconify-icon icon="mdi:heart" class="text-accent" width="12" style="vertical-align: middle;"></iconify-icon> y código
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       WHATSAPP FLOATING BUTTON
+       ========================================== -->
+  <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"
+     class="whatsapp-float" id="whatsappBtn" data-hover aria-label="WhatsApp">
+    <iconify-icon icon="mdi:whatsapp" width="28" style="color: #fff;"></iconify-icon>
+  </a>
+
+
+  <!-- ==========================================
+       JAVASCRIPT
+       ========================================== -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ===========================================
+       1. SCROLL REVEAL (IntersectionObserver)
+       =========================================== */
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      revealObserver.observe(el);
+    });
+
+
+    /* ===========================================
+       3. MOBILE MENU
+       =========================================== */
+    var menuBtn = document.getElementById('menuBtn');
+    var menuClose = document.getElementById('menuClose');
+    var menuOverlay = document.getElementById('menuOverlay');
+
+    function openMenu() {
+      menuOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      menuOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.menu-link').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+
+    /* ===========================================
+       4. NAVBAR SHRINK ON SCROLL
+       =========================================== */
+    var navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+
+    /* ===========================================
+       5. STATS COUNT-UP ANIMATION
+       =========================================== */
+    var statsContainer = document.getElementById('statsContainer');
+    var statsCounted = false;
+
+    function countUp(element, target, suffix, duration) {
+      var start = 0;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        var current = Math.floor(start + (target - start) * eased);
+        element.textContent = current + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    var statsObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !statsCounted) {
+          statsCounted = true;
+          var statEls = statsContainer.querySelectorAll('[data-target]');
+          statEls.forEach(function (el) {
+            var target = parseInt(el.getAttribute('data-target'));
+            var suffix = el.getAttribute('data-suffix') || '';
+            countUp(el, target, suffix, 2000);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    statsObserver.observe(statsContainer);
+
+
+    /* ===========================================
+       6. WHATSAPP FLOATING BUTTON
+       =========================================== */
+    var whatsappBtn = document.getElementById('whatsappBtn');
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 500) {
+        whatsappBtn.classList.add('visible');
+      } else {
+        whatsappBtn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+
+    /* ===========================================
+       7. CONTACT FORM — TOAST
+       =========================================== */
+    var contactForm = document.getElementById('contactForm');
+    var toastEl = document.getElementById('toast');
+    var toastMsg = document.getElementById('toastMsg');
+
+    function showToast(message) {
+      toastMsg.textContent = message;
+      toastEl.classList.add('show');
+      setTimeout(function () {
+        toastEl.classList.remove('show');
+      }, 4000);
+    }
+
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      showToast('¡Mensaje enviado con éxito! Te contactaremos pronto.');
+      contactForm.reset();
+    });
+
+
+    /* ===========================================
+       8. SMOOTH SCROLL FOR ANCHOR LINKS
+       =========================================== */
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        var target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+  })();
+  </script>
+
+</body>
+</html> 
