@@ -1,154 +1,132 @@
-<!DOCTYPE html><!--MeTW84cMHn_Rex3sLBOgF--><html lang="es"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="./_next/static/css/1623fa24a3374790.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="./_next/static/chunks/webpack-0889f6642267bc33.js"/><script src="./_next/static/chunks/4bd1b696-1c88c00269cf164c.js" async=""></script><script src="./_next/static/chunks/255-7b9d67cdc8613f21.js" async=""></script><script src="./_next/static/chunks/main-app-61af12d7fbb59e74.js" async=""></script><script src="./_next/static/chunks/ef7830f0-ece57dde59322873.js" async=""></script><script src="./_next/static/chunks/770-27e277915062f1ed.js" async=""></script><script src="./_next/static/chunks/632-9c5c6e832beae173.js" async=""></script><script src="./_next/static/chunks/app/layout-262ff0497fbc865f.js" async=""></script><script src="./_next/static/chunks/14fe52b9-87f05199ca3ecf46.js" async=""></script><script src="./_next/static/chunks/765f6e35-b0b339a5f54b305b.js" async=""></script><script src="./_next/static/chunks/app/page-fa6e6fa088f108b9.js" async=""></script><meta name="theme-color" content="#2563eb"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/><meta name="apple-mobile-web-app-title" content="DigiCraft"/><link rel="manifest" href="manifest.json"/><link rel="icon" href="favicon.ico"/><link rel="apple-touch-icon" href="apple-touch-icon.png"/><title>DigiCraft Demo - Centro Logístico</title><meta name="description" content="Sistema de gestión logística y control de inventario para DigiCraft"/><link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/><link rel="icon" href="/icon.png?51a4639322d9f0c8" type="image/png" sizes="32x32"/><script>(function(){try{var d=localStorage.getItem("digicraft_dark_mode");var t=d==="true"?"dark":d==="false"?"light":window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})()</script>
+<!DOCTYPE html><!--MeTW84cMHn_Rex3sLBOgF--><html lang="es"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="./_next/static/css/1623fa24a3374790.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="./_next/static/chunks/webpack-0889f6642267bc33.js"/><script src="./_next/static/chunks/4bd1b696-1c88c00269cf164c.js" async=""></script><script src="./_next/static/chunks/255-7b9d67cdc8613f21.js" async=""></script><script src="./_next/static/chunks/main-app-61af12d7fbb59e74.js" async=""></script><script src="./_next/static/chunks/ef7830f0-ece57dde59322873.js" async=""></script><script src="./_next/static/chunks/770-27e277915062f1ed.js" async=""></script><script src="./_next/static/chunks/632-9c5c6e832beae173.js" async=""></script><script src="./_next/static/chunks/app/layout-262ff0497fbc865f.js" async=""></script><script src="./_next/static/chunks/14fe52b9-87f05199ca3ecf46.js" async=""></script><script src="./_next/static/chunks/765f6e35-b0b339a5f54b305b.js" async=""></script><script src="./_next/static/chunks/app/page-fa6e6fa088f108b9.js" async=""></script><meta name="theme-color" content="#2563eb"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/><meta name="apple-mobile-web-app-title" content="DigiCraft"/><link rel="manifest" href="manifest.json"/><link rel="icon" href="favicon.ico"/><link rel="apple-touch-icon" href="apple-touch-icon.png"/><title>DigiCraft Demo - Centro Logístico</title><meta name="description" content="Sistema de gestión logística y control de inventario para DigiCraft"/><link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/><link rel="icon" href="/icon.png?51a4639322d9f0c8" type="image/png" sizes="32x32"/><script>(function(){try{var d=localStorage.getItem("digicraft_dark_mode");var t=d==="true"?"dark":d==="false"?"light":window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})()</script><script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=4').then(function(r){r.update()}).catch(function(){})})}</script><script src="./_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body>
 <script>
 (function(){
   // ===== AUTO-LOGIN BYPASS =====
-  localStorage.setItem("digicraft_session", "admin_default");
-  var users = JSON.parse(localStorage.getItem("digicraft_users") || "[]");
-  var adminExists = users.some(function(u){ return u.id === "admin_default"; });
-  if (!adminExists) {
-    users.push({
-      id: "admin_default", username: "admin", password: "admin123",
-      displayName: "Administrador", role: "ADMIN",
-      createdAt: new Date().toISOString()
-    });
-    localStorage.setItem("digicraft_users", JSON.stringify(users));
+  localStorage.setItem("digicraft_session","admin_default");
+  var users=JSON.parse(localStorage.getItem("digicraft_users")||"[]");
+  if(!users.some(function(u){return u.id==="admin_default";})){
+    users.push({id:"admin_default",username:"admin",password:"admin123",displayName:"Administrador",role:"ADMIN",createdAt:new Date().toISOString()});
+    localStorage.setItem("digicraft_users",JSON.stringify(users));
   }
-  localStorage.setItem("digicraft_operator_name", "Administrador");
+  localStorage.setItem("digicraft_operator_name","Administrador");
 
-  // ===== SEED RANDOM DATA =====
-  if (!localStorage.getItem("digicraft_seeded")) {
-    var clients = ["Transportes R\u00e1pidos S.A.","Log\u00edstica del Sur","Alimentos del Litoral","Fr\u00edos Patag\u00f3nicos","Distribuidora Nacional","Cereales del Norte","Exportadora Premium","Agroindustrial Mendoza","Bebidas del Valle","Qu\u00edmica Industrial"];
-    var products = ["Tomates","Naranjas","Manzanas","Leche","Queso","Carne Vacuna","Pollo","Arroz","Fideos","Aceite","Vino Malbec","Cerveza","Agua Mineral","Yogurt","Pan"];
-    var locations = ["Galp\u00f3n A-01","Galp\u00f3n A-02","Galp\u00f3n B-01","Galp\u00f3n B-02","C\u00e1mara Fr\u00eda 1","C\u00e1mara Fr\u00eda 2","Patio Exterior","Zona de Despacho"];
-    var statuses = ["En Stock","Reservado","En Tr\u00e1nsito","Pendiente Ingreso"];
-    var operators = ["Juan P\u00e9rez","Mar\u00eda Gonz\u00e1lez","Carlos L\u00f3pez","Ana Rodr\u00edguez","Pedro Mart\u00ednez"];
+  // ===== SEED RANDOM DATA (correct format for the app) =====
+  if(!localStorage.getItem("digicraft_seeded_v2")){
+    var clients=["Transportes R\u00e1pidos S.A.","Log\u00edstica del Sur","Alimentos del Litoral","Fr\u00edos Patag\u00f3nicos","Distribuidora Nacional","Cereales del Norte","Exportadora Premium","Agroindustrial Mendoza","Bebidas del Valle","Qu\u00edmica Industrial"];
+    var products=["Tomates","Naranjas","Manzanas","Leche","Queso","Carne Vacuna","Pollo","Arroz","Fideos","Aceite","Vino Malbec","Cerveza","Agua Mineral","Yogurt","Pan"];
+    var containers=["TRLU1234567","TRLU2345678","TRLU3456789","TRLU4567890","TRLU5678901","TRLU6789012","TRLU7890123","TRLU8901234","TRLU9012345","MSKU1122334","CSLU5566778","HLBU9988776"];
+    var locations=["Galp\u00f3n A-01","Galp\u00f3n A-02","Galp\u00f3n B-01","Galp\u00f3n B-02","C\u00e1mara Fr\u00eda 1","C\u00e1mara Fr\u00eda 2","Patio Exterior","Zona de Despacho"];
+    var operators=["Juan P\u00e9rez","Mar\u00eda Gonz\u00e1lez","Carlos L\u00f3pez","Ana Rodr\u00edguez","Pedro Mart\u00ednez"];
+    function ri(a){return a[Math.floor(Math.random()*a.length)];}
+    function ri2(a,n){var r=[];for(var i=0;i<n;i++)r.push(ri(a));return r;}
+    function ds(ago){return new Date(Date.now()-ago*86400000).toISOString();}
 
-    // Seed inventory
-    var inventory = [];
-    for (var i = 0; i < 45; i++) {
-      var cl = clients[Math.floor(Math.random()*clients.length)];
-      var pr = products[Math.floor(Math.random()*products.length)];
-      var loc = locations[Math.floor(Math.random()*locations.length)];
-      var st = statuses[Math.floor(Math.random()*statuses.length)];
-      var pallets = Math.floor(Math.random()*120)+1;
-      var boxes = pallets * (Math.floor(Math.random()*20)+5);
-      var kilos = boxes * (Math.floor(Math.random()*15)+2);
-      var daysAgo = Math.floor(Math.random()*60);
-      inventory.push({
-        id: "INV-"+String(1000+i),
-        containerCode: "CTR-"+String(200+i),
-        clientName: cl,
-        productName: pr,
-        location: loc,
-        status: st,
-        palletCount: pallets,
-        boxCount: boxes,
-        kilos: kilos,
-        entryDate: new Date(Date.now()-daysAgo*86400000).toISOString(),
-        notes: ""
+    // Seed inventory (correct field names)
+    var inv=[];
+    for(var i=0;i<45;i++){
+      var pl=Math.floor(Math.random()*120)+1;
+      var bx=pl*(Math.floor(Math.random()*20)+5);
+      inv.push({
+        id:"inv-"+(1000+i),
+        contenedor:ri(containers),
+        cliente:ri(clients),
+        producto:ri(products),
+        lote:"LOT-"+String(Math.floor(Math.random()*900)+100),
+        pallets:pl,
+        cajas:bx,
+        kilos:bx*(Math.floor(Math.random()*15)+2),
+        estado:ri(["DISPONIBLE","RESERVADO","EN_TRANSITO","PENDIENTE"]),
+        ubicacion:ri(locations),
+        fechaIngreso:ds(Math.floor(Math.random()*60)),
+        observaciones:"",
+        temperatura:(Math.random()*12-2).toFixed(1),
+        numeroCliente:String(Math.floor(Math.random()*50000)+10000)
       });
     }
-    localStorage.setItem("digicraft_inventory_cache_v1", JSON.stringify(inventory));
+    localStorage.setItem("digicraft_inventory_cache_v1",JSON.stringify(inv));
 
-    // Seed orders
-    var orderStatuses = ["Pendiente","En Proceso","Completado","Cancelado"];
-    var orders = [];
-    for (var j = 0; j < 30; j++) {
-      var cl2 = clients[Math.floor(Math.random()*clients.length)];
-      var pr2 = products[Math.floor(Math.random()*products.length)];
-      var os = orderStatuses[Math.floor(Math.random()*orderStatuses.length)];
-      var daysAgo2 = Math.floor(Math.random()*45);
+    // Seed orders (correct format with items[] and reservedItems[])
+    var estados=["PENDIENTE","CONFIRMADO","DESPACHADO","CANCELADO"];
+    var orders=[];
+    for(var j=0;j<25;j++){
+      var cl=ri(clients);
+      var pr=ri(products);
+      var ct=ri(containers);
+      var pl2=Math.floor(Math.random()*20)+1;
+      var bx2=pl2*(Math.floor(Math.random()*10)+3);
+      var kg2=bx2*(Math.floor(Math.random()*15)+2);
+      var itemObj={inventoryId:"inv-"+(Math.floor(Math.random()*45)+1000),producto:pr,contenedor:ct,lote:"LOT-"+String(Math.floor(Math.random()*900)+100),cliente:cl,pallets:pl2,cajas:bx2,kilos:kg2};
+      var resObj={inventoryId:itemObj.inventoryId,palletsReserved:pl2,cajasReserved:bx2,kilosReserved:kg2,contenedor:ct,producto:pr,numeroCliente:String(Math.floor(Math.random()*50000)+10000),lote:itemObj.lote};
       orders.push({
-        id: "ORD-"+String(3000+j),
-        clientName: cl2,
-        productName: pr2,
-        quantity: Math.floor(Math.random()*500)+10,
-        status: os,
-        createdAt: new Date(Date.now()-daysAgo2*86400000).toISOString(),
-        operator: operators[Math.floor(Math.random()*operators.length)],
-        destination: "Destino " + String(Math.floor(Math.random()*50)+1),
-        notes: ""
+        id:"ped-"+String(3000+j),
+        numero:"PED-"+String(j+1).padStart(4,"0"),
+        cliente:cl,
+        estado:ri(estados),
+        items:[itemObj],
+        reservedItems: j<15?[resObj]:[],
+        observaciones:"",
+        operador:ri(operators),
+        archivosAdjuntos:[],
+        createdAt:ds(Math.floor(Math.random()*45)),
+        updatedAt:ds(Math.floor(Math.random()*10))
       });
     }
-    localStorage.setItem("digicraft_orders_v2", JSON.stringify(orders));
+    localStorage.setItem("digicraft_orders_v2",JSON.stringify(orders));
 
     // Seed activity
-    var activityTypes = ["Ingreso","Egreso","Movimiento","Control Temperatura","Auditor\u00eda","Despacho"];
-    var activity = [];
-    for (var k = 0; k < 80; k++) {
-      var daysAgo3 = Math.floor(Math.random()*30);
-      var hoursAgo = Math.floor(Math.random()*24);
+    var actTypes=["INGRESO","EGRESO","MOVIMIENTO","CONTROL_TEMPERATURA","AUDITORIA","DESPACHO"];
+    var activity=[];
+    for(var k=0;k<80;k++){
       activity.push({
-        id: "ACT-"+String(5000+k),
-        type: activityTypes[Math.floor(Math.random()*activityTypes.length)],
-        description: "Operaci\u00f3n registrada - " + clients[Math.floor(Math.random()*clients.length)],
-        operator: operators[Math.floor(Math.random()*operators.length)],
-        timestamp: new Date(Date.now()-daysAgo3*86400000-hoursAgo*3600000).toISOString(),
-        details: {}
+        id:"act-"+(5000+k),
+        type:ri(actTypes),
+        description:"Operaci\u00f3n registrada - "+ri(clients),
+        operator:ri(operators),
+        timestamp:ds(Math.floor(Math.random()*30)+Math.random()),
+        details:{}
       });
     }
-    activity.sort(function(a,b){ return new Date(b.timestamp)-new Date(a.timestamp); });
-    localStorage.setItem("digicraft_activity_cache_v1", JSON.stringify(activity));
+    activity.sort(function(a,b){return new Date(b.timestamp)-new Date(a.timestamp);});
+    localStorage.setItem("digicraft_activity_cache_v1",JSON.stringify(activity));
 
     // Seed audit log
-    var auditActions = ["CREATE","UPDATE","DELETE","LOGIN","VIEW","EXPORT"];
-    var auditLog = [];
-    for (var m = 0; m < 50; m++) {
-      var daysAgo4 = Math.floor(Math.random()*20);
-      auditLog.push({
-        id: "LOG-"+String(7000+m),
-        action: auditActions[Math.floor(Math.random()*auditActions.length)],
-        user: operators[Math.floor(Math.random()*operators.length)],
-        timestamp: new Date(Date.now()-daysAgo4*86400000).toISOString(),
-        details: { entity: "inventory", entityId: "INV-"+String(Math.floor(Math.random()*45)+1000) }
-      });
+    var audActions=["CREATE","UPDATE","DELETE","LOGIN","VIEW","EXPORT"];
+    var audit=[];
+    for(var m=0;m<50;m++){
+      audit.push({id:"log-"+(7000+m),action:ri(audActions),user:ri(operators),timestamp:ds(Math.floor(Math.random()*20)+Math.random()),details:{entity:"inventory",entityId:"inv-"+(Math.floor(Math.random()*45)+1000)}});
     }
-    auditLog.sort(function(a,b){ return new Date(b.timestamp)-new Date(a.timestamp); });
-    localStorage.setItem("digicraft_audit_log_v1", JSON.stringify(auditLog.slice(0,500)));
+    audit.sort(function(a,b){return new Date(b.timestamp)-new Date(a.timestamp);});
+    localStorage.setItem("digicraft_audit_log_v1",JSON.stringify(audit.slice(0,500)));
 
-    // Seed temperature data
-    var tempData = [];
-    for (var n = 0; n < 48; n++) {
-      tempData.push({
-        id: "TEMP-"+n,
-        location: locations[Math.floor(Math.random()*locations.length)],
-        temperature: (Math.random()*12-2).toFixed(1),
-        humidity: (Math.random()*40+50).toFixed(1),
-        timestamp: new Date(Date.now()-n*1800000).toISOString(),
-        status: Math.random()>0.15 ? "Normal" : "Alerta"
-      });
+    // Seed temperature
+    var temp=[];
+    for(var n=0;n<48;n++){
+      temp.push({id:"t-"+n,location:ri(locations),temperature:(Math.random()*12-2).toFixed(1),humidity:(Math.random()*40+50).toFixed(1),timestamp:new Date(Date.now()-n*1800000).toISOString(),status:Math.random()>0.15?"Normal":"Alerta"});
     }
-    localStorage.setItem("temp-monitor-data", JSON.stringify(tempData));
+    localStorage.setItem("temp-monitor-data",JSON.stringify(temp));
 
-    localStorage.setItem("digicraft_seeded", "true");
+    localStorage.setItem("digicraft_seeded_v2","true");
   }
 })();
 </script>
 <script>
-// ===== BACK-TO-TOP BUTTON (injected after app loads) =====
-window.addEventListener('load', function(){
+// ===== BACK-TO-TOP BUTTON =====
+window.addEventListener('load',function(){
   setTimeout(function(){
-    var btn = document.createElement('button');
-    btn.id = 'demo-back-top';
-    btn.title = 'Volver arriba';
-    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>';
-    btn.style.cssText = 'position:fixed;bottom:24px;left:24px;z-index:99999;width:44px;height:44px;border-radius:50%;background:#2563eb;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(37,99,235,0.4);opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s,background 0.2s;pointer-events:none;';
-    btn.onmouseover = function(){ btn.style.background='#1d4ed8'; };
-    btn.onmouseout = function(){ btn.style.background='#2563eb'; };
-    btn.onclick = function(){ window.scrollTo({top:0,behavior:'smooth'}); };
+    var btn=document.createElement('button');
+    btn.id='demo-back-top';btn.title='Volver arriba';
+    btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+    btn.style.cssText='position:fixed;bottom:24px;left:24px;z-index:99999;width:44px;height:44px;border-radius:50%;background:#2563eb;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(37,99,235,0.4);opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s,background 0.2s;pointer-events:none;';
+    btn.onmouseover=function(){btn.style.background='#1d4ed8';};
+    btn.onmouseout=function(){btn.style.background='#2563eb';};
+    btn.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
     document.body.appendChild(btn);
-    var container = btn.closest('body') || document.documentElement;
-    container.addEventListener('scroll', function(){
-      if(window.scrollY>300){btn.style.opacity='1';btn.style.transform='translateY(0)';btn.style.pointerEvents='auto';}
-      else{btn.style.opacity='0';btn.style.transform='translateY(10px)';btn.style.pointerEvents='none';}
-    });
-    // Also listen inside iframe scroll
-    var checkScroll = setInterval(function(){
-      var doc = document;
-      var scrollEl = doc.scrollingElement || doc.documentElement;
-      if(scrollEl.scrollTop>300){btn.style.opacity='1';btn.style.transform='translateY(0)';btn.style.pointerEvents='auto';}
+    var checkScroll=setInterval(function(){
+      var st=document.documentElement.scrollTop||document.body.scrollTop;
+      if(st>300){btn.style.opacity='1';btn.style.transform='translateY(0)';btn.style.pointerEvents='auto';}
       else{btn.style.opacity='0';btn.style.transform='translateY(10px)';btn.style.pointerEvents='none';}
     },300);
   },2000);
 });
-</script><script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=4').then(function(r){r.update()}).catch(function(){})})}</script><script src="./_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body><div hidden=""><!--$--><!--/$--></div><script src="./_next/static/chunks/webpack-0889f6642267bc33.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[29293,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"AuthProvider\"]\n3:I[37106,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"ThemeProvider\"]\n4:I[45432,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"AuditLogProvider\"]\n5:I[67592,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"ToastProvider\"]\n6:I[9766,[],\"\"]\n7:I[98924,[],\"\"]\n8:I[81959,[],\"ClientPageRoot\"]\n9:I[21033,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"693\",\"static/chunks/14fe52b9-87f05199ca3ecf46.js\",\"394\",\"static/chunks/765f6e35-b0b339a5f54b305b.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"974\",\"static/chunks/app/page-fa6e6fa088f108b9.js\"],\"default\"]\nc:I[24431,[],\"OutletBoundary\"]\ne:I[15278,[],\"AsyncMetadataOutlet\"]\n10:I[24431,[],\"ViewportBoundary\"]\n12:I[24431,[],\"MetadataBoundary\"]\n13:\"$Sreact.suspense\"\n15:I[57150,[],\"\"]\n:HL[\"./_next/static/css/1623fa24a3374790.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"MeTW84cMHn_Rex3sLBOgF\",\"p\":\"\",\"c\":[\"\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"./_next/static/css/1623fa24a3374790.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"es\",\"suppressHydrationWarning\":true,\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"script\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"(function(){try{var d=localStorage.getItem(\\\"digicraft_dark_mode\\\");var t=d===\\\"true\\\"?\\\"dark\\\":d===\\\"false\\\"?\\\"light\\\":window.matchMedia(\\\"(prefers-color-scheme:dark)\\\").matches?\\\"dark\\\":\\\"light\\\";document.documentElement.classList.toggle(\\\"dark\\\",t===\\\"dark\\\")}catch(e){}})()\"}}],[\"$\",\"meta\",null,{\"name\":\"theme-color\",\"content\":\"#2563eb\"}],[\"$\",\"meta\",null,{\"name\":\"mobile-web-app-capable\",\"content\":\"yes\"}],[\"$\",\"meta\",null,{\"name\":\"apple-mobile-web-app-capable\",\"content\":\"yes\"}],[\"$\",\"meta\",null,{\"name\":\"apple-mobile-web-app-status-bar-style\",\"content\":\"black-translucent\"}],[\"$\",\"meta\",null,{\"name\":\"apple-mobile-web-app-title\",\"content\":\"DigiCraft\"}],[\"$\",\"link\",null,{\"rel\":\"manifest\",\"href\":\"manifest.json\"}],[\"$\",\"link\",null,{\"rel\":\"icon\",\"href\":\"favicon.ico\"}],[\"$\",\"link\",null,{\"rel\":\"apple-touch-icon\",\"href\":\"apple-touch-icon.png\"}],[\"$\",\"meta\",null,{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1, viewport-fit=cover\"}],[\"$\",\"script\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=4').then(function(r){r.update()}).catch(function(){})})}\"}}]]}],[\"$\",\"body\",null,{\"suppressHydrationWarning\":true,\"children\":[\"$\",\"$L2\",null,{\"children\":[\"$\",\"$L3\",null,{\"children\":[\"$\",\"$L4\",null,{\"children\":[\"$\",\"$L5\",null,{\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]}]}]}]]}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L8\",null,{\"Component\":\"$9\",\"searchParams\":{},\"params\":{},\"promises\":[\"$@a\",\"$@b\"]}],null,[\"$\",\"$Lc\",null,{\"children\":[\"$Ld\",[\"$\",\"$Le\",null,{\"promise\":\"$@f\"}]]}]]}],{},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[[\"$\",\"$L10\",null,{\"children\":\"$L11\"}],null],[\"$\",\"$L12\",null,{\"children\":[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$13\",null,{\"fallback\":null,\"children\":\"$L14\"}]}]}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$15\",[]],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"a:{}\nb:\"$0:f:0:1:2:children:1:props:children:0:props:params\"\n"])</script><script>self.__next_f.push([1,"11:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\nd:null\n"])</script><script>self.__next_f.push([1,"16:I[80622,[],\"IconMark\"]\nf:{\"metadata\":[[\"$\",\"title\",\"0\",{\"children\":\"DigiCraft Demo - Centro Logístico\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Sistema de gestión logística y control de inventario para DigiCraft\"}],[\"$\",\"link\",\"2\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\",\"type\":\"image/x-icon\",\"sizes\":\"32x32\"}],[\"$\",\"link\",\"3\",{\"rel\":\"icon\",\"href\":\"/icon.png?51a4639322d9f0c8\",\"type\":\"image/png\",\"sizes\":\"32x32\"}],[\"$\",\"$L16\",\"4\",{}]],\"error\":null,\"digest\":\"$undefined\"}\n"])</script><script>self.__next_f.push([1,"14:\"$f:metadata\"\n"])</script></body></html>
+</script>
+<div hidden=""><!--$--><!--/$--></div><script src="./_next/static/chunks/webpack-0889f6642267bc33.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[29293,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"AuthProvider\"]\n3:I[37106,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"ThemeProvider\"]\n4:I[45432,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"AuditLogProvider\"]\n5:I[67592,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"177\",\"static/chunks/app/layout-262ff0497fbc865f.js\"],\"ToastProvider\"]\n6:I[9766,[],\"\"]\n7:I[98924,[],\"\"]\n8:I[81959,[],\"ClientPageRoot\"]\n9:I[21033,[\"984\",\"static/chunks/ef7830f0-ece57dde59322873.js\",\"693\",\"static/chunks/14fe52b9-87f05199ca3ecf46.js\",\"394\",\"static/chunks/765f6e35-b0b339a5f54b305b.js\",\"770\",\"static/chunks/770-27e277915062f1ed.js\",\"632\",\"static/chunks/632-9c5c6e832beae173.js\",\"974\",\"static/chunks/app/page-fa6e6fa088f108b9.js\"],\"default\"]\nc:I[24431,[],\"OutletBoundary\"]\ne:I[15278,[],\"AsyncMetadataOutlet\"]\n10:I[24431,[],\"ViewportBoundary\"]\n12:I[24431,[],\"MetadataBoundary\"]\n13:\"$Sreact.suspense\"\n15:I[57150,[],\"\"]\n:HL[\"./_next/static/css/1623fa24a3374790.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"MeTW84cMHn_Rex3sLBOgF\",\"p\":\"\",\"c\":[\"\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"./_next/static/css/1623fa24a3374790.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"es\",\"suppressHydrationWarning\":true,\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"script\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"(function(){try{var d=localStorage.getItem(\\\"digicraft_dark_mode\\\");var t=d===\\\"true\\\"?\\\"dark\\\":d===\\\"false\\\"?\\\"light\\\":window.matchMedia(\\\"(prefers-color-scheme:dark)\\\").matches?\\\"dark\\\":\\\"light\\\";document.documentElement.classList.toggle(\\\"dark\\\",t===\\\"dark\\\")}catch(e){}})()\"}}],[\"$\",\"meta\",null,{\"name\":\"theme-color\",\"content\":\"#2563eb\"}],[\"$\",\"meta\",null,{\"name\":\"mobile-web-app-capable\",\"content\":\"yes\"}],[\"$\",\"meta\",null,{\"name\":\"apple-mobile-web-app-capable\",\"content\":\"yes\"}],[\"$\",\"meta\",null,{\"name\":\"apple-mobile-web-app-status-bar-style\",\"content\":\"black-translucent\"}],[\"$\",\"meta\",null,{\"name\":\"apple-mobile-web-app-title\",\"content\":\"DigiCraft\"}],[\"$\",\"link\",null,{\"rel\":\"manifest\",\"href\":\"manifest.json\"}],[\"$\",\"link\",null,{\"rel\":\"icon\",\"href\":\"favicon.ico\"}],[\"$\",\"link\",null,{\"rel\":\"apple-touch-icon\",\"href\":\"apple-touch-icon.png\"}],[\"$\",\"meta\",null,{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1, viewport-fit=cover\"}],[\"$\",\"script\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=4').then(function(r){r.update()}).catch(function(){})})}\"}}]]}],[\"$\",\"body\",null,{\"suppressHydrationWarning\":true,\"children\":[\"$\",\"$L2\",null,{\"children\":[\"$\",\"$L3\",null,{\"children\":[\"$\",\"$L4\",null,{\"children\":[\"$\",\"$L5\",null,{\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]}]}]}]]}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L8\",null,{\"Component\":\"$9\",\"searchParams\":{},\"params\":{},\"promises\":[\"$@a\",\"$@b\"]}],null,[\"$\",\"$Lc\",null,{\"children\":[\"$Ld\",[\"$\",\"$Le\",null,{\"promise\":\"$@f\"}]]}]]}],{},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[[\"$\",\"$L10\",null,{\"children\":\"$L11\"}],null],[\"$\",\"$L12\",null,{\"children\":[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$13\",null,{\"fallback\":null,\"children\":\"$L14\"}]}]}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$15\",[]],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"a:{}\nb:\"$0:f:0:1:2:children:1:props:children:0:props:params\"\n"])</script><script>self.__next_f.push([1,"11:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\nd:null\n"])</script><script>self.__next_f.push([1,"16:I[80622,[],\"IconMark\"]\nf:{\"metadata\":[[\"$\",\"title\",\"0\",{\"children\":\"DigiCraft Demo - Centro Logístico\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Sistema de gestión logística y control de inventario para DigiCraft\"}],[\"$\",\"link\",\"2\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\",\"type\":\"image/x-icon\",\"sizes\":\"32x32\"}],[\"$\",\"link\",\"3\",{\"rel\":\"icon\",\"href\":\"/icon.png?51a4639322d9f0c8\",\"type\":\"image/png\",\"sizes\":\"32x32\"}],[\"$\",\"$L16\",\"4\",{}]],\"error\":null,\"digest\":\"$undefined\"}\n"])</script><script>self.__next_f.push([1,"14:\"$f:metadata\"\n"])</script></body></html>
