@@ -81,3 +81,33 @@ Built the complete DigiCraft Studio website as a single-page scrolling Next.js 1
 - Main page returns 200 OK
 - Portfolio dynamic routes return 200 OK
 - All responsive breakpoints handled via CSS
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Agregar contador de visitas (totales + diarias), fecha de hoy, toggle claro/oscuro, git commit y deploy
+
+Work Log:
+- Read existing codebase (page.tsx, globals.css, layout.tsx, api/route.ts, prisma/schema.prisma, db.ts)
+- Updated Prisma schema with VisitCounter model (key/value pairs for total and daily counts)
+- Pushed schema to SQLite database and regenerated Prisma client
+- Created /api/visits API route with GET (read counts) and POST (increment + read)
+- Daily counter uses date-based key (daily-YYYY-MM-DD) so it resets automatically each day
+- Added state variables for visitCounts and todayDate in page.tsx
+- Added useEffect for date formatting (Spanish locale)
+- Added useEffect for visit tracking (POST on first visit per session, GET thereafter, using sessionStorage to prevent double-counting)
+- Added top-info-bar component with date (left) and visit counters (right) with eye icon for daily and group icon for total
+- Added comprehensive CSS for top-info-bar, visit-stat, visit-label, visit-number, visit-divider
+- Repositioned navbar from top:0 to top:36px to accommodate the new info bar
+- Build passed successfully with 0 errors
+- Production server restarted and tested
+- API endpoint confirmed working: /api/visits returns {"total":1,"daily":1}
+
+Stage Summary:
+- Visit counter system fully operational with SQLite persistence
+- Daily visits reset automatically each day
+- Date displayed in Spanish format in upper-left bar
+- Visit counts displayed with gold accent numbers in upper-right bar
+- Responsive: visit labels hidden on mobile, icons + numbers remain
+- Git commit: feat: agregar contador de visitas, fecha, y toggle modo claro/oscuro
+- No git remote configured; deployed locally via production server restart
