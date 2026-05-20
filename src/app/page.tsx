@@ -118,6 +118,24 @@ export default function Home() {
   const menuOverlayRef = useRef<HTMLDivElement>(null);
   const statsAnimated = useRef(false);
 
+  /* ─── Demo Logistics Data ─── */
+  const demoContainers = [
+    { id: 'MSCU-7843291', cliente: 'DigiCraft Corp', pallets: 18, kilos: 8420, cajas: 360, temp: '-18.2°C', estado: 'Almacén' },
+    { id: 'TCLU-5519823', cliente: 'Studio Max', pallets: 12, kilos: 5180, cajas: 240, temp: '4.1°C', estado: 'En Tránsito' },
+    { id: 'HLXU-3391027', cliente: 'Pixel Labs', pallets: 22, kilos: 11200, cajas: 440, temp: '-20.0°C', estado: 'Almacén' },
+    { id: 'MAEU-6674215', cliente: 'Nexa Digital', pallets: 8, kilos: 3650, cajas: 160, temp: '2.8°C', estado: 'Despachado' },
+    { id: 'CSLU-9910583', cliente: 'Código Fuente S.A.', pallets: 15, kilos: 7200, cajas: 300, temp: '-15.5°C', estado: 'Almacén' },
+    { id: 'BMOU-4452167', cliente: 'AppForge Inc', pallets: 20, kilos: 9800, cajas: 400, temp: '3.6°C', estado: 'En Tránsito' },
+  ];
+  const demoActivities = [
+    { time: '08:15', tipo: 'INGRESO', guia: 'DC-2025-00142', placa: 'ABC-123', detalle: 'Recepción de contenedor MSCU-7843291' },
+    { time: '09:30', tipo: 'DESPACHO', guia: 'DC-2025-00141', placa: 'XYZ-789', detalle: 'Despacho parcial a Pixel Labs' },
+    { time: '10:45', tipo: 'INGRESO', guia: 'DC-2025-00143', placa: 'DEF-456', detalle: 'Recepción de mercadería refrigerada' },
+    { time: '11:20', tipo: 'REVISIÓN', guia: 'DC-2025-00140', placa: 'GHI-012', detalle: 'Inspección de calidad - Nexa Digital' },
+    { time: '12:00', tipo: 'DESPACHO', guia: 'DC-2025-00139', placa: 'JKL-345', detalle: 'Entrega final a Código Fuente S.A.' },
+  ];
+  const [demoTab, setDemoTab] = useState<'dashboard' | 'inventory' | 'activity'>('dashboard');
+
   /* ─── State ─── */
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -885,7 +903,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Demo Interactive Subsection */}
+        {/* Demo Interactive Subsection - Logistics Dashboard */}
         <div className="reveal" style={{ marginTop: '5rem' }}>
           <div
             style={{
@@ -898,26 +916,175 @@ export default function Home() {
               <div className="demo-dot" style={{ background: '#ff5f57' }} />
               <div className="demo-dot" style={{ background: '#febc2e' }} />
               <div className="demo-dot" style={{ background: '#28c840' }} />
-              <div className="demo-url">demo.digicraft.studio</div>
+              <div className="demo-url">logistica.digicraft.studio</div>
             </div>
-            <div
-              style={{
-                height: '400px',
-                background: 'var(--surface)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '1rem',
-              }}
-            >
-              <Icon icon="mdi:code-braces" width={48} style={{ color: 'var(--accent)' }} />
-              <p style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                Demo Interactivo
-              </p>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                Disponible Próximamente
-              </p>
+            {/* Demo Sidebar + Content */}
+            <div style={{ display: 'flex', minHeight: '520px', background: 'var(--surface)' }}>
+              {/* Mini Sidebar */}
+              <div style={{ width: '200px', background: 'var(--surface-alt)', borderRight: '1px solid var(--border)', padding: '1rem 0', flexShrink: 0 }}>
+                <div style={{ padding: '0 1rem 1rem', borderBottom: '1px solid var(--border)', marginBottom: '0.75rem' }}>
+                  <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', color: 'var(--accent)' }}>DigiCraft</p>
+                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Centro Logístico</p>
+                </div>
+                {[
+                  { key: 'dashboard' as const, icon: 'mdi:view-dashboard', label: 'Dashboard' },
+                  { key: 'inventory' as const, icon: 'mdi:package-variant-closed', label: 'Inventario' },
+                  { key: 'activity' as const, icon: 'mdi:truck-delivery', label: 'Actividad' },
+                ].map((tab) => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setDemoTab(tab.key)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%',
+                      padding: '0.6rem 1rem', border: 'none', background: demoTab === tab.key ? 'rgba(212,175,55,0.1)' : 'transparent',
+                      color: demoTab === tab.key ? 'var(--accent)' : 'var(--text-muted)', cursor: 'pointer',
+                      fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500,
+                      transition: 'all 0.2s', textAlign: 'left',
+                    }}
+                  >
+                    <Icon icon={tab.icon} width={16} />
+                    {tab.label}
+                  </button>
+                ))}
+                <div style={{ padding: '1rem', marginTop: '1rem', borderTop: '1px solid var(--border)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Icon icon="mdi:account" width={14} style={{ color: 'var(--accent)' }} />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)' }}>Admin</p>
+                      <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>Operador</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Main Content */}
+              <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto' }}>
+                {demoTab === 'dashboard' && (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                      <div>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Dashboard</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resumen del centro logístico</p>
+                      </div>
+                      <span style={{ fontSize: '0.7rem', padding: '0.3rem 0.6rem', background: 'rgba(212,175,55,0.1)', color: 'var(--accent)', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 600 }}>LIVE</span>
+                    </div>
+                    {/* KPI Cards */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                      {[
+                        { label: 'Contenedores', value: demoContainers.length, icon: 'mdi:ferry', color: '#D4AF37' },
+                        { label: 'Pallets', value: demoContainers.reduce((s, c) => s + c.pallets, 0), icon: 'mdi:palette', color: '#4CAF50' },
+                        { label: 'Kilos', value: (demoContainers.reduce((s, c) => s + c.kilos, 0) / 1000).toFixed(1) + 'T', icon: 'mdi:weight', color: '#2196F3' },
+                        { label: 'Clientes', value: demoContainers.length, icon: 'mdi:account-group', color: '#FF9800' },
+                      ].map((kpi) => (
+                        <div key={kpi.label} style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
+                            <Icon icon={kpi.icon} width={14} style={{ color: kpi.color }} />
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{kpi.label}</span>
+                          </div>
+                          <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: "'Syne', sans-serif", color: 'var(--text-main)' }}>{kpi.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Status bar */}
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                      {['Almacén', 'En Tránsito', 'Despachado'].map((estado) => {
+                        const count = demoContainers.filter(c => c.estado === estado).length;
+                        const colors: Record<string, string> = { 'Almacén': '#4CAF50', 'En Tránsito': '#FF9800', 'Despachado': '#2196F3' };
+                        return (
+                          <div key={estado} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: colors[estado] }} />
+                            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{estado}</span>
+                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-main)', marginLeft: 'auto' }}>{count}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* Temperature monitoring */}
+                    <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
+                        <Icon icon="mdi:thermometer" width={14} style={{ color: '#f44336' }} />
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Monitoreo de Temperatura</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        {demoContainers.slice(0, 4).map((c) => {
+                          const tempNum = parseFloat(c.temp);
+                          const tempColor = tempNum < -15 ? '#2196F3' : tempNum < 5 ? '#4CAF50' : '#f44336';
+                          return (
+                            <div key={c.id} style={{ flex: 1, textAlign: 'center', padding: '0.4rem', background: 'var(--surface)', borderRadius: '4px' }}>
+                              <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.15rem' }}>{c.id.slice(-4)}</p>
+                              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: tempColor, fontFamily: "'Syne', sans-serif" }}>{c.temp}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {demoTab === 'inventory' && (
+                  <div>
+                    <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.25rem' }}>Inventario</h3>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>{demoContainers.length} contenedores registrados</p>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                          {['Contenedor', 'Cliente', 'Pallets', 'Kilos', 'Cajas', 'Temp', 'Estado'].map((h) => (
+                            <th key={h} style={{ padding: '0.5rem 0.4rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.6rem', letterSpacing: '0.05em' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {demoContainers.map((c) => {
+                          const estadoColors: Record<string, string> = { 'Almacén': '#4CAF50', 'En Tránsito': '#FF9800', 'Despachado': '#2196F3' };
+                          return (
+                            <tr key={c.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                              <td style={{ padding: '0.5rem 0.4rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.7rem' }}>{c.id}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-main)' }}>{c.cliente}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.pallets}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.kilos.toLocaleString()}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.cajas}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.temp}</td>
+                              <td style={{ padding: '0.5rem 0.4rem' }}>
+                                <span style={{ padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.6rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+                {demoTab === 'activity' && (
+                  <div>
+                    <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.25rem' }}>Actividad Reciente</h3>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>Últimos movimientos del día</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      {demoActivities.map((a, i) => {
+                        const tipoColors: Record<string, string> = { 'INGRESO': '#4CAF50', 'DESPACHO': '#2196F3', 'REVISIÓN': '#FF9800' };
+                        const tipoIcons: Record<string, string> = { 'INGRESO': 'mdi:package-down', 'DESPACHO': 'mdi:truck-delivery', 'REVISIÓN': 'mdi:clipboard-check' };
+                        return (
+                          <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: tipoColors[a.tipo] + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <Icon icon={tipoIcons[a.tipo]} width={16} style={{ color: tipoColors[a.tipo] }} />
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>{a.detalle}</span>
+                                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{a.time}</span>
+                              </div>
+                              <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                                <span>Guía: <b style={{ color: 'var(--text-main)' }}>{a.guia}</b></span>
+                                <span>Placa: <b style={{ color: 'var(--text-main)' }}>{a.placa}</b></span>
+                                <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: tipoColors[a.tipo], background: tipoColors[a.tipo] + '15' }}>{a.tipo}</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
