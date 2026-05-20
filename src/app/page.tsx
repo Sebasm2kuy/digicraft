@@ -124,6 +124,40 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeResult, setActiveResult] = useState(-1);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [visitCounts, setVisitCounts] = useState<{ total: number; daily: number } | null>(null);
+  const [todayDate, setTodayDate] = useState('');
+
+  /* ─── Today's Date ─── */
+  useEffect(() => {
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    const formatted = now.toLocaleDateString('es-ES', options);
+    setTodayDate(formatted.charAt(0).toUpperCase() + formatted.slice(1));
+  }, []);
+
+  /* ─── Visit Counter ─── */
+  useEffect(() => {
+    const tracked = sessionStorage.getItem('digicraft-visit-tracked');
+    if (!tracked) {
+      fetch('/api/visits', { method: 'POST' })
+        .then((res) => res.json())
+        .then((data) => {
+          setVisitCounts(data);
+          sessionStorage.setItem('digicraft-visit-tracked', 'true');
+        })
+        .catch(() => {});
+    } else {
+      fetch('/api/visits')
+        .then((res) => res.json())
+        .then((data) => setVisitCounts(data))
+        .catch(() => {});
+    }
+  }, []);
 
   /* ─── Theme Toggle ─── */
   useEffect(() => {
@@ -361,6 +395,31 @@ export default function Home() {
       {/* ─── Toast ─── */}
       <div id="toast" ref={toastRef}>
         ✓ Mensaje enviado con éxito!
+      </div>
+
+      {/* ─── Date + Visit Counter Bar ─── */}
+      <div className="top-info-bar">
+        <div className="top-info-left">
+          <Icon icon="mdi:calendar" width={14} style={{ color: 'var(--accent)' }} />
+          <span>{todayDate}</span>
+        </div>
+        <div className="top-info-right">
+          {visitCounts && (
+            <>
+              <div className="visit-stat">
+                <Icon icon="mdi:eye-outline" width={14} />
+                <span className="visit-label">Hoy:</span>
+                <span className="visit-number">{visitCounts.daily}</span>
+              </div>
+              <div className="visit-divider" />
+              <div className="visit-stat">
+                <Icon icon="mdi:account-group-outline" width={14} />
+                <span className="visit-label">Total:</span>
+                <span className="visit-number">{visitCounts.total}</span>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {/* ─── Navbar ─── */}

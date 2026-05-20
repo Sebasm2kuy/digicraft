@@ -692,7 +692,7 @@ video {
 /* ===== Navbar ===== */
 nav#navbar {
   position: fixed;
-  top: 0;
+  top: 36px;
   left: 0;
   right: 0;
   z-index: 100;
@@ -718,6 +718,80 @@ nav#navbar.scrolled {
 
   nav#navbar.scrolled {
     padding: 0.75rem 1.5rem;
+  }
+}
+
+/* ===== Top Info Bar (Date + Visits) ===== */
+.top-info-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4rem;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+ font-family: "Manrope", sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.top-info-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.top-info-left span {
+  color: var(--text-muted);
+}
+
+.top-info-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.visit-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+}
+
+.visit-stat svg {
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.visit-label {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.visit-number {
+  color: var(--accent);
+  font-weight: 700;
+  font-family: "Syne", sans-serif;
+}
+
+.visit-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+}
+
+@media (max-width: 768px) {
+  .top-info-bar {
+    padding: 0 1.5rem;
+  }
+
+  .visit-label {
+    display: none;
   }
 }
 
