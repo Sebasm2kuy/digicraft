@@ -118,23 +118,47 @@ export default function Home() {
   const menuOverlayRef = useRef<HTMLDivElement>(null);
   const statsAnimated = useRef(false);
 
-  /* ─── Demo Logistics Data ─── */
+  /* ─── Demo Logistics Data (Centro Logístico Frimaral V2) ─── */
   const demoContainers = [
-    { id: 'MSCU-7843291', cliente: 'DigiCraft Corp', pallets: 18, kilos: 8420, cajas: 360, temp: '-18.2°C', estado: 'Almacén' },
-    { id: 'TCLU-5519823', cliente: 'Studio Max', pallets: 12, kilos: 5180, cajas: 240, temp: '4.1°C', estado: 'En Tránsito' },
-    { id: 'HLXU-3391027', cliente: 'Pixel Labs', pallets: 22, kilos: 11200, cajas: 440, temp: '-20.0°C', estado: 'Almacén' },
-    { id: 'MAEU-6674215', cliente: 'Nexa Digital', pallets: 8, kilos: 3650, cajas: 160, temp: '2.8°C', estado: 'Despachado' },
-    { id: 'CSLU-9910583', cliente: 'Código Fuente S.A.', pallets: 15, kilos: 7200, cajas: 300, temp: '-15.5°C', estado: 'Almacén' },
-    { id: 'BMOU-4452167', cliente: 'AppForge Inc', pallets: 20, kilos: 9800, cajas: 400, temp: '3.6°C', estado: 'En Tránsito' },
+    { id: 'MSCU-7843291', cliente: 'DigiCraft Corp', producto: 'Medallones Vacuno Premium', lote: 'L-2025-0891', dua: 'UY-45210', pallets: 18, kilos: 8420, cajas: 360, temp: '-18.2°C', estado: 'Almacén', esCarne: true },
+    { id: 'TCLU-5519823', cliente: 'Studio Max', producto: 'Queso Gouda Export', lote: 'L-2025-0734', dua: 'BR-38921', pallets: 12, kilos: 5180, cajas: 240, temp: '4.1°C', estado: 'En Tránsito', esCarne: false },
+    { id: 'HLXU-3391027', cliente: 'Pixel Labs', producto: 'Filet de Pollo Congelado', lote: 'L-2025-0912', dua: 'AR-50182', pallets: 22, kilos: 11200, cajas: 440, temp: '-20.0°C', estado: 'Almacén', esCarne: true },
+    { id: 'MAEU-6674215', cliente: 'Nexa Digital', producto: 'Mantequilla Láctea', lote: 'L-2025-0655', dua: 'EU-29384', pallets: 8, kilos: 3650, cajas: 160, temp: '2.8°C', estado: 'Despachado', esCarne: false },
+    { id: 'CSLU-9910583', cliente: 'Código Fuente S.A.', producto: 'Chorizo Artesanal', lote: 'L-2025-0877', dua: 'PY-61423', pallets: 15, kilos: 7200, cajas: 300, temp: '-15.5°C', estado: 'Almacén', esCarne: true },
+    { id: 'BMOU-4452167', cliente: 'AppForge Inc', producto: 'Salmón Ahumado', lote: 'L-2025-0903', dua: 'CL-72819', pallets: 20, kilos: 9800, cajas: 400, temp: '3.6°C', estado: 'En Tránsito', esCarne: false },
+    { id: 'OOLU-2289156', cliente: 'DigiCraft Corp', producto: 'Lomo Vetado', lote: 'L-2025-0940', dua: 'UY-45298', pallets: 14, kilos: 6300, cajas: 280, temp: '-19.8°C', estado: 'Almacén', esCarne: true },
+    { id: 'TCNU-7734089', cliente: 'Studio Max', producto: 'Helado Artesanal', lote: 'L-2025-0955', dua: 'BR-39402', pallets: 10, kilos: 4200, cajas: 200, temp: '-22.1°C', estado: 'Almacén', esCarne: false },
   ];
+
+  const demoOrders = [
+    { id: 'PED-0187', cliente: 'Pixel Labs', estado: 'PENDIENTE' as const, items: 3, pallets: 8, kilos: 4200, fecha: '2025-05-19', chofer: '—', patente: '—' },
+    { id: 'PED-0186', cliente: 'DigiCraft Corp', estado: 'CONFIRMADO' as const, items: 2, pallets: 12, kilos: 6100, fecha: '2025-05-19', chofer: 'Carlos Méndez', patente: 'ABC-1234' },
+    { id: 'PED-0185', cliente: 'Nexa Digital', estado: 'DESPACHADO' as const, items: 1, pallets: 5, kilos: 2100, fecha: '2025-05-18', chofer: 'Roberto Gómez', patente: 'XYZ-5678' },
+    { id: 'PED-0184', cliente: 'AppForge Inc', estado: 'DESPACHADO' as const, items: 4, pallets: 18, kilos: 8900, fecha: '2025-05-18', chofer: 'Marcelo Ruiz', patente: 'DEF-9012' },
+    { id: 'PED-0183', cliente: 'Código Fuente S.A.', estado: 'CANCELADO' as const, items: 1, pallets: 3, kilos: 1200, fecha: '2025-05-17', chofer: '—', patente: '—' },
+  ];
+
+  const demoTemperatures = [
+    { sensor: 'CAM-01', nombre: 'Cámara Fría 1', ubicacion: 'Depósito A', temp: -18.2, min: -20.1, max: -17.3, status: 'OK' },
+    { sensor: 'CAM-02', nombre: 'Cámara Fría 2', ubicacion: 'Depósito A', temp: -20.5, min: -22.0, max: -19.1, status: 'OK' },
+    { sensor: 'CAM-03', nombre: 'Cámara Fría 3', ubicacion: 'Depósito B', temp: -15.8, min: -17.4, max: -14.2, status: 'ALERTA' },
+    { sensor: 'REF-01', nombre: 'Refrigerado 1', ubicacion: 'Depósito B', temp: 3.6, min: 1.8, max: 5.2, status: 'OK' },
+    { sensor: 'REF-02', nombre: 'Refrigerado 2', ubicacion: 'Depósito C', temp: 2.1, min: 0.5, max: 4.0, status: 'OK' },
+    { sensor: 'CONG-01', nombre: 'Congelador Ind.', ubicacion: 'Depósito C', temp: -24.3, min: -26.0, max: -22.1, status: 'OK' },
+  ];
+
   const demoActivities = [
-    { time: '08:15', tipo: 'INGRESO', guia: 'DC-2025-00142', placa: 'ABC-123', detalle: 'Recepción de contenedor MSCU-7843291' },
-    { time: '09:30', tipo: 'DESPACHO', guia: 'DC-2025-00141', placa: 'XYZ-789', detalle: 'Despacho parcial a Pixel Labs' },
-    { time: '10:45', tipo: 'INGRESO', guia: 'DC-2025-00143', placa: 'DEF-456', detalle: 'Recepción de mercadería refrigerada' },
-    { time: '11:20', tipo: 'REVISIÓN', guia: 'DC-2025-00140', placa: 'GHI-012', detalle: 'Inspección de calidad - Nexa Digital' },
-    { time: '12:00', tipo: 'DESPACHO', guia: 'DC-2025-00139', placa: 'JKL-345', detalle: 'Entrega final a Código Fuente S.A.' },
+    { time: '08:15', tipo: 'INGRESO', guia: 'DC-2025-00142', placa: 'ABC-123', detalle: 'Recepción MSCU-7843291 — DigiCraft Corp', operador: 'Admin' },
+    { time: '09:30', tipo: 'DESPACHO', guia: 'DC-2025-00141', placa: 'XYZ-789', detalle: 'Despacho PED-0185 a Pixel Labs — 5 pallets', operador: 'Op. López' },
+    { time: '10:45', tipo: 'INGRESO', guia: 'DC-2025-00143', placa: 'DEF-456', detalle: 'Recepción TCLU-5519823 — Studio Max', operador: 'Admin' },
+    { time: '11:20', tipo: 'REVISIÓN', guia: 'DC-2025-00140', placa: 'GHI-012', detalle: 'Inspección MGAP — Lote L-2025-0891', operador: 'Op. Martínez' },
+    { time: '12:00', tipo: 'DESPACHO', guia: 'DC-2025-00139', placa: 'JKL-345', detalle: 'Entrega PED-0184 AppForge — Remito #R-0184', operador: 'Admin' },
+    { time: '13:30', tipo: 'INGRESO', guia: 'DC-2025-00144', placa: 'MNO-678', detalle: 'Ingreso OOLU-2289156 Lomo Vetado', operador: 'Op. López' },
+    { time: '14:15', tipo: 'TEMP', guia: '—', placa: '—', detalle: 'Alerta CAM-03: -15.8°C (umbral: -18°C)', operador: 'Sistema' },
   ];
-  const [demoTab, setDemoTab] = useState<'dashboard' | 'inventory' | 'activity'>('dashboard');
+
+  const [demoTab, setDemoTab] = useState<'dashboard' | 'inventory' | 'orders' | 'temperature' | 'activity'>('dashboard');
+  const [orderFilter, setOrderFilter] = useState('Todos');
 
   /* ─── State ─── */
   const [menuOpen, setMenuOpen] = useState(false);
@@ -903,6 +927,49 @@ export default function Home() {
           ))}
         </div>
 
+        {/* ═══ Video Demo Section ═══ */}
+        <div className="reveal" style={{ marginTop: '4rem' }}>
+          <div style={{ marginBottom: '2rem' }}>
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>
+              <Icon icon="mdi:play-circle" width={24} style={{ verticalAlign: 'middle', marginRight: '0.5rem', color: 'var(--accent)' }} />
+              Demo en Video
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', maxWidth: '600px' }}>
+              Mira el Centro Logístico Frimaral V2 en acción. Compatible con YouTube y TikTok.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            {/* YouTube Embed */}
+            <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)' }}>
+                <Icon icon="mdi:youtube" width={20} style={{ color: '#FF0000' }} />
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>YouTube</span>
+              </div>
+              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+                <iframe
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Demo Centro Logístico"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+            {/* TikTok Embed */}
+            <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)' }}>
+                <Icon icon="ic:baseline-tiktok" width={20} style={{ color: '#00f2ea' }} />
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>TikTok</span>
+              </div>
+              <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '200px', textAlign: 'center' }}>
+                <Icon icon="ic:baseline-tiktok" width={48} style={{ color: 'var(--text-muted)', marginBottom: '0.75rem', opacity: 0.5 }} />
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Video de TikTok</p>
+                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', opacity: 0.7 }}>Usa <code style={{ background: 'var(--surface)', padding: '0.1rem 0.3rem', borderRadius: '3px', fontSize: '0.6rem' }}>{'<blockquote class="tiktok-embed">'}</code> para incrustar</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Demo Interactive Subsection - Logistics Dashboard */}
         <div className="reveal" style={{ marginTop: '5rem' }}>
           <div
@@ -927,8 +994,10 @@ export default function Home() {
                   <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Centro Logístico</p>
                 </div>
                 {[
-                  { key: 'dashboard' as const, icon: 'mdi:view-dashboard', label: 'Dashboard' },
+                  { key: 'dashboard' as const, icon: 'mdi:view-dashboard', label: 'Panel Principal' },
                   { key: 'inventory' as const, icon: 'mdi:package-variant-closed', label: 'Inventario' },
+                  { key: 'orders' as const, icon: 'mdi:clipboard-text', label: 'Pedidos' },
+                  { key: 'temperature' as const, icon: 'mdi:thermometer', label: 'Temperaturas' },
                   { key: 'activity' as const, icon: 'mdi:truck-delivery', label: 'Actividad' },
                 ].map((tab) => (
                   <button
@@ -960,22 +1029,27 @@ export default function Home() {
               </div>
               {/* Main Content */}
               <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto' }}>
-                {demoTab === 'dashboard' && (
+                {demoTab === 'dashboard' && (() => {
+                  const uniqueClients = [...new Set(demoContainers.map(c => c.cliente))].length;
+                  const totalKilos = demoContainers.reduce((s, c) => s + c.kilos, 0);
+                  return (
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Dashboard</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resumen del centro logístico</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Panel Principal</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resumen del centro logístico — Frimaral V2</p>
                       </div>
                       <span style={{ fontSize: '0.7rem', padding: '0.3rem 0.6rem', background: 'rgba(212,175,55,0.1)', color: 'var(--accent)', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 600 }}>LIVE</span>
                     </div>
                     {/* KPI Cards */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.25rem' }}>
                       {[
                         { label: 'Contenedores', value: demoContainers.length, icon: 'mdi:ferry', color: '#D4AF37' },
                         { label: 'Pallets', value: demoContainers.reduce((s, c) => s + c.pallets, 0), icon: 'mdi:palette', color: '#4CAF50' },
-                        { label: 'Kilos', value: (demoContainers.reduce((s, c) => s + c.kilos, 0) / 1000).toFixed(1) + 'T', icon: 'mdi:weight', color: '#2196F3' },
-                        { label: 'Clientes', value: demoContainers.length, icon: 'mdi:account-group', color: '#FF9800' },
+                        { label: 'Toneladas', value: (totalKilos / 1000).toFixed(1) + 'T', icon: 'mdi:weight', color: '#2196F3' },
+                        { label: 'Clientes Activos', value: uniqueClients, icon: 'mdi:account-group', color: '#FF9800' },
+                        { label: 'Cajas', value: demoContainers.reduce((s, c) => s + c.cajas, 0), icon: 'mdi:box', color: '#9C27B0' },
+                        { label: 'Pedidos Hoy', value: demoOrders.length, icon: 'mdi:clipboard-text', color: '#E91E63' },
                       ].map((kpi) => (
                         <div key={kpi.label} style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
@@ -1005,31 +1079,33 @@ export default function Home() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
                         <Icon icon="mdi:thermometer" width={14} style={{ color: '#f44336' }} />
                         <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Monitoreo de Temperatura</span>
+                        <span style={{ marginLeft: 'auto', fontSize: '0.6rem', padding: '0.15rem 0.35rem', borderRadius: '3px', background: demoTemperatures.some(t => t.status === 'ALERTA') ? 'rgba(244,67,54,0.15)' : 'rgba(76,175,80,0.15)', color: demoTemperatures.some(t => t.status === 'ALERTA') ? '#f44336' : '#4CAF50', fontWeight: 600 }}>{demoTemperatures.some(t => t.status === 'ALERTA') ? '⚠ ALERTA' : '✓ OK'}</span>
                       </div>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        {demoContainers.slice(0, 4).map((c) => {
-                          const tempNum = parseFloat(c.temp);
-                          const tempColor = tempNum < -15 ? '#2196F3' : tempNum < 5 ? '#4CAF50' : '#f44336';
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                        {demoTemperatures.slice(0, 3).map((t) => {
+                          const tempColor = t.temp < -15 ? '#2196F3' : t.temp < 5 ? '#4CAF50' : '#f44336';
                           return (
-                            <div key={c.id} style={{ flex: 1, textAlign: 'center', padding: '0.4rem', background: 'var(--surface)', borderRadius: '4px' }}>
-                              <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.15rem' }}>{c.id.slice(-4)}</p>
-                              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: tempColor, fontFamily: "'Syne', sans-serif" }}>{c.temp}</p>
+                            <div key={t.sensor} style={{ textAlign: 'center', padding: '0.4rem', background: 'var(--surface)', borderRadius: '4px' }}>
+                              <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.15rem' }}>{t.nombre}</p>
+                              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: tempColor, fontFamily: "'Syne', sans-serif" }}>{t.temp}°C</p>
                             </div>
                           );
                         })}
                       </div>
                     </div>
                   </div>
-                )}
+                  );
+                })()}
                 {demoTab === 'inventory' && (
                   <div>
                     <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.25rem' }}>Inventario</h3>
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>{demoContainers.length} contenedores registrados</p>
+                    <div style={{ overflowX: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem' }}>
                       <thead>
                         <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                          {['Contenedor', 'Cliente', 'Pallets', 'Kilos', 'Cajas', 'Temp', 'Estado'].map((h) => (
-                            <th key={h} style={{ padding: '0.5rem 0.4rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.6rem', letterSpacing: '0.05em' }}>{h}</th>
+                          {['Contenedor', 'Cliente', 'Producto', 'Lote', 'DUA', 'Pallets', 'Kilos', 'Temp', 'Estado'].map((h) => (
+                            <th key={h} style={{ padding: '0.5rem 0.4rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.55rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -1038,20 +1114,127 @@ export default function Home() {
                           const estadoColors: Record<string, string> = { 'Almacén': '#4CAF50', 'En Tránsito': '#FF9800', 'Despachado': '#2196F3' };
                           return (
                             <tr key={c.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                              <td style={{ padding: '0.5rem 0.4rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.7rem' }}>{c.id}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-main)' }}>{c.cliente}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.65rem', whiteSpace: 'nowrap' }}>{c.id}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{c.cliente}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)' }}>{c.producto}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{c.lote}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{c.dua}</td>
                               <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.pallets}</td>
                               <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.kilos.toLocaleString()}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.cajas}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.temp}</td>
-                              <td style={{ padding: '0.5rem 0.4rem' }}>
-                                <span style={{ padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.6rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center', whiteSpace: 'nowrap' }}>{c.temp}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', whiteSpace: 'nowrap' }}>
+                                <span style={{ padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
+                                {c.esCarne && <span style={{ marginLeft: '0.25rem', padding: '0.1rem 0.3rem', borderRadius: '3px', fontSize: '0.55rem', background: 'rgba(244,67,54,0.1)', color: '#f44336' }}>🥩 Carne</span>}
                               </td>
                             </tr>
                           );
                         })}
                       </tbody>
                     </table>
+                    </div>
+                  </div>
+                )}
+                {demoTab === 'orders' && (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <div>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Pedidos</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{demoOrders.length} pedidos registrados</p>
+                      </div>
+                    </div>
+                    {/* Filter Pills */}
+                    <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                      {['Todos', 'PENDIENTE', 'CONFIRMADO', 'DESPACHADO', 'CANCELADO'].map((filter) => (
+                        <button
+                          key={filter}
+                          onClick={() => setOrderFilter(filter)}
+                          style={{
+                            padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 600,
+                            border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif",
+                            borderColor: orderFilter === filter ? 'var(--accent)' : 'var(--border)',
+                            background: orderFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent',
+                            color: orderFilter === filter ? 'var(--accent)' : 'var(--text-muted)',
+                            transition: 'all 0.2s',
+                          }}
+                        >
+                          {filter}
+                        </button>
+                      ))}
+                    </div>
+                    {/* Orders Table */}
+                    <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                          {['Pedido', 'Cliente', 'Items', 'Pallets', 'Kilos', 'Fecha', 'Chofer', 'Estado'].map((h) => (
+                            <th key={h} style={{ padding: '0.5rem 0.4rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.55rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {demoOrders.filter(o => orderFilter === 'Todos' || o.estado === orderFilter).map((o) => {
+                          const estadoColors: Record<string, string> = { 'PENDIENTE': '#FF9800', 'CONFIRMADO': '#2196F3', 'DESPACHADO': '#4CAF50', 'CANCELADO': '#f44336' };
+                          return (
+                            <tr key={o.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                              <td style={{ padding: '0.5rem 0.4rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.7rem', whiteSpace: 'nowrap' }}>{o.id}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-main)' }}>{o.cliente}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.pallets}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.kilos.toLocaleString()}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{o.fecha}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)' }}>{o.chofer}</td>
+                              <td style={{ padding: '0.5rem 0.4rem', whiteSpace: 'nowrap' }}>
+                                <span style={{ padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    </div>
+                  </div>
+                )}
+                {demoTab === 'temperature' && (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                      <div>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Monitoreo de Temperaturas</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{demoTemperatures.length} sensores activos</p>
+                      </div>
+                      <span style={{ fontSize: '0.65rem', padding: '0.25rem 0.5rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 700, letterSpacing: '0.05em', animation: 'pulse 2s infinite' }}>● LIVE</span>
+                    </div>
+                    {/* Sensor Cards */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
+                      {demoTemperatures.map((t) => {
+                        const tempColor = t.temp < -15 ? '#2196F3' : t.temp < 5 ? '#4CAF50' : '#f44336';
+                        const statusColor = t.status === 'OK' ? '#4CAF50' : '#f44336';
+                        return (
+                          <div key={t.sensor} style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: `1px solid ${t.status === 'ALERTA' ? 'rgba(244,67,54,0.3)' : 'var(--border)'}` }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>{t.nombre}</span>
+                              <span style={{ fontSize: '0.55rem', padding: '0.1rem 0.3rem', borderRadius: '3px', fontWeight: 600, color: statusColor, background: statusColor + '15' }}>{t.status}</span>
+                            </div>
+                            <p style={{ fontSize: '1.5rem', fontWeight: 800, color: tempColor, fontFamily: "'Syne', sans-serif", marginBottom: '0.25rem' }}>{t.temp}°C</p>
+                            <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.1rem' }}>📍 {t.ubicacion}</p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
+                              <span>Mín: {t.min}°C</span>
+                              <span>Máx: {t.max}°C</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* Compliance Bar */}
+                    <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>Cumplimiento Térmico</span>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#4CAF50', fontFamily: "'Syne', sans-serif" }}>92%</span>
+                      </div>
+                      <div style={{ height: '6px', background: 'var(--surface)', borderRadius: '3px', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: '92%', background: 'linear-gradient(90deg, #4CAF50, #8BC34A)', borderRadius: '3px' }} />
+                      </div>
+                      <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>5 de 6 sensores dentro del rango esperado</p>
+                    </div>
                   </div>
                 )}
                 {demoTab === 'activity' && (
@@ -1060,8 +1243,8 @@ export default function Home() {
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>Últimos movimientos del día</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {demoActivities.map((a, i) => {
-                        const tipoColors: Record<string, string> = { 'INGRESO': '#4CAF50', 'DESPACHO': '#2196F3', 'REVISIÓN': '#FF9800' };
-                        const tipoIcons: Record<string, string> = { 'INGRESO': 'mdi:package-down', 'DESPACHO': 'mdi:truck-delivery', 'REVISIÓN': 'mdi:clipboard-check' };
+                        const tipoColors: Record<string, string> = { 'INGRESO': '#4CAF50', 'DESPACHO': '#2196F3', 'REVISIÓN': '#FF9800', 'TEMP': '#f44336' };
+                        const tipoIcons: Record<string, string> = { 'INGRESO': 'mdi:package-down', 'DESPACHO': 'mdi:truck-delivery', 'REVISIÓN': 'mdi:clipboard-check', 'TEMP': 'mdi:thermometer-alert' };
                         return (
                           <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
                             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: tipoColors[a.tipo] + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -1070,11 +1253,12 @@ export default function Home() {
                             <div style={{ flex: 1 }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
                                 <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>{a.detalle}</span>
-                                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{a.time}</span>
+                                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', flexShrink: 0, marginLeft: '0.5rem' }}>{a.time}</span>
                               </div>
-                              <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                              <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                                 <span>Guía: <b style={{ color: 'var(--text-main)' }}>{a.guia}</b></span>
                                 <span>Placa: <b style={{ color: 'var(--text-main)' }}>{a.placa}</b></span>
+                                <span>Operador: <b style={{ color: 'var(--text-main)' }}>{a.operador}</b></span>
                                 <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: tipoColors[a.tipo], background: tipoColors[a.tipo] + '15' }}>{a.tipo}</span>
                               </div>
                             </div>

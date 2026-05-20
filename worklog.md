@@ -111,3 +111,27 @@ Stage Summary:
 - Responsive: visit labels hidden on mobile, icons + numbers remain
 - Git commit: feat: agregar contador de visitas, fecha, y toggle modo claro/oscuro
 - No git remote configured; deployed locally via production server restart
+
+---
+Task ID: 2
+Agent: full-stack-developer
+Task: Enhance DigiCraft demo section with Frimaral V2 features and video embed support
+
+Work Log:
+- Replaced demo data with richer logistics data (8 containers, 5 orders, 6 temperature sensors, 7 activities)
+- Added YouTube and TikTok video embed section between portfolio grid and demo dashboard
+- Expanded sidebar from 3 to 5 tabs (Panel Principal, Inventario, Pedidos, Temperaturas, Actividad)
+- Enhanced Dashboard with 6 KPIs (contenedores, pallets, toneladas, clientes activos, cajas, pedidos hoy)
+- Enhanced Inventory table with Producto, Lote, DUA columns and esCarne badge (🥩 Carne)
+- Added Orders tab with status filter pills (Todos, Pendiente, Confirmado, Despachado, Cancelado) and filtered table
+- Added Temperature monitoring tab with 6 sensor cards, color-coded temps, status badges, and 92% compliance bar
+- Enhanced Activity tab with operator field and TEMP alert type (red thermometer icon)
+- All changes use existing inline styles and CSS custom properties (var(--surface), var(--border), etc.)
+- Build verified successfully: `next build` compiled with 0 errors, all 10 pages generated
+
+Stage Summary:
+- Demo section now comprehensively showcases Centro Logístico Frimaral V2
+- Video embed support added for YouTube (iframe) and TikTok (placeholder with instructions)
+- All 5 tabs fully functional with interactive state (orderFilter, demoTab)
+- Temperature monitoring shows real-time status with alert detection
+- Build passes successfully with static export
