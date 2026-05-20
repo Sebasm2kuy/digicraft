@@ -11,13 +11,13 @@ const searchData = [
   { title: 'Edición de Fotos', section: '#servicios', icon: 'mdi:image-edit' },
   { title: 'Edición de Video', section: '#servicios', icon: 'mdi:movie-edit' },
   { title: 'Diseño & Branding', section: '#servicios', icon: 'mdi:palette-swatch' },
-  { title: 'E-Commerce Premium', section: '/portfolio/ecommerce', icon: 'mdi:cart' },
-  { title: 'Fitness Tracker Pro', section: '/portfolio/fitness-app', icon: 'mdi:run-fast' },
-  { title: 'Boda Romántica', section: '/portfolio/boda-romantica', icon: 'mdi:heart' },
-  { title: 'Spot Publicitario', section: '/portfolio/spot-publicitario', icon: 'mdi:filmstrip' },
-  { title: 'Café Artesanal', section: '/portfolio/cafe-artesanal', icon: 'mdi:coffee' },
-  { title: 'Fashion Editorial', section: '/portfolio/fashion-editorial', icon: 'mdi:hanger' },
-  { title: 'Tarjetas Virtuales Premium', section: '/portfolio/tarjetas-virtuales', icon: 'mdi:card-account-details' },
+  { title: 'E-Commerce Premium', section: '/digicraft/portfolio/ecommerce', icon: 'mdi:cart' },
+  { title: 'Fitness Tracker Pro', section: '/digicraft/portfolio/fitness-app', icon: 'mdi:run-fast' },
+  { title: 'Boda Romántica', section: '/digicraft/portfolio/boda-romantica', icon: 'mdi:heart' },
+  { title: 'Spot Publicitario', section: '/digicraft/portfolio/spot-publicitario', icon: 'mdi:filmstrip' },
+  { title: 'Café Artesanal', section: '/digicraft/portfolio/cafe-artesanal', icon: 'mdi:coffee' },
+  { title: 'Fashion Editorial', section: '/digicraft/portfolio/fashion-editorial', icon: 'mdi:hanger' },
+  { title: 'Tarjetas Virtuales Premium', section: '/digicraft/portfolio/tarjetas-virtuales', icon: 'mdi:card-account-details' },
   { title: 'Plan Starter', section: '#precios', icon: 'mdi:rocket-launch' },
   { title: 'Plan Pro', section: '#precios', icon: 'mdi:star' },
   { title: 'Plan Premium', section: '#precios', icon: 'mdi:crown' },
@@ -140,23 +140,24 @@ export default function Home() {
     setTodayDate(formatted.charAt(0).toUpperCase() + formatted.slice(1));
   }, []);
 
-  /* ─── Visit Counter ─── */
+  /* ─── Visit Counter (localStorage - static site) ─── */
   useEffect(() => {
-    const tracked = sessionStorage.getItem('digicraft-visit-tracked');
-    if (!tracked) {
-      fetch('/api/visits', { method: 'POST' })
-        .then((res) => res.json())
-        .then((data) => {
-          setVisitCounts(data);
-          sessionStorage.setItem('digicraft-visit-tracked', 'true');
-        })
-        .catch(() => {});
-    } else {
-      fetch('/api/visits')
-        .then((res) => res.json())
-        .then((data) => setVisitCounts(data))
-        .catch(() => {});
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const stored = localStorage.getItem('digicraft-visits');
+    let visits = { total: 0, daily: 0, lastDate: '' };
+    if (stored) {
+      try { visits = JSON.parse(stored); } catch { /* ignore */ }
     }
+    // Reset daily if new day
+    if (visits.lastDate !== today) {
+      visits.daily = 0;
+    }
+    // Increment
+    visits.total += 1;
+    visits.daily += 1;
+    visits.lastDate = today;
+    localStorage.setItem('digicraft-visits', JSON.stringify(visits));
+    setVisitCounts({ total: visits.total, daily: visits.daily });
   }, []);
 
   /* ─── Theme Toggle ─── */
@@ -280,7 +281,7 @@ export default function Home() {
   /* ─── Smooth Scroll ─── */
   const scrollTo = useCallback((e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
-    if (target.startsWith('/')) {
+    if (target.startsWith('/digicraft')) {
       window.location.href = target;
       return;
     }
@@ -349,7 +350,7 @@ export default function Home() {
           e.preventDefault();
           const item = searchResults[activeResult];
           if (item) {
-            if (item.section.startsWith('/')) {
+            if (item.section.startsWith('/digicraft')) {
               window.location.href = item.section;
             } else {
               closeSearch();
@@ -855,7 +856,7 @@ export default function Home() {
           {portfolioItems.map((item, idx) => (
             <a
               key={item.slug}
-              href={`/portfolio/${item.slug}`}
+              href={`/digicraft/portfolio/${item.slug}`}
               className={`portfolio-item reveal ${item.isVideo ? '' : ''}`}
               style={{
                 aspectRatio: item.isVideo ? '9/16' : undefined,
