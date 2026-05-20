@@ -123,6 +123,33 @@ export default function Home() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeResult, setActiveResult] = useState(-1);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  /* ─── Theme Toggle ─── */
+  useEffect(() => {
+    const saved = localStorage.getItem('digicraft-theme') as 'dark' | 'light' | null;
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const initial = saved || (prefersLight ? 'light' : 'dark');
+    if (initial === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    requestAnimationFrame(() => setTheme(initial));
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.classList.add('theme-transition');
+    if (next === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('digicraft-theme', next);
+    setTheme(next);
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transition');
+    }, 500);
+  }, [theme]);
 
   const searchResults = (() => {
     if (searchQuery.trim() === '') return searchData;
@@ -368,9 +395,59 @@ export default function Home() {
           >
             <Icon icon="mdi:magnify" width={22} />
           </button>
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
+            aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+          >
+            <span className="toggle-thumb">
+              {theme === 'dark' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="#F8F7F4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              )}
+            </span>
+          </button>
         </div>
 
-        <div className="flex items-center gap-4 z-10 md:hidden">
+        <div className="flex items-center gap-3 z-10 md:hidden">
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
+            aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+          >
+            <span className="toggle-thumb">
+              {theme === 'dark' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="#F8F7F4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              )}
+            </span>
+          </button>
           <button
             onClick={openSearch}
             aria-label="Buscar"
@@ -515,7 +592,7 @@ export default function Home() {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'radial-gradient(ellipse at center, transparent 0%, var(--bg) 75%)',
+            background: 'var(--hero-gradient)',
             zIndex: 1,
           }}
         />
