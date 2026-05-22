@@ -945,21 +945,30 @@ export default function Home() {
               </div>
             </a>
           ))}
-        </div>
-
-        {/* ═══ TikTok — Invitación 15 Años ═══ */}
-        <div className="reveal" style={{ marginTop: '3rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-            <Icon icon="ic:baseline-tiktok" width={20} style={{ color: '#00f2ea' }} />
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>Invitación Virtual — 15 Años</h3>
-          </div>
-          <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', maxWidth: '340px' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', background: '#000' }}>
+          {/* TikTok — Invitación 15 Años (dentro del grid) */}
+          <div
+            className="reveal"
+            style={{
+              gridColumn: 'span 1',
+              gridRow: 'span 2',
+              display: 'flex',
+              flexDirection: 'column',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              border: '1px solid var(--border)',
+              background: 'var(--surface-alt)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 0.75rem', borderBottom: '1px solid var(--border)' }}>
+              <Icon icon="ic:baseline-tiktok" width={16} style={{ color: '#00f2ea' }} />
+              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>Invitación Virtual — 15 Años</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flex: 1, background: '#000', padding: '0', overflow: 'hidden' }}>
               <blockquote
                 className="tiktok-embed"
                 cite="https://www.tiktok.com/@laultimaesfera/video/7641569299802508562"
                 data-video-id="7641569299802508562"
-                style={{ maxWidth: '100%', minWidth: '280px' }}
+                style={{ maxWidth: '100%', minWidth: '0' }}
               >
                 <section> </section>
               </blockquote>
