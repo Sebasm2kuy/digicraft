@@ -947,51 +947,22 @@ export default function Home() {
           ))}
         </div>
 
-        {/* ═══ Video Demo Section ═══ */}
-        <div className="reveal" style={{ marginTop: '4rem' }}>
-          <div style={{ marginBottom: '2rem' }}>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>
-              <Icon icon="mdi:play-circle" width={24} style={{ verticalAlign: 'middle', marginRight: '0.5rem', color: 'var(--accent)' }} />
-              Demo en Video
-            </h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', maxWidth: '600px' }}>
-              Mira el Centro Logístico Frimaral V2 en acción. Compatible con YouTube y TikTok.
-            </p>
+        {/* ═══ TikTok — Invitación 15 Años ═══ */}
+        <div className="reveal" style={{ marginTop: '3rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <Icon icon="ic:baseline-tiktok" width={20} style={{ color: '#00f2ea' }} />
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>Invitación Virtual — 15 Años</h3>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-            {/* YouTube Embed */}
-            <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)' }}>
-                <Icon icon="mdi:youtube" width={20} style={{ color: '#FF0000' }} />
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>YouTube</span>
-              </div>
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-                <iframe
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                  title="Demo Centro Logístico"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-            {/* TikTok Embed — Invitación 15 Años */}
-            <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)' }}>
-                <Icon icon="ic:baseline-tiktok" width={20} style={{ color: '#00f2ea' }} />
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>TikTok</span>
-                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginLeft: 'auto' }}>Invitación 15 Años</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'center', background: '#000', padding: '0' }}>
-                <blockquote
-                  className="tiktok-embed"
-                  cite="https://www.tiktok.com/@laultimaesfera/video/7641569299802508562"
-                  data-video-id="7641569299802508562"
-                  style={{ maxWidth: '100%', minWidth: '280px' }}
-                >
-                  <section> </section>
-                </blockquote>
-              </div>
+          <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', maxWidth: '340px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', background: '#000' }}>
+              <blockquote
+                className="tiktok-embed"
+                cite="https://www.tiktok.com/@laultimaesfera/video/7641569299802508562"
+                data-video-id="7641569299802508562"
+                style={{ maxWidth: '100%', minWidth: '280px' }}
+              >
+                <section> </section>
+              </blockquote>
             </div>
           </div>
         </div>
