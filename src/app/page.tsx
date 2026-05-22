@@ -117,6 +117,61 @@ function normalize(str: string) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
+/* ─── Demo Logistics Initial Data (Centro Logístico Frimaral V2) ─── */
+type InventoryItem = {
+  id: string; cliente: string; producto: string; lote: string; dua: string;
+  pallets: number; kilos: number; cajas: number; temp: string; estado: string; esCarne: boolean;
+};
+type OrderItem = {
+  id: string; cliente: string; estado: 'PENDIENTE' | 'CONFIRMADO' | 'DESPACHADO' | 'CANCELADO';
+  items: number; pallets: number; kilos: number; fecha: string; chofer: string; patente: string; transporte: string;
+};
+type TempSensor = {
+  sensor: string; nombre: string; ubicacion: string; temp: number; min: number; max: number; status: string;
+};
+type ActivityEntry = {
+  time: string; tipo: string; guia: string; placa: string; detalle: string; operador: string;
+};
+type OrderLineItem = { producto: string; pallets: number; cajas: number; kilos: number; };
+
+const INITIAL_INVENTORY: InventoryItem[] = [
+  { id: 'MSCU-7843291', cliente: 'DigiCraft Corp', producto: 'Medallones Vacuno Premium', lote: 'L-2025-0891', dua: 'UY-45210', pallets: 18, kilos: 8420, cajas: 360, temp: '-18.2°C', estado: 'Almacén', esCarne: true },
+  { id: 'TCLU-5519823', cliente: 'Studio Max', producto: 'Queso Gouda Export', lote: 'L-2025-0734', dua: 'BR-38921', pallets: 12, kilos: 5180, cajas: 240, temp: '4.1°C', estado: 'En Tránsito', esCarne: false },
+  { id: 'HLXU-3391027', cliente: 'Pixel Labs', producto: 'Filet de Pollo Congelado', lote: 'L-2025-0912', dua: 'AR-50182', pallets: 22, kilos: 11200, cajas: 440, temp: '-20.0°C', estado: 'Almacén', esCarne: true },
+  { id: 'MAEU-6674215', cliente: 'Nexa Digital', producto: 'Mantequilla Láctea', lote: 'L-2025-0655', dua: 'EU-29384', pallets: 8, kilos: 3650, cajas: 160, temp: '2.8°C', estado: 'Despachado', esCarne: false },
+  { id: 'CSLU-9910583', cliente: 'Código Fuente S.A.', producto: 'Chorizo Artesanal', lote: 'L-2025-0877', dua: 'PY-61423', pallets: 15, kilos: 7200, cajas: 300, temp: '-15.5°C', estado: 'Almacén', esCarne: true },
+  { id: 'BMOU-4452167', cliente: 'AppForge Inc', producto: 'Salmón Ahumado', lote: 'L-2025-0903', dua: 'CL-72819', pallets: 20, kilos: 9800, cajas: 400, temp: '3.6°C', estado: 'En Tránsito', esCarne: false },
+  { id: 'OOLU-2289156', cliente: 'DigiCraft Corp', producto: 'Lomo Vetado', lote: 'L-2025-0940', dua: 'UY-45298', pallets: 14, kilos: 6300, cajas: 280, temp: '-19.8°C', estado: 'Almacén', esCarne: true },
+  { id: 'TCNU-7734089', cliente: 'Studio Max', producto: 'Helado Artesanal', lote: 'L-2025-0955', dua: 'BR-39402', pallets: 10, kilos: 4200, cajas: 200, temp: '-22.1°C', estado: 'Almacén', esCarne: false },
+];
+
+const INITIAL_ORDERS: OrderItem[] = [
+  { id: 'PED-0187', cliente: 'Pixel Labs', estado: 'PENDIENTE', items: 3, pallets: 8, kilos: 4200, fecha: '2025-05-19', chofer: '—', patente: '—', transporte: '—' },
+  { id: 'PED-0186', cliente: 'DigiCraft Corp', estado: 'CONFIRMADO', items: 2, pallets: 12, kilos: 6100, fecha: '2025-05-19', chofer: 'Carlos Méndez', patente: 'ABC-1234', transporte: 'Transportes del Sur' },
+  { id: 'PED-0185', cliente: 'Nexa Digital', estado: 'DESPACHADO', items: 1, pallets: 5, kilos: 2100, fecha: '2025-05-18', chofer: 'Roberto Gómez', patente: 'XYZ-5678', transporte: 'Logística RSA' },
+  { id: 'PED-0184', cliente: 'AppForge Inc', estado: 'DESPACHADO', items: 4, pallets: 18, kilos: 8900, fecha: '2025-05-18', chofer: 'Marcelo Ruiz', patente: 'DEF-9012', transporte: 'Frigorífico Express' },
+  { id: 'PED-0183', cliente: 'Código Fuente S.A.', estado: 'CANCELADO', items: 1, pallets: 3, kilos: 1200, fecha: '2025-05-17', chofer: '—', patente: '—', transporte: '—' },
+];
+
+const INITIAL_TEMPS: TempSensor[] = [
+  { sensor: 'CAM-01', nombre: 'Cámara Fría 1', ubicacion: 'Depósito A', temp: -18.2, min: -20.1, max: -17.3, status: 'OK' },
+  { sensor: 'CAM-02', nombre: 'Cámara Fría 2', ubicacion: 'Depósito A', temp: -20.5, min: -22.0, max: -19.1, status: 'OK' },
+  { sensor: 'CAM-03', nombre: 'Cámara Fría 3', ubicacion: 'Depósito B', temp: -15.8, min: -17.4, max: -14.2, status: 'ALERTA' },
+  { sensor: 'REF-01', nombre: 'Refrigerado 1', ubicacion: 'Depósito B', temp: 3.6, min: 1.8, max: 5.2, status: 'OK' },
+  { sensor: 'REF-02', nombre: 'Refrigerado 2', ubicacion: 'Depósito C', temp: 2.1, min: 0.5, max: 4.0, status: 'OK' },
+  { sensor: 'CONG-01', nombre: 'Congelador Ind.', ubicacion: 'Depósito C', temp: -24.3, min: -26.0, max: -22.1, status: 'OK' },
+];
+
+const INITIAL_ACTIVITY: ActivityEntry[] = [
+  { time: '08:15', tipo: 'INGRESO', guia: 'DC-2025-00142', placa: 'ABC-123', detalle: 'Recepción MSCU-7843291 — DigiCraft Corp', operador: 'Admin' },
+  { time: '09:30', tipo: 'DESPACHO', guia: 'DC-2025-00141', placa: 'XYZ-789', detalle: 'Despacho PED-0185 a Pixel Labs — 5 pallets', operador: 'Op. López' },
+  { time: '10:45', tipo: 'INGRESO', guia: 'DC-2025-00143', placa: 'DEF-456', detalle: 'Recepción TCLU-5519823 — Studio Max', operador: 'Admin' },
+  { time: '11:20', tipo: 'REVISIÓN', guia: 'DC-2025-00140', placa: 'GHI-012', detalle: 'Inspección MGAP — Lote L-2025-0891', operador: 'Op. Martínez' },
+  { time: '12:00', tipo: 'DESPACHO', guia: 'DC-2025-00139', placa: 'JKL-345', detalle: 'Entrega PED-0184 AppForge — Remito #R-0184', operador: 'Admin' },
+  { time: '13:30', tipo: 'INGRESO', guia: 'DC-2025-00144', placa: 'MNO-678', detalle: 'Ingreso OOLU-2289156 Lomo Vetado', operador: 'Op. López' },
+  { time: '14:15', tipo: 'TEMP', guia: '—', placa: '—', detalle: 'Alerta CAM-03: -15.8°C (umbral: -18°C)', operador: 'Sistema' },
+];
+
 export default function Home() {
   /* ─── Refs ─── */
   const navbarRef = useRef<HTMLElement>(null);
@@ -128,47 +183,54 @@ export default function Home() {
   const menuOverlayRef = useRef<HTMLDivElement>(null);
   const statsAnimated = useRef(false);
 
-  /* ─── Demo Logistics Data (Centro Logístico Frimaral V2) ─── */
-  const demoContainers = [
-    { id: 'MSCU-7843291', cliente: 'DigiCraft Corp', producto: 'Medallones Vacuno Premium', lote: 'L-2025-0891', dua: 'UY-45210', pallets: 18, kilos: 8420, cajas: 360, temp: '-18.2°C', estado: 'Almacén', esCarne: true },
-    { id: 'TCLU-5519823', cliente: 'Studio Max', producto: 'Queso Gouda Export', lote: 'L-2025-0734', dua: 'BR-38921', pallets: 12, kilos: 5180, cajas: 240, temp: '4.1°C', estado: 'En Tránsito', esCarne: false },
-    { id: 'HLXU-3391027', cliente: 'Pixel Labs', producto: 'Filet de Pollo Congelado', lote: 'L-2025-0912', dua: 'AR-50182', pallets: 22, kilos: 11200, cajas: 440, temp: '-20.0°C', estado: 'Almacén', esCarne: true },
-    { id: 'MAEU-6674215', cliente: 'Nexa Digital', producto: 'Mantequilla Láctea', lote: 'L-2025-0655', dua: 'EU-29384', pallets: 8, kilos: 3650, cajas: 160, temp: '2.8°C', estado: 'Despachado', esCarne: false },
-    { id: 'CSLU-9910583', cliente: 'Código Fuente S.A.', producto: 'Chorizo Artesanal', lote: 'L-2025-0877', dua: 'PY-61423', pallets: 15, kilos: 7200, cajas: 300, temp: '-15.5°C', estado: 'Almacén', esCarne: true },
-    { id: 'BMOU-4452167', cliente: 'AppForge Inc', producto: 'Salmón Ahumado', lote: 'L-2025-0903', dua: 'CL-72819', pallets: 20, kilos: 9800, cajas: 400, temp: '3.6°C', estado: 'En Tránsito', esCarne: false },
-    { id: 'OOLU-2289156', cliente: 'DigiCraft Corp', producto: 'Lomo Vetado', lote: 'L-2025-0940', dua: 'UY-45298', pallets: 14, kilos: 6300, cajas: 280, temp: '-19.8°C', estado: 'Almacén', esCarne: true },
-    { id: 'TCNU-7734089', cliente: 'Studio Max', producto: 'Helado Artesanal', lote: 'L-2025-0955', dua: 'BR-39402', pallets: 10, kilos: 4200, cajas: 200, temp: '-22.1°C', estado: 'Almacén', esCarne: false },
-  ];
-
-  const demoOrders = [
-    { id: 'PED-0187', cliente: 'Pixel Labs', estado: 'PENDIENTE' as const, items: 3, pallets: 8, kilos: 4200, fecha: '2025-05-19', chofer: '—', patente: '—' },
-    { id: 'PED-0186', cliente: 'DigiCraft Corp', estado: 'CONFIRMADO' as const, items: 2, pallets: 12, kilos: 6100, fecha: '2025-05-19', chofer: 'Carlos Méndez', patente: 'ABC-1234' },
-    { id: 'PED-0185', cliente: 'Nexa Digital', estado: 'DESPACHADO' as const, items: 1, pallets: 5, kilos: 2100, fecha: '2025-05-18', chofer: 'Roberto Gómez', patente: 'XYZ-5678' },
-    { id: 'PED-0184', cliente: 'AppForge Inc', estado: 'DESPACHADO' as const, items: 4, pallets: 18, kilos: 8900, fecha: '2025-05-18', chofer: 'Marcelo Ruiz', patente: 'DEF-9012' },
-    { id: 'PED-0183', cliente: 'Código Fuente S.A.', estado: 'CANCELADO' as const, items: 1, pallets: 3, kilos: 1200, fecha: '2025-05-17', chofer: '—', patente: '—' },
-  ];
-
-  const demoTemperatures = [
-    { sensor: 'CAM-01', nombre: 'Cámara Fría 1', ubicacion: 'Depósito A', temp: -18.2, min: -20.1, max: -17.3, status: 'OK' },
-    { sensor: 'CAM-02', nombre: 'Cámara Fría 2', ubicacion: 'Depósito A', temp: -20.5, min: -22.0, max: -19.1, status: 'OK' },
-    { sensor: 'CAM-03', nombre: 'Cámara Fría 3', ubicacion: 'Depósito B', temp: -15.8, min: -17.4, max: -14.2, status: 'ALERTA' },
-    { sensor: 'REF-01', nombre: 'Refrigerado 1', ubicacion: 'Depósito B', temp: 3.6, min: 1.8, max: 5.2, status: 'OK' },
-    { sensor: 'REF-02', nombre: 'Refrigerado 2', ubicacion: 'Depósito C', temp: 2.1, min: 0.5, max: 4.0, status: 'OK' },
-    { sensor: 'CONG-01', nombre: 'Congelador Ind.', ubicacion: 'Depósito C', temp: -24.3, min: -26.0, max: -22.1, status: 'OK' },
-  ];
-
-  const demoActivities = [
-    { time: '08:15', tipo: 'INGRESO', guia: 'DC-2025-00142', placa: 'ABC-123', detalle: 'Recepción MSCU-7843291 — DigiCraft Corp', operador: 'Admin' },
-    { time: '09:30', tipo: 'DESPACHO', guia: 'DC-2025-00141', placa: 'XYZ-789', detalle: 'Despacho PED-0185 a Pixel Labs — 5 pallets', operador: 'Op. López' },
-    { time: '10:45', tipo: 'INGRESO', guia: 'DC-2025-00143', placa: 'DEF-456', detalle: 'Recepción TCLU-5519823 — Studio Max', operador: 'Admin' },
-    { time: '11:20', tipo: 'REVISIÓN', guia: 'DC-2025-00140', placa: 'GHI-012', detalle: 'Inspección MGAP — Lote L-2025-0891', operador: 'Op. Martínez' },
-    { time: '12:00', tipo: 'DESPACHO', guia: 'DC-2025-00139', placa: 'JKL-345', detalle: 'Entrega PED-0184 AppForge — Remito #R-0184', operador: 'Admin' },
-    { time: '13:30', tipo: 'INGRESO', guia: 'DC-2025-00144', placa: 'MNO-678', detalle: 'Ingreso OOLU-2289156 Lomo Vetado', operador: 'Op. López' },
-    { time: '14:15', tipo: 'TEMP', guia: '—', placa: '—', detalle: 'Alerta CAM-03: -15.8°C (umbral: -18°C)', operador: 'Sistema' },
-  ];
-
+  /* ─── Demo Logistics State (Centro Logístico Frimaral V2) ─── */
+  const [inventory, setInventory] = useState<InventoryItem[]>(INITIAL_INVENTORY);
+  const [orders, setOrders] = useState<OrderItem[]>(INITIAL_ORDERS);
+  const [temperatures, setTemperatures] = useState<TempSensor[]>(INITIAL_TEMPS);
+  const [activityLog, setActivityLog] = useState<ActivityEntry[]>(INITIAL_ACTIVITY);
   const [demoTab, setDemoTab] = useState<'dashboard' | 'inventory' | 'orders' | 'temperature' | 'activity'>('dashboard');
+  const [showModal, setShowModal] = useState<string | null>(null);
+  const [editingItem, setEditingItem] = useState<InventoryItem | null>(null);
+  const [demoToast, setDemoToast] = useState('');
   const [orderFilter, setOrderFilter] = useState('Todos');
+  const [inventorySearch, setInventorySearch] = useState('');
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [activityFilter, setActivityFilter] = useState('Todos');
+  const [dispatchForm, setDispatchForm] = useState<{ chofer: string; patente: string; transporte: string }>({ chofer: '', patente: '', transporte: '' });
+  const [dispatchOrderId, setDispatchOrderId] = useState<string | null>(null);
+  const [newOrderForm, setNewOrderForm] = useState<{ cliente: string; lineItems: OrderLineItem[] }>({ cliente: '', lineItems: [] });
+  const [invForm, setInvForm] = useState({ cliente: '', producto: '', contenedor: '', lote: '', dua: '', pallets: 0, cajas: 0, kilos: 0, temp: '-18.0°C', estado: 'Almacén' });
+
+  /* ─── Demo Helper Functions ─── */
+  const generateId = useCallback(() => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const prefixes = ['MSCU', 'TCLU', 'HLXU', 'MAEU', 'CSLU', 'BMOU', 'OOLU', 'TCNU'];
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    let id = prefix + '-';
+    for (let i = 0; i < 7; i++) id += chars[Math.floor(Math.random() * chars.length)];
+    return id;
+  }, []);
+
+  const addActivity = useCallback((tipo: string, detalle: string, operador: string = 'Demo User') => {
+    const now = new Date();
+    const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    setActivityLog(prev => [{ time, tipo, guia: '—', placa: '—', detalle, operador }, ...prev]);
+  }, []);
+
+  const showDemoToast = useCallback((msg: string) => {
+    setDemoToast(msg);
+    setTimeout(() => setDemoToast(''), 3000);
+  }, []);
+
+  const recalcKPIs = useCallback(() => {
+    const totalContainers = inventory.length;
+    const totalPallets = inventory.reduce((s, c) => s + c.pallets, 0);
+    const totalKilos = inventory.reduce((s, c) => s + c.kilos, 0);
+    const totalCajas = inventory.reduce((s, c) => s + c.cajas, 0);
+    const uniqueClients = [...new Set(inventory.map(c => c.cliente))].length;
+    const capacityPercent = Math.min(Math.round((totalPallets / 200) * 100), 100);
+    return { totalContainers, totalPallets, totalKilos, totalCajas, uniqueClients, capacityPercent };
+  }, [inventory]);
 
   /* ─── State ─── */
   const [menuOpen, setMenuOpen] = useState(false);
@@ -978,21 +1040,14 @@ export default function Home() {
 
         {/* Demo Interactive Subsection - Logistics Dashboard */}
         <div className="reveal" style={{ marginTop: '5rem' }}>
-          <div
-            style={{
-              border: '1px solid var(--border)',
-              borderRadius: '8px',
-              overflow: 'hidden',
-            }}
-          >
+          <div style={{ border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden' }}>
             <div className="demo-topbar">
               <div className="demo-dot" style={{ background: '#ff5f57' }} />
               <div className="demo-dot" style={{ background: '#febc2e' }} />
               <div className="demo-dot" style={{ background: '#28c840' }} />
               <div className="demo-url">logistica.digicraft.studio</div>
             </div>
-            {/* Demo Sidebar + Content */}
-            <div style={{ display: 'flex', minHeight: '520px', background: 'var(--surface)' }}>
+            <div style={{ display: 'flex', minHeight: '520px', background: 'var(--surface)', position: 'relative' }}>
               {/* Mini Sidebar */}
               <div style={{ width: '200px', background: 'var(--surface-alt)', borderRight: '1px solid var(--border)', padding: '1rem 0', flexShrink: 0 }}>
                 <div style={{ padding: '0 1rem 1rem', borderBottom: '1px solid var(--border)', marginBottom: '0.75rem' }}>
@@ -1006,17 +1061,7 @@ export default function Home() {
                   { key: 'temperature' as const, icon: 'mdi:thermometer', label: 'Temperaturas' },
                   { key: 'activity' as const, icon: 'mdi:truck-delivery', label: 'Actividad' },
                 ].map((tab) => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setDemoTab(tab.key)}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%',
-                      padding: '0.6rem 1rem', border: 'none', background: demoTab === tab.key ? 'rgba(212,175,55,0.1)' : 'transparent',
-                      color: demoTab === tab.key ? 'var(--accent)' : 'var(--text-muted)', cursor: 'pointer',
-                      fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500,
-                      transition: 'all 0.2s', textAlign: 'left',
-                    }}
-                  >
+                  <button key={tab.key} onClick={() => setDemoTab(tab.key)} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%', padding: '0.6rem 1rem', border: 'none', background: demoTab === tab.key ? 'rgba(212,175,55,0.1)' : 'transparent', color: demoTab === tab.key ? 'var(--accent)' : 'var(--text-muted)', cursor: 'pointer', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500, transition: 'all 0.2s', textAlign: 'left' }}>
                     <Icon icon={tab.icon} width={16} />
                     {tab.label}
                   </button>
@@ -1027,35 +1072,35 @@ export default function Home() {
                       <Icon icon="mdi:account" width={14} style={{ color: 'var(--accent)' }} />
                     </div>
                     <div>
-                      <p style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)' }}>Admin</p>
+                      <p style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)' }}>Demo User</p>
                       <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>Operador</p>
                     </div>
                   </div>
                 </div>
               </div>
               {/* Main Content */}
-              <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto' }}>
+              <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto', maxHeight: '580px' }}>
+                {/* ── DASHBOARD TAB ── */}
                 {demoTab === 'dashboard' && (() => {
-                  const uniqueClients = [...new Set(demoContainers.map(c => c.cliente))].length;
-                  const totalKilos = demoContainers.reduce((s, c) => s + c.kilos, 0);
+                  const kpis = recalcKPIs();
+                  const hasAlert = temperatures.some(t => t.status === 'ALERTA');
                   return (
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <div>
                         <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Panel Principal</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resumen del centro logístico — Frimaral V2</p>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resumen en tiempo real — Frimaral V2</p>
                       </div>
                       <span style={{ fontSize: '0.7rem', padding: '0.3rem 0.6rem', background: 'rgba(212,175,55,0.1)', color: 'var(--accent)', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 600 }}>LIVE</span>
                     </div>
-                    {/* KPI Cards */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.25rem' }}>
                       {[
-                        { label: 'Contenedores', value: demoContainers.length, icon: 'mdi:ferry', color: '#D4AF37' },
-                        { label: 'Pallets', value: demoContainers.reduce((s, c) => s + c.pallets, 0), icon: 'mdi:palette', color: '#4CAF50' },
-                        { label: 'Toneladas', value: (totalKilos / 1000).toFixed(1) + 'T', icon: 'mdi:weight', color: '#2196F3' },
-                        { label: 'Clientes Activos', value: uniqueClients, icon: 'mdi:account-group', color: '#FF9800' },
-                        { label: 'Cajas', value: demoContainers.reduce((s, c) => s + c.cajas, 0), icon: 'mdi:box', color: '#9C27B0' },
-                        { label: 'Pedidos Hoy', value: demoOrders.length, icon: 'mdi:clipboard-text', color: '#E91E63' },
+                        { label: 'Contenedores', value: kpis.totalContainers, icon: 'mdi:ferry', color: '#D4AF37' },
+                        { label: 'Pallets', value: kpis.totalPallets, icon: 'mdi:palette', color: '#4CAF50' },
+                        { label: 'Toneladas', value: (kpis.totalKilos / 1000).toFixed(1) + 'T', icon: 'mdi:weight', color: '#2196F3' },
+                        { label: 'Clientes Activos', value: kpis.uniqueClients, icon: 'mdi:account-group', color: '#FF9800' },
+                        { label: 'Cajas', value: kpis.totalCajas, icon: 'mdi:box', color: '#9C27B0' },
+                        { label: 'Capacidad', value: kpis.capacityPercent + '%', icon: 'mdi:chart-donut', color: '#E91E63' },
                       ].map((kpi) => (
                         <div key={kpi.label} style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
@@ -1066,34 +1111,55 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-                    {/* Status bar */}
                     <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
                       {['Almacén', 'En Tránsito', 'Despachado'].map((estado) => {
-                        const count = demoContainers.filter(c => c.estado === estado).length;
+                        const count = inventory.filter(c => c.estado === estado).length;
+                        const pct = inventory.length > 0 ? Math.round((count / inventory.length) * 100) : 0;
                         const colors: Record<string, string> = { 'Almacén': '#4CAF50', 'En Tránsito': '#FF9800', 'Despachado': '#2196F3' };
                         return (
-                          <div key={estado} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
-                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: colors[estado] }} />
-                            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{estado}</span>
-                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-main)', marginLeft: 'auto' }}>{count}</span>
+                          <div key={estado} style={{ flex: 1, padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
+                              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: colors[estado] }} />
+                              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{estado}</span>
+                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-main)', marginLeft: 'auto' }}>{count}</span>
+                            </div>
+                            <div style={{ height: '4px', background: 'var(--surface)', borderRadius: '2px', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', width: pct + '%', background: colors[estado], borderRadius: '2px', transition: 'width 0.5s' }} />
+                            </div>
                           </div>
                         );
                       })}
                     </div>
-                    {/* Temperature monitoring */}
-                    <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                    <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)', marginBottom: '1rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
                         <Icon icon="mdi:thermometer" width={14} style={{ color: '#f44336' }} />
                         <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Monitoreo de Temperatura</span>
-                        <span style={{ marginLeft: 'auto', fontSize: '0.6rem', padding: '0.15rem 0.35rem', borderRadius: '3px', background: demoTemperatures.some(t => t.status === 'ALERTA') ? 'rgba(244,67,54,0.15)' : 'rgba(76,175,80,0.15)', color: demoTemperatures.some(t => t.status === 'ALERTA') ? '#f44336' : '#4CAF50', fontWeight: 600 }}>{demoTemperatures.some(t => t.status === 'ALERTA') ? '⚠ ALERTA' : '✓ OK'}</span>
+                        <span style={{ marginLeft: 'auto', fontSize: '0.6rem', padding: '0.15rem 0.35rem', borderRadius: '3px', background: hasAlert ? 'rgba(244,67,54,0.15)' : 'rgba(76,175,80,0.15)', color: hasAlert ? '#f44336' : '#4CAF50', fontWeight: 600 }}>{hasAlert ? '⚠ ALERTA' : '✓ OK'}</span>
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
-                        {demoTemperatures.slice(0, 3).map((t) => {
-                          const tempColor = t.temp < -15 ? '#2196F3' : t.temp < 5 ? '#4CAF50' : '#f44336';
+                        {temperatures.slice(0, 3).map((t) => {
+                          const tempColor = t.temp < -18 ? '#2196F3' : t.temp >= -18 && t.temp < 0 ? '#4CAF50' : '#f44336';
                           return (
                             <div key={t.sensor} style={{ textAlign: 'center', padding: '0.4rem', background: 'var(--surface)', borderRadius: '4px' }}>
                               <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.15rem' }}>{t.nombre}</p>
-                              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: tempColor, fontFamily: "'Syne', sans-serif" }}>{t.temp}°C</p>
+                              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: tempColor, fontFamily: "'Syne', sans-serif" }}>{t.temp.toFixed(1)}°C</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
+                        <Icon icon="mdi:clock-outline" width={14} style={{ color: 'var(--accent)' }} />
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Actividad Reciente</span>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                        {activityLog.slice(0, 5).map((a, i) => {
+                          const tipoColors: Record<string, string> = { 'INGRESO': '#4CAF50', 'DESPACHO': '#2196F3', 'REVISIÓN': '#FF9800', 'TEMP': '#f44336', 'PEDIDO': '#E91E63', 'EDICIÓN': '#FF9800', 'ELIMINACIÓN': '#f44336' };
+                          return (
+                            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.3rem 0.4rem', borderRadius: '3px', background: 'var(--surface)' }}>
+                              <span style={{ fontSize: '0.65rem', color: 'var(--text-main)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.detalle}</span>
+                              <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginLeft: '0.5rem', flexShrink: 0 }}>{a.time}</span>
                             </div>
                           );
                         })}
@@ -1102,117 +1168,154 @@ export default function Home() {
                   </div>
                   );
                 })()}
+                {/* ── INVENTORY TAB ── */}
                 {demoTab === 'inventory' && (
                   <div>
-                    <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.25rem' }}>Inventario</h3>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>{demoContainers.length} contenedores registrados</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <div>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Inventario</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{inventory.length} contenedores registrados</p>
+                      </div>
+                      <button onClick={() => { setInvForm({ cliente: '', producto: '', contenedor: '', lote: '', dua: '', pallets: 0, cajas: 0, kilos: 0, temp: '-18.0°C', estado: 'Almacén' }); setEditingItem(null); setShowModal('addInventory'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                        <Icon icon="mdi:plus" width={14} /> Agregar Item
+                      </button>
+                    </div>
+                    <div style={{ position: 'relative', marginBottom: '1rem' }}>
+                      <Icon icon="mdi:magnify" width={14} style={{ position: 'absolute', left: '0.6rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                      <input type="text" placeholder="Buscar por cliente, producto, contenedor, lote..." value={inventorySearch} onChange={(e) => setInventorySearch(e.target.value)} style={{ width: '100%', padding: '0.45rem 0.6rem 0.45rem 1.8rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.75rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                    </div>
                     <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem' }}>
-                      <thead>
-                        <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                          {['Contenedor', 'Cliente', 'Producto', 'Lote', 'DUA', 'Pallets', 'Kilos', 'Temp', 'Estado'].map((h) => (
-                            <th key={h} style={{ padding: '0.5rem 0.4rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.55rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {demoContainers.map((c) => {
-                          const estadoColors: Record<string, string> = { 'Almacén': '#4CAF50', 'En Tránsito': '#FF9800', 'Despachado': '#2196F3' };
-                          return (
-                            <tr key={c.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                              <td style={{ padding: '0.5rem 0.4rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.65rem', whiteSpace: 'nowrap' }}>{c.id}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{c.cliente}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)' }}>{c.producto}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{c.lote}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{c.dua}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.pallets}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.kilos.toLocaleString()}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center', whiteSpace: 'nowrap' }}>{c.temp}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', whiteSpace: 'nowrap' }}>
-                                <span style={{ padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
-                                {c.esCarne && <span style={{ marginLeft: '0.25rem', padding: '0.1rem 0.3rem', borderRadius: '3px', fontSize: '0.55rem', background: 'rgba(244,67,54,0.1)', color: '#f44336' }}>🥩 Carne</span>}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
+                        <thead>
+                          <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                            {['Contenedor', 'Cliente', 'Producto', 'Lote', 'Pallets', 'Cajas', 'Kilos', 'Temp', 'Estado', 'Acc.'].map((h) => (
+                              <th key={h} style={{ padding: '0.4rem 0.3rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.5rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {inventory.filter(c => {
+                            if (!inventorySearch) return true;
+                            const q = inventorySearch.toLowerCase();
+                            return c.cliente.toLowerCase().includes(q) || c.producto.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || c.lote.toLowerCase().includes(q);
+                          }).map((c) => {
+                            const estadoColors: Record<string, string> = { 'Almacén': '#4CAF50', 'En Tránsito': '#FF9800', 'Despachado': '#2196F3' };
+                            return (
+                              <tr key={c.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                                <td style={{ padding: '0.4rem 0.3rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.6rem', whiteSpace: 'nowrap' }}>{c.id}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', whiteSpace: 'nowrap', fontSize: '0.65rem' }}>{c.cliente}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.65rem' }}>{c.producto}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', fontSize: '0.6rem' }}>{c.lote}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.pallets}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.cajas}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{c.kilos.toLocaleString()}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center', whiteSpace: 'nowrap', fontSize: '0.6rem' }}>{c.temp}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
+                                  {c.esCarne && <span style={{ marginLeft: '0.15rem', fontSize: '0.5rem' }}>🥩</span>}
+                                </td>
+                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                  {deleteConfirmId === c.id ? (
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.55rem' }}>
+                                      <span style={{ color: 'var(--text-muted)' }}>¿Eliminar?</span>
+                                      <button onClick={() => { setInventory(prev => prev.filter(i => i.id !== c.id)); addActivity('ELIMINACIÓN', `Eliminado contenedor ${c.id} — ${c.cliente}`); showDemoToast(`Contenedor ${c.id} eliminado`); setDeleteConfirmId(null); }} style={{ padding: '0.1rem 0.3rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '0.55rem', fontWeight: 600 }}>Sí</button>
+                                      <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '0.1rem 0.3rem', background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: '3px', cursor: 'pointer', fontSize: '0.55rem' }}>No</button>
+                                    </span>
+                                  ) : (
+                                    <span style={{ display: 'inline-flex', gap: '0.25rem' }}>
+                                      <button onClick={() => { setEditingItem(c); setInvForm({ cliente: c.cliente, producto: c.producto, contenedor: c.id, lote: c.lote, dua: c.dua, pallets: c.pallets, cajas: c.cajas, kilos: c.kilos, temp: c.temp, estado: c.estado }); setShowModal('editInventory'); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: '2px', display: 'flex', borderRadius: '3px', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}><Icon icon="mdi:pencil" width={15} /></button>
+                                      <button onClick={() => setDeleteConfirmId(c.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: '2px', display: 'flex', borderRadius: '3px', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#f44336'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}><Icon icon="mdi:trash-can" width={15} /></button>
+                                    </span>
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 )}
+                {/* ── ORDERS TAB ── */}
                 {demoTab === 'orders' && (
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                       <div>
                         <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Pedidos</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{demoOrders.length} pedidos registrados</p>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{orders.length} pedidos registrados</p>
                       </div>
+                      <button onClick={() => { setNewOrderForm({ cliente: '', lineItems: [{ producto: '', pallets: 0, cajas: 0, kilos: 0 }] }); setShowModal('addOrder'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                        <Icon icon="mdi:plus" width={14} /> Nuevo Pedido
+                      </button>
                     </div>
-                    {/* Filter Pills */}
                     <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
                       {['Todos', 'PENDIENTE', 'CONFIRMADO', 'DESPACHADO', 'CANCELADO'].map((filter) => (
-                        <button
-                          key={filter}
-                          onClick={() => setOrderFilter(filter)}
-                          style={{
-                            padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 600,
-                            border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif",
-                            borderColor: orderFilter === filter ? 'var(--accent)' : 'var(--border)',
-                            background: orderFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent',
-                            color: orderFilter === filter ? 'var(--accent)' : 'var(--text-muted)',
-                            transition: 'all 0.2s',
-                          }}
-                        >
-                          {filter}
-                        </button>
+                        <button key={filter} onClick={() => setOrderFilter(filter)} style={{ padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: orderFilter === filter ? 'var(--accent)' : 'var(--border)', background: orderFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent', color: orderFilter === filter ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{filter}</button>
                       ))}
                     </div>
-                    {/* Orders Table */}
                     <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem' }}>
-                      <thead>
-                        <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                          {['Pedido', 'Cliente', 'Items', 'Pallets', 'Kilos', 'Fecha', 'Chofer', 'Estado'].map((h) => (
-                            <th key={h} style={{ padding: '0.5rem 0.4rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.55rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {demoOrders.filter(o => orderFilter === 'Todos' || o.estado === orderFilter).map((o) => {
-                          const estadoColors: Record<string, string> = { 'PENDIENTE': '#FF9800', 'CONFIRMADO': '#2196F3', 'DESPACHADO': '#4CAF50', 'CANCELADO': '#f44336' };
-                          return (
-                            <tr key={o.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                              <td style={{ padding: '0.5rem 0.4rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.7rem', whiteSpace: 'nowrap' }}>{o.id}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-main)' }}>{o.cliente}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.pallets}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.kilos.toLocaleString()}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{o.fecha}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', color: 'var(--text-muted)' }}>{o.chofer}</td>
-                              <td style={{ padding: '0.5rem 0.4rem', whiteSpace: 'nowrap' }}>
-                                <span style={{ padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
+                        <thead>
+                          <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                            {['Pedido', 'Cliente', 'Items', 'Pallets', 'Kilos', 'Fecha', 'Chofer', 'Estado', 'Acc.'].map((h) => (
+                              <th key={h} style={{ padding: '0.4rem 0.3rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.5rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {orders.filter(o => orderFilter === 'Todos' || o.estado === orderFilter).map((o) => {
+                            const estadoColors: Record<string, string> = { 'PENDIENTE': '#FF9800', 'CONFIRMADO': '#2196F3', 'DESPACHADO': '#4CAF50', 'CANCELADO': '#f44336' };
+                            return (
+                              <tr key={o.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                                <td style={{ padding: '0.4rem 0.3rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.65rem', whiteSpace: 'nowrap' }}>{o.id}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontSize: '0.65rem' }}>{o.cliente}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.pallets}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.kilos.toLocaleString()}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', fontSize: '0.6rem' }}>{o.fecha}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem' }}>{o.chofer}</td>
+                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
+                                </td>
+                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                  {o.estado === 'PENDIENTE' && (
+                                    <span style={{ display: 'inline-flex', gap: '0.2rem' }}>
+                                      <button onClick={() => { setOrders(prev => prev.map(x => x.id === o.id ? { ...x, estado: 'CONFIRMADO' as const } : x)); addActivity('PEDIDO', `Pedido ${o.id} confirmado — ${o.cliente}`); showDemoToast(`${o.id} confirmado`); }} title="Confirmar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2196F3', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:check-circle" width={16} /></button>
+                                      <button onClick={() => { setOrders(prev => prev.map(x => x.id === o.id ? { ...x, estado: 'CANCELADO' as const } : x)); addActivity('PEDIDO', `Pedido ${o.id} cancelado — ${o.cliente}`); showDemoToast(`${o.id} cancelado`); }} title="Cancelar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#f44336', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:close-circle" width={16} /></button>
+                                    </span>
+                                  )}
+                                  {o.estado === 'CONFIRMADO' && (
+                                    <button onClick={() => { setDispatchOrderId(o.id); setDispatchForm({ chofer: '', patente: '', transporte: '' }); setShowModal('dispatchOrder'); }} title="Despachar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#4CAF50', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:truck-delivery" width={16} /></button>
+                                  )}
+                                  {(o.estado === 'DESPACHADO' || o.estado === 'CANCELADO') && <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>—</span>}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 )}
-                {demoTab === 'temperature' && (
+                {/* ── TEMPERATURE TAB ── */}
+                {demoTab === 'temperature' && (() => {
+                  const okCount = temperatures.filter(t => t.status === 'OK').length;
+                  const pct = temperatures.length > 0 ? Math.round((okCount / temperatures.length) * 100) : 0;
+                  const hasAlert = temperatures.some(t => t.status === 'ALERTA');
+                  return (
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <div>
                         <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Monitoreo de Temperaturas</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{demoTemperatures.length} sensores activos</p>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{temperatures.length} sensores activos</p>
                       </div>
-                      <span style={{ fontSize: '0.65rem', padding: '0.25rem 0.5rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 700, letterSpacing: '0.05em', animation: 'pulse 2s infinite' }}>● LIVE</span>
+                      <button onClick={() => { setTemperatures(prev => prev.map(t => { const variation = (Math.random() - 0.5) * 3; const newTemp = parseFloat((t.temp + variation).toFixed(1)); const newMin = Math.min(t.min, newTemp); const newMax = Math.max(t.max, newTemp); let status = 'OK'; if (t.sensor.startsWith('CAM') && newTemp > -18) status = 'ALERTA'; if (t.sensor.startsWith('REF') && (newTemp > 8 || newTemp < -2)) status = 'ALERTA'; if (t.sensor.startsWith('CONG') && newTemp > -20) status = 'ALERTA'; return { ...t, temp: newTemp, min: newMin, max: newMax, status }; })); addActivity('TEMP', 'Simulación de lectura de sensores ejecutada', 'Sistema'); showDemoToast('Lectura de sensores simulada'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                        <Icon icon="mdi:refresh" width={14} /> Simular Lectura
+                      </button>
                     </div>
-                    {/* Sensor Cards */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
-                      {demoTemperatures.map((t) => {
-                        const tempColor = t.temp < -15 ? '#2196F3' : t.temp < 5 ? '#4CAF50' : '#f44336';
+                      {temperatures.map((t) => {
+                        const tempColor = t.temp < -18 ? '#2196F3' : (t.temp >= -18 && t.temp < 0) ? '#4CAF50' : (t.temp >= 0 && t.temp < 8) ? '#4CAF50' : '#f44336';
                         const statusColor = t.status === 'OK' ? '#4CAF50' : '#f44336';
                         return (
                           <div key={t.sensor} style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: `1px solid ${t.status === 'ALERTA' ? 'rgba(244,67,54,0.3)' : 'var(--border)'}` }}>
@@ -1220,52 +1323,62 @@ export default function Home() {
                               <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>{t.nombre}</span>
                               <span style={{ fontSize: '0.55rem', padding: '0.1rem 0.3rem', borderRadius: '3px', fontWeight: 600, color: statusColor, background: statusColor + '15' }}>{t.status}</span>
                             </div>
-                            <p style={{ fontSize: '1.5rem', fontWeight: 800, color: tempColor, fontFamily: "'Syne', sans-serif", marginBottom: '0.25rem' }}>{t.temp}°C</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: 800, color: tempColor, fontFamily: "'Syne', sans-serif", marginBottom: '0.25rem' }}>{t.temp.toFixed(1)}°C</p>
                             <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.1rem' }}>📍 {t.ubicacion}</p>
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
-                              <span>Mín: {t.min}°C</span>
-                              <span>Máx: {t.max}°C</span>
+                              <span>Mín: {t.min.toFixed(1)}°C</span>
+                              <span>Máx: {t.max.toFixed(1)}°C</span>
                             </div>
                           </div>
                         );
                       })}
                     </div>
-                    {/* Compliance Bar */}
                     <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                         <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>Cumplimiento Térmico</span>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#4CAF50', fontFamily: "'Syne', sans-serif" }}>92%</span>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: pct >= 80 ? '#4CAF50' : '#f44336', fontFamily: "'Syne', sans-serif" }}>{pct}%</span>
                       </div>
                       <div style={{ height: '6px', background: 'var(--surface)', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: '92%', background: 'linear-gradient(90deg, #4CAF50, #8BC34A)', borderRadius: '3px' }} />
+                        <div style={{ height: '100%', width: pct + '%', background: pct >= 80 ? 'linear-gradient(90deg, #4CAF50, #8BC34A)' : 'linear-gradient(90deg, #f44336, #FF9800)', borderRadius: '3px', transition: 'width 0.5s' }} />
                       </div>
-                      <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>5 de 6 sensores dentro del rango esperado</p>
+                      <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>{okCount} de {temperatures.length} sensores dentro del rango esperado</p>
                     </div>
                   </div>
-                )}
+                  );
+                })()}
+                {/* ── ACTIVITY TAB ── */}
                 {demoTab === 'activity' && (
                   <div>
-                    <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.25rem' }}>Actividad Reciente</h3>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>Últimos movimientos del día</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                      {demoActivities.map((a, i) => {
-                        const tipoColors: Record<string, string> = { 'INGRESO': '#4CAF50', 'DESPACHO': '#2196F3', 'REVISIÓN': '#FF9800', 'TEMP': '#f44336' };
-                        const tipoIcons: Record<string, string> = { 'INGRESO': 'mdi:package-down', 'DESPACHO': 'mdi:truck-delivery', 'REVISIÓN': 'mdi:clipboard-check', 'TEMP': 'mdi:thermometer-alert' };
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <div>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Registro de Actividad</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{activityLog.length} registros</p>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                      {['Todos', 'INGRESO', 'DESPACHO', 'PEDIDO', 'EDICIÓN', 'ELIMINACIÓN', 'TEMP', 'REVISIÓN'].map((f) => (
+                        <button key={f} onClick={() => setActivityFilter(f)} style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.6rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: activityFilter === f ? 'var(--accent)' : 'var(--border)', background: activityFilter === f ? 'rgba(212,175,55,0.1)' : 'transparent', color: activityFilter === f ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{f}</button>
+                      ))}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', maxHeight: '400px', overflowY: 'auto' }}>
+                      {activityLog.filter(a => activityFilter === 'Todos' || a.tipo === activityFilter).map((a, i) => {
+                        const tipoColors: Record<string, string> = { 'INGRESO': '#4CAF50', 'DESPACHO': '#2196F3', 'REVISIÓN': '#FF9800', 'TEMP': '#f44336', 'PEDIDO': '#E91E63', 'EDICIÓN': '#FF9800', 'ELIMINACIÓN': '#f44336' };
+                        const tipoIcons: Record<string, string> = { 'INGRESO': 'mdi:package-down', 'DESPACHO': 'mdi:truck-delivery', 'REVISIÓN': 'mdi:clipboard-check', 'TEMP': 'mdi:thermometer-alert', 'PEDIDO': 'mdi:clipboard-text', 'EDICIÓN': 'mdi:pencil', 'ELIMINACIÓN': 'mdi:trash-can' };
+                        const color = tipoColors[a.tipo] || '#9E9E9E';
+                        const icon = tipoIcons[a.tipo] || 'mdi:information';
                         return (
-                          <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
-                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: tipoColors[a.tipo] + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <Icon icon={tipoIcons[a.tipo]} width={16} style={{ color: tipoColors[a.tipo] }} />
+                          <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.6rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                            <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <Icon icon={icon} width={15} style={{ color }} />
                             </div>
-                            <div style={{ flex: 1 }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-                                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>{a.detalle}</span>
-                                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', flexShrink: 0, marginLeft: '0.5rem' }}>{a.time}</span>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.15rem' }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.detalle}</span>
+                                <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', flexShrink: 0, marginLeft: '0.5rem' }}>{a.time}</span>
                               </div>
-                              <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
-                                <span>Guía: <b style={{ color: 'var(--text-main)' }}>{a.guia}</b></span>
-                                <span>Placa: <b style={{ color: 'var(--text-main)' }}>{a.placa}</b></span>
-                                <span>Operador: <b style={{ color: 'var(--text-main)' }}>{a.operador}</b></span>
-                                <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.55rem', fontWeight: 600, color: tipoColors[a.tipo], background: tipoColors[a.tipo] + '15' }}>{a.tipo}</span>
+                              <div style={{ display: 'flex', gap: '0.6rem', fontSize: '0.6rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
+                                <span>Op: <b style={{ color: 'var(--text-main)' }}>{a.operador}</b></span>
+                                <span style={{ padding: '0.05rem 0.3rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color, background: color + '15' }}>{a.tipo}</span>
                               </div>
                             </div>
                           </div>
@@ -1275,6 +1388,137 @@ export default function Home() {
                   </div>
                 )}
               </div>
+              {/* ── MODALS ── */}
+              {showModal && (
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50 }} onClick={() => setShowModal(null)}>
+                  <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', width: '90%', maxWidth: '420px', maxHeight: '85%', overflowY: 'auto', padding: '1.25rem' }} onClick={(e) => e.stopPropagation()}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                      <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                        {showModal === 'addInventory' ? 'Agregar Item' : showModal === 'editInventory' ? 'Editar Item' : showModal === 'addOrder' ? 'Nuevo Pedido' : 'Despachar Pedido'}
+                      </h3>
+                      <button onClick={() => setShowModal(null)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '2px', display: 'flex' }}><Icon icon="mdi:close" width={20} /></button>
+                    </div>
+                    {(showModal === 'addInventory' || showModal === 'editInventory') && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        {[ { label: 'Cliente', field: 'cliente' as const, type: 'text' }, { label: 'Producto', field: 'producto' as const, type: 'text' }, { label: 'Contenedor', field: 'contenedor' as const, type: 'text' }, { label: 'Lote', field: 'lote' as const, type: 'text' }, { label: 'DUA', field: 'dua' as const, type: 'text' } ].map(f => (
+                          <div key={f.field}>
+                            <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
+                            <input type={f.type} value={(invForm as Record<string, unknown>)[f.field] as string} onChange={(e) => setInvForm(p => ({ ...p, [f.field]: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                          </div>
+                        ))}
+                        {[ { label: 'Pallets', field: 'pallets' as const }, { label: 'Cajas', field: 'cajas' as const }, { label: 'Kilos', field: 'kilos' as const } ].map(f => (
+                          <div key={f.field}>
+                            <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
+                            <input type="number" value={(invForm as Record<string, unknown>)[f.field] as number} onChange={(e) => setInvForm(p => ({ ...p, [f.field]: Number(e.target.value) }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                          </div>
+                        ))}
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Temperatura</label>
+                          <input type="text" value={invForm.temp} onChange={(e) => setInvForm(p => ({ ...p, temp: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Estado</label>
+                          <select value={invForm.estado} onChange={(e) => setInvForm(p => ({ ...p, estado: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
+                            <option value="Almacén">Almacén</option>
+                            <option value="En Tránsito">En Tránsito</option>
+                            <option value="Despachado">Despachado</option>
+                          </select>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => {
+                            if (showModal === 'addInventory') {
+                              const newItem: InventoryItem = { id: invForm.contenedor || generateId(), cliente: invForm.cliente, producto: invForm.producto, lote: invForm.lote, dua: invForm.dua, pallets: invForm.pallets, cajas: invForm.cajas, kilos: invForm.kilos, temp: invForm.temp, estado: invForm.estado, esCarne: invForm.producto.toLowerCase().includes('pollo') || invForm.producto.toLowerCase().includes('vacuno') || invForm.producto.toLowerCase().includes('lomo') || invForm.producto.toLowerCase().includes('chorizo') || invForm.producto.toLowerCase().includes('medallón') };
+                              setInventory(prev => [newItem, ...prev]);
+                              addActivity('INGRESO', `Nuevo item: ${newItem.id} — ${newItem.cliente} (${newItem.producto})`);
+                              showDemoToast(`Item ${newItem.id} agregado al inventario`);
+                            } else if (showModal === 'editInventory' && editingItem) {
+                              setInventory(prev => prev.map(c => c.id === editingItem.id ? { ...c, cliente: invForm.cliente, producto: invForm.producto, lote: invForm.lote, dua: invForm.dua, pallets: invForm.pallets, cajas: invForm.cajas, kilos: invForm.kilos, temp: invForm.temp, estado: invForm.estado, esCarne: invForm.producto.toLowerCase().includes('pollo') || invForm.producto.toLowerCase().includes('vacuno') || invForm.producto.toLowerCase().includes('lomo') || invForm.producto.toLowerCase().includes('chorizo') || invForm.producto.toLowerCase().includes('medallón') } : c));
+                              addActivity('EDICIÓN', `Editado contenedor ${editingItem.id} — ${invForm.cliente}`);
+                              showDemoToast(`Contenedor ${editingItem.id} actualizado`);
+                            }
+                            setShowModal(null);
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
+                        </div>
+                      </div>
+                    )}
+                    {showModal === 'addOrder' && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Cliente</label>
+                          <select value={newOrderForm.cliente} onChange={(e) => setNewOrderForm(p => ({ ...p, cliente: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
+                            <option value="">Seleccionar cliente...</option>
+                            {[...new Set(inventory.map(c => c.cliente))].map(cl => <option key={cl} value={cl}>{cl}</option>)}
+                          </select>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Líneas de Pedido</label>
+                          {newOrderForm.lineItems.map((li, idx) => (
+                            <div key={idx} style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.3rem' }}>
+                              <select value={li.producto} onChange={(e) => { const updated = [...newOrderForm.lineItems]; updated[idx] = { ...updated[idx], producto: e.target.value }; setNewOrderForm(p => ({ ...p, lineItems: updated })); }} style={{ flex: 2, padding: '0.4rem 0.5rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none' }}>
+                                <option value="">Producto...</option>
+                                {inventory.filter(c => c.estado === 'Almacén').map(c => <option key={c.id} value={c.producto}>{c.producto}</option>)}
+                              </select>
+                              <input type="number" placeholder="Pal" value={li.pallets || ''} onChange={(e) => { const updated = [...newOrderForm.lineItems]; updated[idx] = { ...updated[idx], pallets: Number(e.target.value) }; setNewOrderForm(p => ({ ...p, lineItems: updated })); }} style={{ width: '50px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
+                              <input type="number" placeholder="Kg" value={li.kilos || ''} onChange={(e) => { const updated = [...newOrderForm.lineItems]; updated[idx] = { ...updated[idx], kilos: Number(e.target.value) }; setNewOrderForm(p => ({ ...p, lineItems: updated })); }} style={{ width: '60px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
+                              {newOrderForm.lineItems.length > 1 && <button onClick={() => { const updated = newOrderForm.lineItems.filter((_, i) => i !== idx); setNewOrderForm(p => ({ ...p, lineItems: updated })); }} style={{ background: 'none', border: 'none', color: '#f44336', cursor: 'pointer', padding: '2px', display: 'flex' }}><Icon icon="mdi:close" width={14} /></button>}
+                            </div>
+                          ))}
+                          <button onClick={() => setNewOrderForm(p => ({ ...p, lineItems: [...p.lineItems, { producto: '', pallets: 0, cajas: 0, kilos: 0 }] }))} style={{ padding: '0.25rem 0.5rem', background: 'transparent', border: '1px dashed var(--border)', color: 'var(--text-muted)', borderRadius: '4px', fontSize: '0.65rem', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Icon icon="mdi:plus" width={12} /> Agregar línea</button>
+                        </div>
+                        <div style={{ padding: '0.5rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                          Total: {newOrderForm.lineItems.reduce((s, l) => s + l.pallets, 0)} pallets / {newOrderForm.lineItems.reduce((s, l) => s + l.kilos, 0).toLocaleString()} kg — {newOrderForm.lineItems.filter(l => l.producto).length} items
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => {
+                            if (!newOrderForm.cliente) return;
+                            const nextNum = orders.length > 0 ? Math.max(...orders.map(o => parseInt(o.id.replace('PED-', '')))) + 1 : 187;
+                            const totalPallets = newOrderForm.lineItems.reduce((s, l) => s + l.pallets, 0);
+                            const totalKilos = newOrderForm.lineItems.reduce((s, l) => s + l.kilos, 0);
+                            const validItems = newOrderForm.lineItems.filter(l => l.producto);
+                            const newId = `PED-${String(nextNum).padStart(4, '0')}`;
+                            const today = new Date().toISOString().split('T')[0];
+                            const newOrder: OrderItem = { id: newId, cliente: newOrderForm.cliente, estado: 'PENDIENTE', items: validItems.length, pallets: totalPallets, kilos: totalKilos, fecha: today, chofer: '—', patente: '—', transporte: '—' };
+                            setOrders(prev => [newOrder, ...prev]);
+                            addActivity('PEDIDO', `Pedido ${newId} creado — ${newOrderForm.cliente} (${validItems.length} items, ${totalPallets} pallets)`);
+                            showDemoToast(`Pedido ${newId} creado`);
+                            setShowModal(null);
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Crear Pedido</button>
+                        </div>
+                      </div>
+                    )}
+                    {showModal === 'dispatchOrder' && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Completar datos de despacho para <b style={{ color: 'var(--text-main)' }}>{dispatchOrderId}</b></p>
+                        {[ { label: 'Chofer', field: 'chofer' as const }, { label: 'Patente', field: 'patente' as const }, { label: 'Transporte', field: 'transporte' as const } ].map(f => (
+                          <div key={f.field}>
+                            <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
+                            <input type="text" value={dispatchForm[f.field]} onChange={(e) => setDispatchForm(p => ({ ...p, [f.field]: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                          </div>
+                        ))}
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => {
+                            if (!dispatchForm.chofer) return;
+                            setOrders(prev => prev.map(o => o.id === dispatchOrderId ? { ...o, estado: 'DESPACHADO' as const, chofer: dispatchForm.chofer, patente: dispatchForm.patente, transporte: dispatchForm.transporte } : o));
+                            addActivity('DESPACHO', `Pedido ${dispatchOrderId} despachado — Chofer: ${dispatchForm.chofer}, Patente: ${dispatchForm.patente}`);
+                            showDemoToast(`Pedido ${dispatchOrderId} despachado`);
+                            setShowModal(null);
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Despachar</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              {/* ── DEMO TOAST ── */}
+              {demoToast && (
+                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'var(--accent)', color: '#000', padding: '0.6rem 1rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'Manrope', sans-serif", boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 100, display: 'flex', alignItems: 'center', gap: '0.4rem', animation: 'fadeIn 0.3s ease' }}>
+                  <Icon icon="mdi:check-circle" width={16} />
+                  {demoToast}
+                </div>
+              )}
             </div>
           </div>
         </div>
