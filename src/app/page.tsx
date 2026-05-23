@@ -1073,7 +1073,7 @@ export default function Home() {
             className="reveal"
             onClick={() => setDemoExpanded(true)}
           style={{
-            gridColumn: 'span 1',
+            gridColumn: 'span 2',
             gridRow: 'span 1',
             borderRadius: '8px',
             overflow: 'hidden',
@@ -1087,7 +1087,7 @@ export default function Home() {
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           {/* Mini preview */}
-          <div style={{ height: '180px', background: 'var(--surface)', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ height: '220px', background: 'var(--surface)', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px', background: 'var(--surface-alt)', borderBottom: '1px solid var(--border)' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
               <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
@@ -1104,19 +1104,19 @@ export default function Home() {
               {/* Fake KPI grid */}
               <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
                 {[0,1,2,3,4,5].map(i => (
-                  <div key={i} style={{ background: 'var(--surface-alt)', borderRadius: '3px', padding: '4px 5px' }}>
-                    <div style={{ height: '3px', width: '60%', borderRadius: '2px', background: 'var(--border)', marginBottom: '4px' }} />
-                    <div style={{ height: '7px', width: '80%', borderRadius: '2px', background: 'var(--accent)', opacity: 0.6 }} />
+                  <div key={i} style={{ background: 'var(--surface-alt)', borderRadius: '4px', padding: '6px 7px', border: '1px solid var(--border)' }}>
+                    <div style={{ height: '3px', width: '60%', borderRadius: '2px', background: 'var(--border)', marginBottom: '5px' }} />
+                    <div style={{ height: '8px', width: '80%', borderRadius: '2px', background: 'var(--accent)', opacity: 0.6 }} />
                   </div>
                 ))}
               </div>
             </div>
           </div>
           {/* Info */}
-          <div style={{ padding: '0.75rem' }}>
+          <div style={{ padding: '0.85rem 0.75rem' }}>
             <span style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--accent)' }}>Desarrollo Web</span>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '0.2rem', marginBottom: '0.3rem' }}>Sistema ERP a Medida</h3>
-            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>Software de gestión empresarial con Next.js, Firebase y PWA. CRUD completo, roles, exportación.</p>
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '0.2rem', marginBottom: '0.4rem' }}>Sistema ERP a Medida</h3>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>Software de gestión empresarial con Next.js, Firebase y PWA. CRUD completo, roles, exportación.</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.5rem', color: 'var(--accent)', fontSize: '0.75rem', fontWeight: 600 }}>
               <Icon icon="mdi:arrow-right-circle" width={16} />
               Ver Demo Interactiva
@@ -1736,139 +1736,113 @@ export default function Home() {
               )}
             </div>
           </div>
+
+          {/* ── Description below the demo (scrollable) ── */}
+          <div style={{ overflowY: 'auto', maxHeight: '40vh', padding: '2.5rem 0 0', borderTop: '1px solid var(--border)' }}>
+            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+              {/* Intro */}
+              <div style={{ marginBottom: '2rem' }}>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.8rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Software a Medida</p>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>Sistema de Gestión Empresarial Integral</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.7 }}>Plataforma 100% personalizable, diseñada en Next.js con React 19, que se adapta a la operativa de cualquier empresa. Desde inventario y clientes hasta pedidos y órdenes de compra, todo funciona en tiempo real, desde cualquier dispositivo.</p>
+              </div>
+              {/* Caso de Éxito */}
+              <div style={{ padding: '1.5rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)', marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.75rem' }}>
+                  <Icon icon="mdi:checkbox-marked-circle" width={20} style={{ color: 'var(--accent)' }} />
+                  <div>
+                    <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>Caso de Éxito: Centro Logístico Frimaral V2</h4>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Plataforma productiva en uso real — <a href="https://planilladecarga.github.io/centrologisticofrimaralV2/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>Ver demo en vivo →</a></p>
+                  </div>
+                </div>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', lineHeight: 1.7, marginBottom: '0.5rem' }}>Sistema completo de gestión logística con inventario por contenedores, escáner de barras, pedidos con reserva de stock, despachos con lectura de PDFs, monitoreo de temperatura, auth por roles, exportación Excel y PWA offline. La misma arquitectura se adapta a cualquier rubro: distribuidoras, tiendas, talleres, etc.</p>
+              </div>
+              {/* Personalización */}
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Icon icon="mdi:tune-vertical" width={18} style={{ color: 'var(--accent)' }} /> ¿Qué se puede personalizar?
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }}>
+                  {[
+                    { icon: 'mdi:domain', title: 'Identidad de Marca', desc: 'Logo, colores, tipografía y nombre del sistema adaptados a tu empresa.' },
+                    { icon: 'mdi:shape', title: 'Módulos a Medida', desc: 'Inventario, ventas, compras, producción, finanzas, RRHH, logística, facturación, etc.' },
+                    { icon: 'mdi:tag-multiple', title: 'Catálogo de Productos', desc: 'Categorías, unidades, campos personalizados y jerarquías según tu negocio.' },
+                    { icon: 'mdi:account-supervisor', title: 'Roles y Permisos', desc: 'Admin, Operador, Ventas, Solo Lectura — cada usuario ve solo lo suyo.' },
+                    { icon: 'mdi:file-chart', title: 'Reportes y Exportación', desc: 'Excel y PDF con estilo corporativo. Dashboards con KPIs en tiempo real.' },
+                    { icon: 'mdi:barcode-scan', title: 'Escáner y Captura', desc: 'Códigos de barras/QR por cámara, lectura de PDFs, fotos y documentos adjuntos.' },
+                    { icon: 'mdi:bell-ring', title: 'Alertas y Notificaciones', desc: 'Stock bajo, pedidos vencidos, tareas pendientes. Configurables por email o push.' },
+                    { icon: 'mdi:swap-horizontal', title: 'Flujos de Trabajo', desc: 'Circuitos de estados personalizables: pedidos, despachos, presupuestos, etc.' },
+                  ].map((item) => (
+                    <div key={item.title} style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                      <Icon icon={item.icon} width={16} style={{ color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
+                      <div>
+                        <p style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.15rem' }}>{item.title}</p>
+                        <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Stack */}
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Icon icon="mdi:layers-triple" width={18} style={{ color: 'var(--accent)' }} /> Stack Tecnológico
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
+                  {[
+                    { icon: 'simple-icons:nextdotjs', label: 'Next.js 15' },
+                    { icon: 'simple-icons:react', label: 'React 19' },
+                    { icon: 'simple-icons:typescript', label: 'TypeScript' },
+                    { icon: 'simple-icons:tailwindcss', label: 'Tailwind CSS 4' },
+                    { icon: 'simple-icons:firebase', label: 'Firebase' },
+                    { icon: 'simple-icons:githubactions', label: 'GitHub Actions' },
+                    { icon: 'simple-icons:motion', label: 'Framer Motion' },
+                    { icon: 'mdi:cellphone-check', label: 'PWA Ready' },
+                  ].map((tech) => (
+                    <div key={tech.label} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 0.6rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                      <Icon icon={tech.icon} width={16} style={{ color: 'var(--accent)' }} />
+                      <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-main)' }}>{tech.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Valor */}
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Icon icon="mdi:rocket-launch" width={18} style={{ color: 'var(--accent)' }} /> ¿Qué valor genera?
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
+                  {[
+                    { icon: 'mdi:clock-fast', title: 'Ahorro de Tiempo', desc: 'Automatizá procesos manuales. Lo que tomaba 30 minutos ahora toma 30 segundos.' },
+                    { icon: 'mdi:shield-check', title: 'Cero Errores', desc: 'Validaciones automáticas y flujos controlados evitan errores costosos.' },
+                    { icon: 'mdi:chart-timeline-variant-shimmer', title: 'Datos en Vivo', desc: 'Dashboards, reportes exportables y métricas clave al instante.' },
+                    { icon: 'mdi:devices', title: 'Multi-Device', desc: 'PC, tablet y celular. Sin instalar nada, funciona desde cualquier lugar.' },
+                    { icon: 'mdi:puzzle', title: 'Escalable', desc: 'Empezá con lo que necesitás hoy y agregá módulos sin rewrits.' },
+                    { icon: 'mdi:cash-multiple', title: 'ROI Inmediato', desc: 'Costo único, sin licencias mensuales. Se justifica en el primer mes.' },
+                  ].map((item) => (
+                    <div key={item.title} style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem', background: 'var(--surface)', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                      <Icon icon={item.icon} width={16} style={{ color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
+                      <div>
+                        <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.15rem' }}>{item.title}</p>
+                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* CTA */}
+              <div style={{ textAlign: 'center', padding: '1.5rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1rem', color: 'var(--text-main)', marginBottom: '0.5rem' }}>¿Tu empresa necesita un sistema así?</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>Contanos tu operación y te diseñamos una propuesta a medida. Software real que funciona desde el día uno.</p>
+                <a href="#contacto" className="btn-primary" onClick={(e) => { e.preventDefault(); setDemoExpanded(false); setTimeout(() => document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ display: 'inline-flex', fontSize: '0.85rem', padding: '0.6rem 1.2rem' }}>
+                  Solicitar Propuesta <Icon icon="mdi:arrow-right" width={16} />
+                </a>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       )}
-
-      {/* ════════════════════════════════════════════════════════════════
-          SOFTWARE DESCRIPTION SECTION
-      ════════════════════════════════════════════════════════════════ */}
-      <section className="section-padding" style={{ padding: '6rem 4rem', maxWidth: '1100px', margin: '0 auto' }}>
-        <div className="reveal" style={{ marginBottom: '4rem' }}>
-          <p className="label" style={{ color: 'var(--accent)', marginBottom: '0.75rem' }}>Software a Medida</p>
-          <h2 className="heading-lg reveal reveal-delay-1">Sistema de Gestión Empresarial Integral</h2>
-          <p className="reveal reveal-delay-2" style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '750px', lineHeight: 1.8, marginTop: '1rem' }}>
-            Plataforma 100% personalizable, diseñada en Next.js con React 19, que se adapta a la operativa de cualquier empresa que necesite control total sobre su negocio. Desde la gestión de inventario y clientes hasta el seguimiento de pedidos y órdenes de compra, todo funciona en tiempo real, desde cualquier dispositivo, sin instalar nada.
-          </p>
-        </div>
-
-        {/* ── Caso de Éxito Real ── */}
-        <div className="reveal reveal-delay-1" style={{ padding: '2rem', background: 'var(--surface-alt)', borderRadius: '8px', border: '1px solid var(--border)', marginBottom: '3rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--accent-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon icon="mdi:checkbox-marked-circle" width={22} style={{ color: 'var(--accent)' }} />
-            </div>
-            <div>
-              <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1rem', color: 'var(--text-main)' }}>Caso de Éxito: Centro Logístico Frimaral V2</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Plataforma productiva en uso real — <a href="https://planilladecarga.github.io/centrologisticofrimaralV2/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Ver demo en vivo →</a></p>
-            </div>
-          </div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.8, marginBottom: '1rem' }}>
-            Esta demo fue inspirada en un sistema completo de gestión logística que desarrollamos para un centro de logística frigorífica. La versión productiva incluye módulos de control de inventario por contenedores, ingreso de mercadería con escáner de códigos de barras, gestión de pedidos con reserva de stock, despachos reales con lectura de PDFs, monitoreo de temperatura en tiempo real con alertas, autenticación por roles, exportación a Excel, auditoría completa y soporte PWA para trabajar offline. Todo esto demostró que la misma arquitectura se puede adaptar a cualquier rubro.
-          </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.8 }}>
-            Lo que ves arriba es una versión genérica del sistema: las funcionalidades son las mismas, pero los datos y la terminología se adaptan al negocio del cliente. Si es una distribuidora, gestionamos productos y rutas. Si es una tienda, manejamos ventas y stock. Si es un taller, controlamos materiales y órdenes de trabajo. La base es sólida, flexible y escalable.
-          </p>
-        </div>
-
-        {/* ── ¿Qué se puede personalizar? ── */}
-        <div style={{ marginBottom: '3rem' }}>
-          <h3 className="heading-md reveal" style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Icon icon="mdi:tune-vertical" width={24} style={{ color: 'var(--accent)' }} />
-            ¿Qué se puede personalizar para tu empresa?
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem' }}>
-            {[
-              { icon: 'mdi:domain', title: 'Identidad de Marca', desc: 'Logo, colores corporativos, tipografía, nombre del sistema. Todo se adapta a la imagen de tu empresa para que el software se sienta 100% propio.' },
-              { icon: 'mdi:shape', title: 'Módulos a Medida', desc: 'Agregá o quitás funcionalidades según tu operativa: inventario, ventas, compras, producción, finanzas, RRHH, logística, cobros, remitos, facturación, etc.' },
-              { icon: 'mdi:tag-multiple', title: 'Catálogo de Productos', desc: 'Estructura de productos personalizada con las categorías, unidades de medida, campos personalizados y jerarquías que tu negocio necesita.' },
-              { icon: 'mdi:account-supervisor', title: 'Roles y Permisos', desc: 'Sistema de autenticación con roles personalizados (Admin, Operador, Ventas, Solo Lectura). Cada usuario ve y hace solo lo que le corresponde.' },
-              { icon: 'mdi:file-chart', title: 'Reportes y Exportación', desc: 'Exportación a Excel y PDF con estilo corporativo. Dashboards personalizados con los KPIs que importan a tu gestión. Gráficos y métricas en tiempo real.' },
-              { icon: 'mdi:barcode-scan', title: 'Escáner y Captura', desc: 'Integración de escáner de códigos de barras/QR por cámara. Lectura de PDFs. Captura de fotos y documentos adjuntos en cada operación.' },
-              { icon: 'mdi:bell-ring', title: 'Alertas y Notificaciones', desc: 'Stock bajo, pedidos vencidos, temperaturas fuera de rango, tareas pendientes. Alertas configurables por email, push o dentro del sistema.' },
-              { icon: 'mdi:swap-horizontal', title: 'Flujos de Trabajo', desc: 'Cada proceso tiene su circuito de estados aprobación personalizable: pedidos, órdenes de compra, despachos, presupuestos, cualquier trámite interno.' },
-            ].map((item, idx) => (
-              <div key={item.title} className={`service-card reveal reveal-delay-${Math.min(idx + 1, 5)}`} style={{ padding: '1.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.75rem' }}>
-                  <Icon icon={item.icon} width={20} style={{ color: 'var(--accent)' }} />
-                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>{item.title}</h4>
-                </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.7 }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Stack Tecnológico ── */}
-        <div style={{ marginBottom: '3rem' }}>
-          <h3 className="heading-md reveal" style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Icon icon="mdi:layers-triple" width={24} style={{ color: 'var(--accent)' }} />
-            Stack Tecnológico de Vanguardia
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
-            {[
-              { icon: 'simple-icons:nextdotjs', label: 'Next.js 15', desc: 'Framework React de última generación con App Router y generación estática' },
-              { icon: 'simple-icons:react', label: 'React 19', desc: 'Biblioteca de UI más avanzada del mercado con server components y hooks modernos' },
-              { icon: 'simple-icons:typescript', label: 'TypeScript', desc: 'Tipado estático para código robusto, mantenible y sin errores en producción' },
-              { icon: 'simple-icons:tailwindcss', label: 'Tailwind CSS 4', desc: 'Framework de diseño utility-first para interfaces rápidas, responsivas y consistentes' },
-              { icon: 'simple-icons:firebase', label: 'Firebase', desc: 'Backend como servicio: base de datos NoSQL en tiempo real, autenticación y storage en la nube' },
-              { icon: 'simple-icons:githubactions', label: 'GitHub Actions', desc: 'CI/CD automatizado: cada cambio se compila, prueba y despliega automáticamente' },
-              { icon: 'simple-icons:motion', label: 'Framer Motion', desc: 'Animaciones fluidas y transiciones profesionales para una experiencia de usuario premium' },
-              { icon: 'mdi:cellphone-check', label: 'PWA Ready', desc: 'Instalable como app, funciona offline, notificaciones push y acceso desde cualquier dispositivo' },
-            ].map((tech, idx) => (
-              <div key={tech.label} className="reveal reveal-delay-1" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
-                <Icon icon={tech.icon} width={28} style={{ color: 'var(--accent)', flexShrink: 0 }} />
-                <div>
-                  <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-main)' }}>{tech.label}</p>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', lineHeight: 1.5, marginTop: '0.15rem' }}>{tech.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Valor generado ── */}
-        <div>
-          <h3 className="heading-md reveal" style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Icon icon="mdi:rocket-launch" width={24} style={{ color: 'var(--accent)' }} />
-            ¿Qué valor genera para tu empresa?
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem' }}>
-            {[
-              { icon: 'mdi:clock-fast', title: 'Ahorro de Tiempo Real', desc: 'Automatizás procesos manuales, eliminás papel y reducís horas de trabajo administrativo. Lo que antes tomaba 30 minutos ahora toma 30 segundos.' },
-              { icon: 'mdi:shield-check', title: 'Cero Errores Humanos', desc: 'Validaciones automáticas, reserva de stock en tiempo real y flujos de trabajo controlados evitan errores costosos en la operativa diaria.' },
-              { icon: 'mdi:chart-timeline-variant-shimmer', title: 'Decisiones con Datos', desc: 'Dashboards en vivo, reportes exportables y métricas clave al instante. Dejás de adivinar y empezás a gestionar con información real y actualizada.' },
-              { icon: 'mdi:devices', title: 'Acceso Desde Cualquier Lugar', desc: 'Funciona en PC, tablet y celular. No necesitás instalar nada. Tu equipo trabaja desde el depósito, la oficina o desde la calle con la misma información.' },
-              { icon: 'mdi:puzzle', title: 'Crece con tu Negocio', desc: 'Arquitectura modular y escalable. Empezá con lo que necesitás hoy y agregá módulos a medida que tu empresa crece, sin rewrits ni migraciones.' },
-              { icon: 'mdi:cash-multiple', title: 'ROI Inmediato', desc: 'Costo de desarrollo único, sin licencias mensuales. En el primer mes de uso ya se justifica la inversión por el ahorro en tiempo y errores evitados.' },
-            ].map((item, idx) => (
-              <div key={item.title} className="reveal reveal-delay-1" style={{ display: 'flex', gap: '0.75rem', padding: '1.25rem', background: 'var(--surface)', borderRadius: '6px', border: '1px solid var(--border)' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--accent-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Icon icon={item.icon} width={18} style={{ color: 'var(--accent)' }} />
-                </div>
-                <div>
-                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '0.3rem' }}>{item.title}</h4>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', lineHeight: 1.7 }}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── CTA ── */}
-        <div className="reveal" style={{ textAlign: 'center', marginTop: '3.5rem', padding: '2.5rem', background: 'var(--surface-alt)', borderRadius: '8px', border: '1px solid var(--border)' }}>
-          <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.2rem', color: 'var(--text-main)', marginBottom: '0.75rem' }}>
-            ¿Tu empresa necesita un sistema así?
-          </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '550px', margin: '0 auto 1.5rem', lineHeight: 1.7 }}>
-            Contanos tu operación y te diseñamos una propuesta a medida. Sin compromisos, sin humo. Software real que funciona desde el día uno.
-          </p>
-          <a href="#contacto" className="btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' }); }}>
-            Solicitar Propuesta
-            <Icon icon="mdi:arrow-right" width={18} />
-          </a>
-        </div>
-      </section>
 
       {/* ════════════════════════════════════════════════════════════════
           PROCESS SECTION
