@@ -199,14 +199,13 @@ export default function Home() {
   const [demoExpanded, setDemoExpanded] = useState(false);
   const [demoTab, setDemoTab] = useState<'dashboard' | 'clientes' | 'productos' | 'ventas' | 'compras' | 'actividad'>('dashboard');
   
-  /* Lock body scroll when demo is expanded */
+  /* Scroll to demo section when expanded */
   useEffect(() => {
     if (demoExpanded) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      setTimeout(() => {
+        document.getElementById('erp-demo-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
-    return () => { document.body.style.overflow = ''; };
   }, [demoExpanded]);
   const [showModal, setShowModal] = useState<string | null>(null);
   const [demoToast, setDemoToast] = useState('');
@@ -1131,14 +1130,13 @@ export default function Home() {
       </div>
       </section>
 
-      {/* ── DEMO EXPANDED (Full Interactive ERP) ── */}
-      {demoExpanded && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'var(--bg)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'fadeIn 0.25s ease' }} onClick={() => setDemoExpanded(false)} onKeyDown={(e) => { if (e.key === 'Escape') setDemoExpanded(false); }} tabIndex={-1} ref={(el) => el?.focus()}>
-          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }} onClick={(e) => e.stopPropagation()}>
+      {/* ── DEMO EXPANDED (Full Interactive ERP) — Inline Section ── */}
+      <section id="erp-demo-section" style={{ display: demoExpanded ? 'block' : 'none', animation: 'fadeIn 0.4s ease', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
             {/* Top Navigation Bar */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 2rem', background: 'var(--surface-alt)', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-              <button onClick={() => setDemoExpanded(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-main)', cursor: 'pointer', padding: '0.6rem 1.2rem', fontSize: '0.9rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-main)'; }}>
-                <Icon icon="mdi:arrow-left" width={20} /> Volver
+              <button onClick={() => { setDemoExpanded(false); setTimeout(() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-main)', cursor: 'pointer', padding: '0.6rem 1.2rem', fontSize: '0.9rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-main)'; }}>
+                <Icon icon="mdi:arrow-left" width={20} /> Volver al Portfolio
               </button>
               <div style={{ textAlign: 'center' }}>
                 <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.3rem', color: 'var(--text-main)' }}>Sistema de Gestión ERP</p>
@@ -1149,7 +1147,7 @@ export default function Home() {
                 <span style={{ fontSize: '0.8rem', color: 'var(--accent)', fontWeight: 600, fontFamily: "'Syne', sans-serif" }}>LIVE</span>
               </div>
             </div>
-            <div style={{ display: 'flex', flex: 1, background: 'var(--surface)', position: 'relative', overflow: 'hidden', minHeight: 0 }}>
+            <div style={{ display: 'flex', background: 'var(--surface)', position: 'relative', minHeight: '600px' }}>
               {/* Mini Sidebar */}
               <div style={{ width: '260px', background: 'var(--surface-alt)', borderRight: '1px solid var(--border)', padding: '1rem 0', flexShrink: 0 }}>
                 <div style={{ padding: '0 1rem 1rem', borderBottom: '1px solid var(--border)', marginBottom: '0.75rem' }}>
@@ -1182,7 +1180,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Main Content */}
-              <div style={{ flex: 1, padding: '2rem', overflow: 'auto' }}>
+              <div style={{ flex: 1, padding: '2rem', minWidth: 0 }}>
                 {/* ── DASHBOARD TAB ── */}
                 {demoTab === 'dashboard' && (() => {
                   const kpis = recalcKPIs();
@@ -1551,7 +1549,7 @@ export default function Home() {
               </div>
               {/* ── MODALS ── */}
               {showModal && (
-                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50 }} onClick={() => setShowModal(null)}>
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000 }} onClick={() => setShowModal(null)}>
                   <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', width: '90%', maxWidth: '420px', maxHeight: '85%', overflowY: 'auto', padding: '1.25rem' }} onClick={(e) => e.stopPropagation()}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1rem', fontWeight: 700, color: 'var(--text-main)' }}>
@@ -1730,22 +1728,21 @@ export default function Home() {
               )}
               {/* ── DEMO TOAST ── */}
               {demoToast && (
-                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'var(--accent)', color: '#000', padding: '0.75rem 1.25rem', borderRadius: '6px', fontSize: '0.9rem', fontWeight: 600, fontFamily: "'Manrope', sans-serif", boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 100, display: 'flex', alignItems: 'center', gap: '0.4rem', animation: 'fadeIn 0.3s ease' }}>
+                <div style={{ position: 'fixed', bottom: '1.5rem', right: '1.5rem', background: 'var(--accent)', color: '#000', padding: '0.75rem 1.25rem', borderRadius: '6px', fontSize: '0.9rem', fontWeight: 600, fontFamily: "'Manrope', sans-serif", boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 10001, display: 'flex', alignItems: 'center', gap: '0.4rem', animation: 'fadeIn 0.3s ease' }}>
                   <Icon icon="mdi:check-circle" width={16} />
                   {demoToast}
                 </div>
               )}
-            </div>
           </div>
 
-          {/* ── Description below the demo (scrollable) ── */}
-          <div style={{ overflowY: 'auto', maxHeight: '45vh', padding: '2rem 0 0', borderTop: '1px solid var(--border)' }}>
-            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          {/* ── Description below the demo (natural page flow, no scroll) ── */}
+          <div style={{ padding: '4rem 2rem', borderTop: '1px solid var(--border)' }}>
+            <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
               {/* Intro */}
-              <div style={{ marginBottom: '2rem' }}>
-                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Software a Medida</p>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>Sistema de Gestión Empresarial Integral</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.7 }}>Plataforma 100% personalizable, diseñada en Next.js con React 19, que se adapta a la operativa de cualquier empresa. Desde inventario y clientes hasta pedidos y órdenes de compra, todo funciona en tiempo real, desde cualquier dispositivo.</p>
+              <div style={{ marginBottom: '2.5rem' }}>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.9rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Software a Medida</p>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.75rem' }}>Sistema de Gestión Empresarial Integral</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.8 }}>Plataforma 100% personalizable, diseñada en Next.js con React 19, que se adapta a la operativa de cualquier empresa. Desde inventario y clientes hasta pedidos y órdenes de compra, todo funciona en tiempo real, desde cualquier dispositivo.</p>
               </div>
               {/* Caso de Éxito */}
               <div style={{ padding: '1.5rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)', marginBottom: '2rem' }}>
@@ -1756,7 +1753,7 @@ export default function Home() {
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Plataforma productiva en uso real — <a href="https://planilladecarga.github.io/centrologisticofrimaralV2/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>Ver demo en vivo →</a></p>
                   </div>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.7, marginBottom: '0.5rem' }}>Sistema completo de gestión logística con inventario por contenedores, escáner de barras, pedidos con reserva de stock, despachos con lectura de PDFs, monitoreo de temperatura, auth por roles, exportación Excel y PWA offline. La misma arquitectura se adapta a cualquier rubro: distribuidoras, tiendas, talleres, etc.</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.8, marginBottom: '0.5rem' }}>Sistema completo de gestión logística con inventario por contenedores, escáner de barras, pedidos con reserva de stock, despachos con lectura de PDFs, monitoreo de temperatura, auth por roles, exportación Excel y PWA offline. La misma arquitectura se adapta a cualquier rubro: distribuidoras, tiendas, talleres, etc.</p>
               </div>
               {/* Personalización */}
               <div style={{ marginBottom: '2rem' }}>
@@ -1835,14 +1832,14 @@ export default function Home() {
               <div style={{ textAlign: 'center', padding: '1.5rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
                 <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: 'var(--text-main)', marginBottom: '0.5rem' }}>¿Tu empresa necesita un sistema así?</p>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>Contanos tu operación y te diseñamos una propuesta a medida. Software real que funciona desde el día uno.</p>
-                <a href="#contacto" className="btn-primary" onClick={(e) => { e.preventDefault(); setDemoExpanded(false); setTimeout(() => document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ display: 'inline-flex', fontSize: '0.85rem', padding: '0.6rem 1.2rem' }}>
+                <a href="#contacto" className="btn-primary" onClick={(e) => { e.preventDefault(); setDemoExpanded(false); setTimeout(() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' }), 200); }} style={{ display: 'inline-flex', fontSize: '0.95rem', padding: '0.75rem 1.5rem' }}>
                   Solicitar Propuesta <Icon icon="mdi:arrow-right" width={16} />
                 </a>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </section>
 
       {/* ════════════════════════════════════════════════════════════════
           PROCESS SECTION
