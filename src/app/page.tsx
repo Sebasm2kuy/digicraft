@@ -1133,32 +1133,28 @@ export default function Home() {
 
       {/* ── DEMO EXPANDED (Full Interactive ERP) ── */}
       {demoExpanded && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', animation: 'fadeIn 0.25s ease' }} onClick={() => setDemoExpanded(false)} onKeyDown={(e) => { if (e.key === 'Escape') setDemoExpanded(false); }} tabIndex={-1} ref={(el) => el?.focus()}>
-          <div style={{ width: '100%', maxWidth: '1100px', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
-            {/* Close button */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-              <div>
-                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: '#fff' }}>Sistema de Gestión Empresarial — Demo Interactiva</p>
-                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>Explorá los módulos, creá pedidos, gestioná stock — todo funciona en tiempo real</p>
-              </div>
-              <button onClick={() => setDemoExpanded(false)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', color: '#fff', cursor: 'pointer', padding: '0.5rem 1rem', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Icon icon="mdi:close" width={16} /> Cerrar
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'var(--bg)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'fadeIn 0.25s ease' }} onClick={() => setDemoExpanded(false)} onKeyDown={(e) => { if (e.key === 'Escape') setDemoExpanded(false); }} tabIndex={-1} ref={(el) => el?.focus()}>
+          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }} onClick={(e) => e.stopPropagation()}>
+            {/* Top Navigation Bar */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 2rem', background: 'var(--surface-alt)', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
+              <button onClick={() => setDemoExpanded(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-main)', cursor: 'pointer', padding: '0.6rem 1.2rem', fontSize: '0.9rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-main)'; }}>
+                <Icon icon="mdi:arrow-left" width={20} /> Volver
               </button>
-            </div>
-            {/* Demo window */}
-            <div style={{ border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
-              <div className="demo-topbar">
-                <div className="demo-dot" style={{ background: '#ff5f57' }} />
-                <div className="demo-dot" style={{ background: '#febc2e' }} />
-                <div className="demo-dot" style={{ background: '#28c840' }} />
-                <div className="demo-url">erp.digicraft.studio</div>
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.3rem', color: 'var(--text-main)' }}>Sistema de Gestión ERP</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Demo Interactiva — Explorá, creá, gestioná</p>
               </div>
-              <div style={{ display: 'flex', height: '560px', background: 'var(--surface)', position: 'relative' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 0.8rem', background: 'rgba(212,175,55,0.1)', borderRadius: '6px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#D4AF37' }} />
+                <span style={{ fontSize: '0.8rem', color: 'var(--accent)', fontWeight: 600, fontFamily: "'Syne', sans-serif" }}>LIVE</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flex: 1, background: 'var(--surface)', position: 'relative', overflow: 'hidden', minHeight: 0 }}>
               {/* Mini Sidebar */}
-              <div style={{ width: '200px', background: 'var(--surface-alt)', borderRight: '1px solid var(--border)', padding: '1rem 0', flexShrink: 0 }}>
+              <div style={{ width: '260px', background: 'var(--surface-alt)', borderRight: '1px solid var(--border)', padding: '1rem 0', flexShrink: 0 }}>
                 <div style={{ padding: '0 1rem 1rem', borderBottom: '1px solid var(--border)', marginBottom: '0.75rem' }}>
-                  <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', color: 'var(--accent)' }}>DigiCraft</p>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Gestión Empresarial</p>
+                  <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1rem', color: 'var(--accent)' }}>DigiCraft</p>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Gestión Empresarial</p>
                 </div>
                 {[
                   { key: 'dashboard' as const, icon: 'mdi:view-dashboard', label: 'Panel Principal' },
@@ -1168,8 +1164,8 @@ export default function Home() {
                   { key: 'compras' as const, icon: 'mdi:cart-arrow-down', label: 'Compras' },
                   { key: 'actividad' as const, icon: 'mdi:history', label: 'Actividad' },
                 ].map((tab) => (
-                  <button key={tab.key} onClick={() => setDemoTab(tab.key)} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%', padding: '0.6rem 1rem', border: 'none', background: demoTab === tab.key ? 'rgba(212,175,55,0.1)' : 'transparent', color: demoTab === tab.key ? 'var(--accent)' : 'var(--text-muted)', cursor: 'pointer', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500, transition: 'all 0.2s', textAlign: 'left' }}>
-                    <Icon icon={tab.icon} width={16} />
+                  <button key={tab.key} onClick={() => setDemoTab(tab.key)} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%', padding: '0.75rem 1.25rem', border: 'none', background: demoTab === tab.key ? 'rgba(212,175,55,0.1)' : 'transparent', color: demoTab === tab.key ? 'var(--accent)' : 'var(--text-muted)', cursor: 'pointer', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", fontWeight: 500, transition: 'all 0.2s', textAlign: 'left' }}>
+                    <Icon icon={tab.icon} width={20} />
                     {tab.label}
                   </button>
                 ))}
@@ -1179,14 +1175,14 @@ export default function Home() {
                       <Icon icon="mdi:account" width={14} style={{ color: 'var(--accent)' }} />
                     </div>
                     <div>
-                      <p style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)' }}>Demo User</p>
-                      <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>Administrador</p>
+                      <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)' }}>Demo User</p>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Administrador</p>
                     </div>
                   </div>
                 </div>
               </div>
               {/* Main Content */}
-              <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto', maxHeight: '580px' }}>
+              <div style={{ flex: 1, padding: '2rem', overflow: 'auto' }}>
                 {/* ── DASHBOARD TAB ── */}
                 {demoTab === 'dashboard' && (() => {
                   const kpis = recalcKPIs();
@@ -1195,10 +1191,10 @@ export default function Home() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Panel Principal</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resumen general del negocio</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>Panel Principal</h3>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Resumen general del negocio</p>
                       </div>
-                      <span style={{ fontSize: '0.7rem', padding: '0.3rem 0.6rem', background: 'rgba(212,175,55,0.1)', color: 'var(--accent)', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 600 }}>LIVE</span>
+                      <span style={{ fontSize: '0.8rem', padding: '0.3rem 0.6rem', background: 'rgba(212,175,55,0.1)', color: 'var(--accent)', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontWeight: 600 }}>LIVE</span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.25rem' }}>
                       {[
@@ -1209,44 +1205,44 @@ export default function Home() {
                         { label: 'Compras Pend.', value: kpis.comprasPendientes, icon: 'mdi:cart-arrow-down', color: '#2196F3' },
                         { label: 'Valor Inventario', value: '$' + kpis.valorInventario.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','), icon: 'mdi:cash', color: '#9C27B0' },
                       ].map((kpi) => (
-                        <div key={kpi.label} style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
+                        <div key={kpi.label} style={{ padding: '1rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
                             <Icon icon={kpi.icon} width={14} style={{ color: kpi.color }} />
-                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{kpi.label}</span>
+                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{kpi.label}</span>
                           </div>
-                          <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: "'Syne', sans-serif", color: 'var(--text-main)' }}>{kpi.value}</p>
+                          <p style={{ fontSize: '1.6rem', fontWeight: 800, fontFamily: "'Syne', sans-serif", color: 'var(--text-main)' }}>{kpi.value}</p>
                         </div>
                       ))}
                     </div>
                     {lowStock.length > 0 && (
-                      <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)', marginBottom: '1rem' }}>
+                      <div style={{ padding: '1rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)', marginBottom: '1rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
                           <Icon icon="mdi:alert-circle" width={14} style={{ color: '#f44336' }} />
-                          <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Alertas de Stock</span>
-                          <span style={{ marginLeft: 'auto', fontSize: '0.6rem', padding: '0.15rem 0.35rem', borderRadius: '3px', background: 'rgba(244,67,54,0.15)', color: '#f44336', fontWeight: 600 }}>{lowStock.length} productos</span>
+                          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Alertas de Stock</span>
+                          <span style={{ marginLeft: 'auto', fontSize: '0.75rem', padding: '0.15rem 0.35rem', borderRadius: '3px', background: 'rgba(244,67,54,0.15)', color: '#f44336', fontWeight: 600 }}>{lowStock.length} productos</span>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                           {lowStock.map((p) => (
                             <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.3rem 0.4rem', borderRadius: '3px', background: 'var(--surface)' }}>
-                              <span style={{ fontSize: '0.65rem', color: 'var(--text-main)' }}>{p.nombre}</span>
-                              <span style={{ fontSize: '0.55rem', color: '#f44336', fontWeight: 600 }}>{p.stock}/{p.stockMin}</span>
+                              <span style={{ fontSize: '0.85rem', color: 'var(--text-main)' }}>{p.nombre}</span>
+                              <span style={{ fontSize: '0.75rem', color: '#f44336', fontWeight: 600 }}>{p.stock}/{p.stockMin}</span>
                             </div>
                           ))}
                         </div>
                       </div>
                     )}
-                    <div style={{ padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                    <div style={{ padding: '1rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
                         <Icon icon="mdi:clock-outline" width={14} style={{ color: 'var(--accent)' }} />
-                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Actividad Reciente</span>
+                        <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Actividad Reciente</span>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                         {activityLog.slice(0, 5).map((a, i) => {
                           const tipoColors: Record<string, string> = { 'CLIENTE': '#4CAF50', 'PRODUCTO': '#2196F3', 'VENTA': '#D4AF37', 'COMPRA': '#9C27B0', 'EDICIÓN': '#FF9800', 'ELIMINACIÓN': '#f44336' };
                           return (
-                            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.3rem 0.4rem', borderRadius: '3px', background: 'var(--surface)' }}>
-                              <span style={{ fontSize: '0.65rem', color: 'var(--text-main)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.detalle}</span>
-                              <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginLeft: '0.5rem', flexShrink: 0 }}>{a.time}</span>
+                            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.4rem 0.5rem', borderRadius: '4px', background: 'var(--surface)' }}>
+                              <span style={{ fontSize: '0.88rem', color: 'var(--text-main)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.detalle}</span>
+                              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '0.5rem', flexShrink: 0 }}>{a.time}</span>
                             </div>
                           );
                         })}
@@ -1260,23 +1256,23 @@ export default function Home() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Clientes</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{clientes.length} clientes registrados</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>Clientes</h3>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{clientes.length} clientes registrados</p>
                       </div>
-                      <button onClick={() => { setClienteForm({ nombre: '', email: '', telefono: '', empresa: '', rubro: '', estado: 'Activo' }); setEditingCliente(null); setShowModal('addCliente'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <button onClick={() => { setClienteForm({ nombre: '', email: '', telefono: '', empresa: '', rubro: '', estado: 'Activo' }); setEditingCliente(null); setShowModal('addCliente'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                         <Icon icon="mdi:plus" width={14} /> Agregar Cliente
                       </button>
                     </div>
                     <div style={{ position: 'relative', marginBottom: '1rem' }}>
                       <Icon icon="mdi:magnify" width={14} style={{ position: 'absolute', left: '0.6rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                      <input type="text" placeholder="Buscar por nombre, email, empresa..." value={clienteSearch} onChange={(e) => setClienteSearch(e.target.value)} style={{ width: '100%', padding: '0.45rem 0.6rem 0.45rem 1.8rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.75rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                      <input type="text" placeholder="Buscar por nombre, email, empresa..." value={clienteSearch} onChange={(e) => setClienteSearch(e.target.value)} style={{ width: '100%', padding: '0.45rem 0.6rem 0.45rem 1.8rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.9rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ overflowX: 'auto' }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
                         <thead>
                           <tr style={{ borderBottom: '1px solid var(--border)' }}>
                             {['ID', 'Nombre', 'Email', 'Teléfono', 'Empresa', 'Rubro', 'Estado', 'Acc.'].map((h) => (
-                              <th key={h} style={{ padding: '0.4rem 0.3rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.5rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                              <th key={h} style={{ padding: '0.65rem 0.6rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
                             ))}
                           </tr>
                         </thead>
@@ -1289,21 +1285,21 @@ export default function Home() {
                             const estadoColors: Record<string, string> = { 'Activo': '#4CAF50', 'Inactivo': '#9E9E9E' };
                             return (
                               <tr key={c.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                                <td style={{ padding: '0.4rem 0.3rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.6rem', whiteSpace: 'nowrap' }}>{c.id}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', whiteSpace: 'nowrap', fontSize: '0.65rem' }}>{c.nombre}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem' }}>{c.email}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem', whiteSpace: 'nowrap' }}>{c.telefono}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontSize: '0.65rem' }}>{c.empresa}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem' }}>{c.rubro}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
-                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
+                                <td style={{ padding: '0.55rem 0.5rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>{c.id}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', whiteSpace: 'nowrap', fontSize: '0.85rem' }}>{c.nombre}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>{c.email}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>{c.telefono}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontSize: '0.85rem' }}>{c.empresa}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>{c.rubro}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
+                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.8rem', fontWeight: 600, color: estadoColors[c.estado], background: estadoColors[c.estado] + '15' }}>{c.estado}</span>
                                 </td>
-                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
                                   {deleteConfirmId === c.id ? (
-                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.55rem' }}>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.75rem' }}>
                                       <span style={{ color: 'var(--text-muted)' }}>¿Eliminar?</span>
-                                      <button onClick={() => { setClientes(prev => prev.filter(x => x.id !== c.id)); addActivity('ELIMINACIÓN', `Cliente ${c.empresa} eliminado`); showDemoToast(`${c.empresa} eliminado`); setDeleteConfirmId(null); }} style={{ padding: '0.1rem 0.3rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '0.55rem', fontWeight: 600 }}>Sí</button>
-                                      <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '0.1rem 0.3rem', background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: '3px', cursor: 'pointer', fontSize: '0.55rem' }}>No</button>
+                                      <button onClick={() => { setClientes(prev => prev.filter(x => x.id !== c.id)); addActivity('ELIMINACIÓN', `Cliente ${c.empresa} eliminado`); showDemoToast(`${c.empresa} eliminado`); setDeleteConfirmId(null); }} style={{ padding: '0.1rem 0.3rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600 }}>Sí</button>
+                                      <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '0.1rem 0.3rem', background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: '3px', cursor: 'pointer', fontSize: '0.75rem' }}>No</button>
                                     </span>
                                   ) : (
                                     <span style={{ display: 'inline-flex', gap: '0.25rem' }}>
@@ -1325,23 +1321,23 @@ export default function Home() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Productos</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{productos.length} productos registrados</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>Productos</h3>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{productos.length} productos registrados</p>
                       </div>
-                      <button onClick={() => { setProductoForm({ nombre: '', categoria: '', precio: 0, stock: 0, stockMin: 0, unidad: 'Unidad', proveedor: '' }); setEditingProducto(null); setShowModal('addProducto'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <button onClick={() => { setProductoForm({ nombre: '', categoria: '', precio: 0, stock: 0, stockMin: 0, unidad: 'Unidad', proveedor: '' }); setEditingProducto(null); setShowModal('addProducto'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                         <Icon icon="mdi:plus" width={14} /> Agregar Producto
                       </button>
                     </div>
                     <div style={{ position: 'relative', marginBottom: '1rem' }}>
                       <Icon icon="mdi:magnify" width={14} style={{ position: 'absolute', left: '0.6rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                      <input type="text" placeholder="Buscar por nombre, categoría, proveedor..." value={productoSearch} onChange={(e) => setProductoSearch(e.target.value)} style={{ width: '100%', padding: '0.45rem 0.6rem 0.45rem 1.8rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.75rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                      <input type="text" placeholder="Buscar por nombre, categoría, proveedor..." value={productoSearch} onChange={(e) => setProductoSearch(e.target.value)} style={{ width: '100%', padding: '0.45rem 0.6rem 0.45rem 1.8rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.9rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ overflowX: 'auto' }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
                         <thead>
                           <tr style={{ borderBottom: '1px solid var(--border)' }}>
                             {['ID', 'Nombre', 'Categoría', 'Precio', 'Stock', 'Mín.', 'Unidad', 'Proveedor', 'Acc.'].map((h) => (
-                              <th key={h} style={{ padding: '0.4rem 0.3rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.5rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                              <th key={h} style={{ padding: '0.65rem 0.6rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
                             ))}
                           </tr>
                         </thead>
@@ -1352,20 +1348,20 @@ export default function Home() {
                             return p.nombre.toLowerCase().includes(q) || p.categoria.toLowerCase().includes(q) || p.proveedor.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
                           }).map((p) => (
                             <tr key={p.id} style={{ borderBottom: '1px solid var(--border)', background: p.stock < p.stockMin ? 'rgba(244,67,54,0.03)' : 'transparent' }}>
-                              <td style={{ padding: '0.4rem 0.3rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.6rem', whiteSpace: 'nowrap' }}>{p.id}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontSize: '0.65rem' }}>{p.nombre}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem' }}>{p.categoria}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontSize: '0.65rem', whiteSpace: 'nowrap' }}>${p.precio.toFixed(2)}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: p.stock < p.stockMin ? '#f44336' : 'var(--text-muted)', textAlign: 'center', fontWeight: p.stock < p.stockMin ? 700 : 400 }}>{p.stock}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{p.stockMin}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem' }}>{p.unidad}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', fontSize: '0.6rem' }}>{p.proveedor}</td>
-                              <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                              <td style={{ padding: '0.55rem 0.5rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>{p.id}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontSize: '0.85rem' }}>{p.nombre}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>{p.categoria}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>${p.precio.toFixed(2)}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: p.stock < p.stockMin ? '#f44336' : 'var(--text-muted)', textAlign: 'center', fontWeight: p.stock < p.stockMin ? 700 : 400 }}>{p.stock}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', textAlign: 'center' }}>{p.stockMin}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>{p.unidad}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>{p.proveedor}</td>
+                              <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
                                 {deleteConfirmId === p.id ? (
-                                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.55rem' }}>
+                                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.75rem' }}>
                                     <span style={{ color: 'var(--text-muted)' }}>¿Eliminar?</span>
-                                    <button onClick={() => { setProductos(prev => prev.filter(x => x.id !== p.id)); addActivity('ELIMINACIÓN', `Producto ${p.nombre} eliminado`); showDemoToast(`${p.nombre} eliminado`); setDeleteConfirmId(null); }} style={{ padding: '0.1rem 0.3rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '0.55rem', fontWeight: 600 }}>Sí</button>
-                                    <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '0.1rem 0.3rem', background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: '3px', cursor: 'pointer', fontSize: '0.55rem' }}>No</button>
+                                    <button onClick={() => { setProductos(prev => prev.filter(x => x.id !== p.id)); addActivity('ELIMINACIÓN', `Producto ${p.nombre} eliminado`); showDemoToast(`${p.nombre} eliminado`); setDeleteConfirmId(null); }} style={{ padding: '0.1rem 0.3rem', background: 'rgba(244,67,54,0.15)', color: '#f44336', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600 }}>Sí</button>
+                                    <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '0.1rem 0.3rem', background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: '3px', cursor: 'pointer', fontSize: '0.75rem' }}>No</button>
                                   </span>
                                 ) : (
                                   <span style={{ display: 'inline-flex', gap: '0.25rem' }}>
@@ -1386,24 +1382,24 @@ export default function Home() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Ventas</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{pedidos.length} pedidos registrados</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>Ventas</h3>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{pedidos.length} pedidos registrados</p>
                       </div>
-                      <button onClick={() => { setVentaForm({ clienteId: '', items: [{ productoId: '', cantidad: 1, precioUnitario: 0 }] }); setShowModal('addVenta'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <button onClick={() => { setVentaForm({ clienteId: '', items: [{ productoId: '', cantidad: 1, precioUnitario: 0 }] }); setShowModal('addVenta'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                         <Icon icon="mdi:plus" width={14} /> Nueva Venta
                       </button>
                     </div>
                     <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
                       {['Todos', 'PENDIENTE', 'CONFIRMADO', 'ENVIADO', 'ENTREGADO', 'CANCELADO'].map((filter) => (
-                        <button key={filter} onClick={() => setVentaFilter(filter)} style={{ padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: ventaFilter === filter ? 'var(--accent)' : 'var(--border)', background: ventaFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent', color: ventaFilter === filter ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{filter}</button>
+                        <button key={filter} onClick={() => setVentaFilter(filter)} style={{ padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: ventaFilter === filter ? 'var(--accent)' : 'var(--border)', background: ventaFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent', color: ventaFilter === filter ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{filter}</button>
                       ))}
                     </div>
                     <div style={{ overflowX: 'auto' }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
                         <thead>
                           <tr style={{ borderBottom: '1px solid var(--border)' }}>
                             {['Pedido', 'Cliente', 'Items', 'Total', 'Fecha', 'Estado', 'Acc.'].map((h) => (
-                              <th key={h} style={{ padding: '0.4rem 0.3rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.5rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                              <th key={h} style={{ padding: '0.65rem 0.6rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
                             ))}
                           </tr>
                         </thead>
@@ -1412,15 +1408,15 @@ export default function Home() {
                             const estadoColors: Record<string, string> = { 'PENDIENTE': '#FF9800', 'CONFIRMADO': '#2196F3', 'ENVIADO': '#9C27B0', 'ENTREGADO': '#4CAF50', 'CANCELADO': '#f44336' };
                             return (
                               <tr key={o.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                                <td style={{ padding: '0.4rem 0.3rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.65rem', whiteSpace: 'nowrap' }}>{o.id}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontSize: '0.65rem' }}>{o.clienteNombre}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items.length}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontWeight: 600, whiteSpace: 'nowrap' }}>${o.total.toFixed(2)}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', fontSize: '0.6rem' }}>{o.fecha}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
-                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
+                                <td style={{ padding: '0.55rem 0.5rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{o.id}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontSize: '0.85rem' }}>{o.clienteNombre}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items.length}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontWeight: 600, whiteSpace: 'nowrap' }}>${o.total.toFixed(2)}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', fontSize: '0.88rem' }}>{o.fecha}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
+                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.8rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
                                 </td>
-                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
                                   {o.estado === 'PENDIENTE' && (
                                     <span style={{ display: 'inline-flex', gap: '0.2rem' }}>
                                       <button onClick={() => { setPedidos(prev => prev.map(x => x.id === o.id ? { ...x, estado: 'CONFIRMADO' as const } : x)); addActivity('VENTA', `Pedido ${o.id} confirmado — ${o.clienteNombre}`); showDemoToast(`${o.id} confirmado`); }} title="Confirmar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2196F3', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:check-circle" width={16} /></button>
@@ -1439,7 +1435,7 @@ export default function Home() {
                                       <button onClick={() => { setPedidos(prev => prev.map(x => x.id === o.id ? { ...x, estado: 'CANCELADO' as const } : x)); addActivity('VENTA', `Pedido ${o.id} cancelado — ${o.clienteNombre}`); showDemoToast(`${o.id} cancelado`); }} title="Cancelar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#f44336', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:close-circle" width={16} /></button>
                                     </span>
                                   )}
-                                  {(o.estado === 'ENTREGADO' || o.estado === 'CANCELADO') && <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>—</span>}
+                                  {(o.estado === 'ENTREGADO' || o.estado === 'CANCELADO') && <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>—</span>}
                                 </td>
                               </tr>
                             );
@@ -1454,24 +1450,24 @@ export default function Home() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Compras</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{ordenesCompra.length} órdenes de compra</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>Compras</h3>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{ordenesCompra.length} órdenes de compra</p>
                       </div>
-                      <button onClick={() => { setCompraForm({ proveedor: '', items: [{ productoId: '', cantidad: 1, precioUnitario: 0 }] }); setShowModal('addCompra'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <button onClick={() => { setCompraForm({ proveedor: '', items: [{ productoId: '', cantidad: 1, precioUnitario: 0 }] }); setShowModal('addCompra'); }} style={{ padding: '0.4rem 0.75rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                         <Icon icon="mdi:plus" width={14} /> Nueva Orden
                       </button>
                     </div>
                     <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
                       {['Todos', 'SOLICITADA', 'APROBADA', 'RECIBIDA', 'CANCELADA'].map((filter) => (
-                        <button key={filter} onClick={() => setCompraFilter(filter)} style={{ padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: compraFilter === filter ? 'var(--accent)' : 'var(--border)', background: compraFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent', color: compraFilter === filter ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{filter}</button>
+                        <button key={filter} onClick={() => setCompraFilter(filter)} style={{ padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: compraFilter === filter ? 'var(--accent)' : 'var(--border)', background: compraFilter === filter ? 'rgba(212,175,55,0.1)' : 'transparent', color: compraFilter === filter ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{filter}</button>
                       ))}
                     </div>
                     <div style={{ overflowX: 'auto' }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
                         <thead>
                           <tr style={{ borderBottom: '1px solid var(--border)' }}>
                             {['OC#', 'Proveedor', 'Items', 'Total', 'Fecha', 'Estado', 'Acc.'].map((h) => (
-                              <th key={h} style={{ padding: '0.4rem 0.3rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.5rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                              <th key={h} style={{ padding: '0.65rem 0.6rem', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
                             ))}
                           </tr>
                         </thead>
@@ -1480,15 +1476,15 @@ export default function Home() {
                             const estadoColors: Record<string, string> = { 'SOLICITADA': '#FF9800', 'APROBADA': '#2196F3', 'RECIBIDA': '#4CAF50', 'CANCELADA': '#f44336' };
                             return (
                               <tr key={o.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                                <td style={{ padding: '0.4rem 0.3rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.65rem', whiteSpace: 'nowrap' }}>{o.id}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontSize: '0.65rem' }}>{o.proveedor}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items.length}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-main)', fontWeight: 600, whiteSpace: 'nowrap' }}>${o.total.toFixed(2)}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', fontSize: '0.6rem' }}>{o.fecha}</td>
-                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
-                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
+                                <td style={{ padding: '0.55rem 0.5rem', fontFamily: "'Syne', sans-serif", fontWeight: 600, color: 'var(--text-main)', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{o.id}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontSize: '0.85rem' }}>{o.proveedor}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', textAlign: 'center' }}>{o.items.length}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-main)', fontWeight: 600, whiteSpace: 'nowrap' }}>${o.total.toFixed(2)}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', fontSize: '0.88rem' }}>{o.fecha}</td>
+                                <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
+                                  <span style={{ padding: '0.1rem 0.35rem', borderRadius: '3px', fontSize: '0.8rem', fontWeight: 600, color: estadoColors[o.estado], background: estadoColors[o.estado] + '15' }}>{o.estado}</span>
                                 </td>
-                                <td style={{ padding: '0.4rem 0.3rem', whiteSpace: 'nowrap' }}>
+                                <td style={{ padding: '0.55rem 0.5rem', whiteSpace: 'nowrap' }}>
                                   {o.estado === 'SOLICITADA' && (
                                     <span style={{ display: 'inline-flex', gap: '0.2rem' }}>
                                       <button onClick={() => { setOrdenesCompra(prev => prev.map(x => x.id === o.id ? { ...x, estado: 'APROBADA' as const } : x)); addActivity('COMPRA', `OC ${o.id} aprobada — ${o.proveedor}`); showDemoToast(`${o.id} aprobada`); }} title="Aprobar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2196F3', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:check-circle" width={16} /></button>
@@ -1501,7 +1497,7 @@ export default function Home() {
                                       <button onClick={() => { setOrdenesCompra(prev => prev.map(x => x.id === o.id ? { ...x, estado: 'CANCELADA' as const } : x)); addActivity('COMPRA', `OC ${o.id} cancelada — ${o.proveedor}`); showDemoToast(`${o.id} cancelada`); }} title="Cancelar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#f44336', padding: '2px', display: 'flex', borderRadius: '3px' }}><Icon icon="mdi:close-circle" width={16} /></button>
                                     </span>
                                   )}
-                                  {(o.estado === 'RECIBIDA' || o.estado === 'CANCELADA') && <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>—</span>}
+                                  {(o.estado === 'RECIBIDA' || o.estado === 'CANCELADA') && <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>—</span>}
                                 </td>
                               </tr>
                             );
@@ -1516,13 +1512,13 @@ export default function Home() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                       <div>
-                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Registro de Actividad</h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{activityLog.length} registros</p>
+                        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>Registro de Actividad</h3>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{activityLog.length} registros</p>
                       </div>
                     </div>
                     <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
                       {['Todos', 'CLIENTE', 'PRODUCTO', 'VENTA', 'COMPRA', 'EDICIÓN', 'ELIMINACIÓN'].map((f) => (
-                        <button key={f} onClick={() => setActivityFilter(f)} style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.6rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: activityFilter === f ? 'var(--accent)' : 'var(--border)', background: activityFilter === f ? 'rgba(212,175,55,0.1)' : 'transparent', color: activityFilter === f ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{f}</button>
+                        <button key={f} onClick={() => setActivityFilter(f)} style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, border: '1px solid', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", borderColor: activityFilter === f ? 'var(--accent)' : 'var(--border)', background: activityFilter === f ? 'rgba(212,175,55,0.1)' : 'transparent', color: activityFilter === f ? 'var(--accent)' : 'var(--text-muted)', transition: 'all 0.2s' }}>{f}</button>
                       ))}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', maxHeight: '400px', overflowY: 'auto' }}>
@@ -1538,12 +1534,12 @@ export default function Home() {
                             </div>
                             <div style={{ flex: 1, minWidth: 0 }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.15rem' }}>
-                                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.detalle}</span>
-                                <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', flexShrink: 0, marginLeft: '0.5rem' }}>{a.time}</span>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.detalle}</span>
+                                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', flexShrink: 0, marginLeft: '0.5rem' }}>{a.time}</span>
                               </div>
-                              <div style={{ display: 'flex', gap: '0.6rem', fontSize: '0.6rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
+                              <div style={{ display: 'flex', gap: '0.6rem', fontSize: '0.8rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                                 <span>Op: <b style={{ color: 'var(--text-main)' }}>{a.usuario}</b></span>
-                                <span style={{ padding: '0.05rem 0.3rem', borderRadius: '3px', fontSize: '0.5rem', fontWeight: 600, color, background: color + '15' }}>{a.tipo}</span>
+                                <span style={{ padding: '0.05rem 0.3rem', borderRadius: '3px', fontSize: '0.8rem', fontWeight: 600, color, background: color + '15' }}>{a.tipo}</span>
                               </div>
                             </div>
                           </div>
@@ -1568,19 +1564,19 @@ export default function Home() {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                         {[{ label: 'Nombre', field: 'nombre' as const }, { label: 'Email', field: 'email' as const }, { label: 'Teléfono', field: 'telefono' as const }, { label: 'Empresa', field: 'empresa' as const }, { label: 'Rubro', field: 'rubro' as const }].map(f => (
                           <div key={f.field}>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
-                            <input type="text" value={clienteForm[f.field]} onChange={(e) => setClienteForm(p => ({ ...p, [f.field]: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
+                            <input type="text" value={clienteForm[f.field]} onChange={(e) => setClienteForm(p => ({ ...p, [f.field]: e.target.value }))} style={{ width: '100%', padding: '0.65rem 1rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
                           </div>
                         ))}
                         <div>
-                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Estado</label>
-                          <select value={clienteForm.estado} onChange={(e) => setClienteForm(p => ({ ...p, estado: e.target.value as 'Activo' | 'Inactivo' }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
+                          <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Estado</label>
+                          <select value={clienteForm.estado} onChange={(e) => setClienteForm(p => ({ ...p, estado: e.target.value as 'Activo' | 'Inactivo' }))} style={{ width: '100%', padding: '0.65rem 1rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                           </select>
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                           <button onClick={() => {
                             if (showModal === 'addCliente') {
                               const newId = generateId('CL', clientes);
@@ -1594,7 +1590,7 @@ export default function Home() {
                               showDemoToast(`${editingCliente.empresa} actualizado`);
                             }
                             setShowModal(null);
-                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
                         </div>
                       </div>
                     )}
@@ -1603,18 +1599,18 @@ export default function Home() {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                         {[{ label: 'Nombre', field: 'nombre' as const, type: 'text' }, { label: 'Categoría', field: 'categoria' as const, type: 'text' }, { label: 'Unidad', field: 'unidad' as const, type: 'text' }, { label: 'Proveedor', field: 'proveedor' as const, type: 'text' }].map(f => (
                           <div key={f.field}>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
-                            <input type={f.type} value={productoForm[f.field]} onChange={(e) => setProductoForm(p => ({ ...p, [f.field]: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
+                            <input type={f.type} value={productoForm[f.field]} onChange={(e) => setProductoForm(p => ({ ...p, [f.field]: e.target.value }))} style={{ width: '100%', padding: '0.65rem 1rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
                           </div>
                         ))}
                         {[{ label: 'Precio', field: 'precio' as const }, { label: 'Stock', field: 'stock' as const }, { label: 'Stock Mínimo', field: 'stockMin' as const }].map(f => (
                           <div key={f.field}>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
-                            <input type="number" value={productoForm[f.field]} onChange={(e) => setProductoForm(p => ({ ...p, [f.field]: Number(e.target.value) }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
+                            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>{f.label}</label>
+                            <input type="number" value={productoForm[f.field]} onChange={(e) => setProductoForm(p => ({ ...p, [f.field]: Number(e.target.value) }))} style={{ width: '100%', padding: '0.65rem 1rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }} />
                           </div>
                         ))}
                         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                           <button onClick={() => {
                             if (showModal === 'addProducto') {
                               const newId = generateId('PRD', productos);
@@ -1628,7 +1624,7 @@ export default function Home() {
                               showDemoToast(`${editingProducto.nombre} actualizado`);
                             }
                             setShowModal(null);
-                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
                         </div>
                       </div>
                     )}
@@ -1636,32 +1632,32 @@ export default function Home() {
                     {showModal === 'addVenta' && (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                         <div>
-                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Cliente</label>
-                          <select value={ventaForm.clienteId} onChange={(e) => setVentaForm(p => ({ ...p, clienteId: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
+                          <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Cliente</label>
+                          <select value={ventaForm.clienteId} onChange={(e) => setVentaForm(p => ({ ...p, clienteId: e.target.value }))} style={{ width: '100%', padding: '0.65rem 1rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
                             <option value="">Seleccionar cliente...</option>
                             {clientes.filter(c => c.estado === 'Activo').map(c => <option key={c.id} value={c.id}>{c.empresa}</option>)}
                           </select>
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Líneas de Venta</label>
+                          <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Líneas de Venta</label>
                           {ventaForm.items.map((li, idx) => (
                             <div key={idx} style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.3rem', alignItems: 'center' }}>
-                              <select value={li.productoId} onChange={(e) => { const updated = [...ventaForm.items]; const prod = productos.find(p => p.id === e.target.value); updated[idx] = { ...updated[idx], productoId: e.target.value, precioUnitario: prod ? prod.precio : 0 }; setVentaForm(p => ({ ...p, items: updated })); }} style={{ flex: 2, padding: '0.4rem 0.5rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none' }}>
+                              <select value={li.productoId} onChange={(e) => { const updated = [...ventaForm.items]; const prod = productos.find(p => p.id === e.target.value); updated[idx] = { ...updated[idx], productoId: e.target.value, precioUnitario: prod ? prod.precio : 0 }; setVentaForm(p => ({ ...p, items: updated })); }} style={{ flex: 2, padding: '0.4rem 0.5rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.85rem', fontFamily: "'Manrope', sans-serif", outline: 'none' }}>
                                 <option value="">Producto...</option>
                                 {productos.map(p => <option key={p.id} value={p.id}>{p.nombre} (${p.precio})</option>)}
                               </select>
-                              <input type="number" placeholder="Cant" min={1} value={li.cantidad || ''} onChange={(e) => { const updated = [...ventaForm.items]; updated[idx] = { ...updated[idx], cantidad: Math.max(1, Number(e.target.value)) }; setVentaForm(p => ({ ...p, items: updated })); }} style={{ width: '55px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
-                              <input type="number" placeholder="$" value={li.precioUnitario || ''} onChange={(e) => { const updated = [...ventaForm.items]; updated[idx] = { ...updated[idx], precioUnitario: Number(e.target.value) }; setVentaForm(p => ({ ...p, items: updated })); }} style={{ width: '65px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
+                              <input type="number" placeholder="Cant" min={1} value={li.cantidad || ''} onChange={(e) => { const updated = [...ventaForm.items]; updated[idx] = { ...updated[idx], cantidad: Math.max(1, Number(e.target.value)) }; setVentaForm(p => ({ ...p, items: updated })); }} style={{ width: '55px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.85rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
+                              <input type="number" placeholder="$" value={li.precioUnitario || ''} onChange={(e) => { const updated = [...ventaForm.items]; updated[idx] = { ...updated[idx], precioUnitario: Number(e.target.value) }; setVentaForm(p => ({ ...p, items: updated })); }} style={{ width: '65px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.85rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
                               {ventaForm.items.length > 1 && <button onClick={() => { const updated = ventaForm.items.filter((_, i) => i !== idx); setVentaForm(p => ({ ...p, items: updated })); }} style={{ background: 'none', border: 'none', color: '#f44336', cursor: 'pointer', padding: '2px', display: 'flex' }}><Icon icon="mdi:close" width={14} /></button>}
                             </div>
                           ))}
-                          <button onClick={() => setVentaForm(p => ({ ...p, items: [...p.items, { productoId: '', cantidad: 1, precioUnitario: 0 }] }))} style={{ padding: '0.25rem 0.5rem', background: 'transparent', border: '1px dashed var(--border)', color: 'var(--text-muted)', borderRadius: '4px', fontSize: '0.65rem', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Icon icon="mdi:plus" width={12} /> Agregar línea</button>
+                          <button onClick={() => setVentaForm(p => ({ ...p, items: [...p.items, { productoId: '', cantidad: 1, precioUnitario: 0 }] }))} style={{ padding: '0.25rem 0.5rem', background: 'transparent', border: '1px dashed var(--border)', color: 'var(--text-muted)', borderRadius: '4px', fontSize: '0.85rem', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Icon icon="mdi:plus" width={12} /> Agregar línea</button>
                         </div>
-                        <div style={{ padding: '0.5rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        <div style={{ padding: '0.5rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                           Total: <b style={{ color: 'var(--text-main)' }}>${ventaForm.items.reduce((s, l) => s + (l.cantidad * l.precioUnitario), 0).toFixed(2)}</b> — {ventaForm.items.filter(l => l.productoId).length} items
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                           <button onClick={() => {
                             if (!ventaForm.clienteId || !ventaForm.items.some(l => l.productoId)) return;
                             const cl = clientes.find(c => c.id === ventaForm.clienteId);
@@ -1677,7 +1673,7 @@ export default function Home() {
                             addActivity('VENTA', `Venta ${newId} creada — ${cl?.empresa} ($${total.toFixed(2)})`);
                             showDemoToast(`Venta ${newId} creada`);
                             setShowModal(null);
-                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Crear Venta</button>
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Crear Venta</button>
                         </div>
                       </div>
                     )}
@@ -1685,32 +1681,32 @@ export default function Home() {
                     {showModal === 'addCompra' && (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                         <div>
-                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Proveedor</label>
-                          <select value={compraForm.proveedor} onChange={(e) => setCompraForm(p => ({ ...p, proveedor: e.target.value }))} style={{ width: '100%', padding: '0.5rem 0.75rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
+                          <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Proveedor</label>
+                          <select value={compraForm.proveedor} onChange={(e) => setCompraForm(p => ({ ...p, proveedor: e.target.value }))} style={{ width: '100%', padding: '0.65rem 1rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.95rem', fontFamily: "'Manrope', sans-serif", outline: 'none', boxSizing: 'border-box' }}>
                             <option value="">Seleccionar proveedor...</option>
                             {[...new Set(productos.map(p => p.proveedor))].map(pr => <option key={pr} value={pr}>{pr}</option>)}
                           </select>
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Líneas de Compra</label>
+                          <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Líneas de Compra</label>
                           {compraForm.items.map((li, idx) => (
                             <div key={idx} style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.3rem', alignItems: 'center' }}>
-                              <select value={li.productoId} onChange={(e) => { const updated = [...compraForm.items]; updated[idx] = { ...updated[idx], productoId: e.target.value }; setCompraForm(p => ({ ...p, items: updated })); }} style={{ flex: 2, padding: '0.4rem 0.5rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none' }}>
+                              <select value={li.productoId} onChange={(e) => { const updated = [...compraForm.items]; updated[idx] = { ...updated[idx], productoId: e.target.value }; setCompraForm(p => ({ ...p, items: updated })); }} style={{ flex: 2, padding: '0.4rem 0.5rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.85rem', fontFamily: "'Manrope', sans-serif", outline: 'none' }}>
                                 <option value="">Producto...</option>
                                 {productos.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
                               </select>
-                              <input type="number" placeholder="Cant" min={1} value={li.cantidad || ''} onChange={(e) => { const updated = [...compraForm.items]; updated[idx] = { ...updated[idx], cantidad: Math.max(1, Number(e.target.value)) }; setCompraForm(p => ({ ...p, items: updated })); }} style={{ width: '55px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
-                              <input type="number" placeholder="$" value={li.precioUnitario || ''} onChange={(e) => { const updated = [...compraForm.items]; updated[idx] = { ...updated[idx], precioUnitario: Number(e.target.value) }; setCompraForm(p => ({ ...p, items: updated })); }} style={{ width: '65px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.7rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
+                              <input type="number" placeholder="Cant" min={1} value={li.cantidad || ''} onChange={(e) => { const updated = [...compraForm.items]; updated[idx] = { ...updated[idx], cantidad: Math.max(1, Number(e.target.value)) }; setCompraForm(p => ({ ...p, items: updated })); }} style={{ width: '55px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.85rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
+                              <input type="number" placeholder="$" value={li.precioUnitario || ''} onChange={(e) => { const updated = [...compraForm.items]; updated[idx] = { ...updated[idx], precioUnitario: Number(e.target.value) }; setCompraForm(p => ({ ...p, items: updated })); }} style={{ width: '65px', padding: '0.4rem', background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.85rem', fontFamily: "'Manrope', sans-serif", outline: 'none', textAlign: 'center' }} />
                               {compraForm.items.length > 1 && <button onClick={() => { const updated = compraForm.items.filter((_, i) => i !== idx); setCompraForm(p => ({ ...p, items: updated })); }} style={{ background: 'none', border: 'none', color: '#f44336', cursor: 'pointer', padding: '2px', display: 'flex' }}><Icon icon="mdi:close" width={14} /></button>}
                             </div>
                           ))}
-                          <button onClick={() => setCompraForm(p => ({ ...p, items: [...p.items, { productoId: '', cantidad: 1, precioUnitario: 0 }] }))} style={{ padding: '0.25rem 0.5rem', background: 'transparent', border: '1px dashed var(--border)', color: 'var(--text-muted)', borderRadius: '4px', fontSize: '0.65rem', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Icon icon="mdi:plus" width={12} /> Agregar línea</button>
+                          <button onClick={() => setCompraForm(p => ({ ...p, items: [...p.items, { productoId: '', cantidad: 1, precioUnitario: 0 }] }))} style={{ padding: '0.25rem 0.5rem', background: 'transparent', border: '1px dashed var(--border)', color: 'var(--text-muted)', borderRadius: '4px', fontSize: '0.85rem', cursor: 'pointer', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Icon icon="mdi:plus" width={12} /> Agregar línea</button>
                         </div>
-                        <div style={{ padding: '0.5rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        <div style={{ padding: '0.5rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                           Total: <b style={{ color: 'var(--text-main)' }}>${compraForm.items.reduce((s, l) => s + (l.cantidad * l.precioUnitario), 0).toFixed(2)}</b> — {compraForm.items.filter(l => l.productoId).length} items
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                          <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '0.5rem', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-main)', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                           <button onClick={() => {
                             if (!compraForm.proveedor || !compraForm.items.some(l => l.productoId)) return;
                             const validItems = compraForm.items.filter(l => l.productoId).map(l => {
@@ -1725,7 +1721,7 @@ export default function Home() {
                             addActivity('COMPRA', `OC ${newId} creada — ${compraForm.proveedor} ($${total.toFixed(2)})`);
                             showDemoToast(`OC ${newId} creada`);
                             setShowModal(null);
-                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Crear OC</button>
+                          }} style={{ flex: 1, padding: '0.5rem', background: 'var(--accent)', color: '#000', border: 'none', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif" }}>Crear OC</button>
                         </div>
                       </div>
                     )}
@@ -1734,7 +1730,7 @@ export default function Home() {
               )}
               {/* ── DEMO TOAST ── */}
               {demoToast && (
-                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'var(--accent)', color: '#000', padding: '0.6rem 1rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'Manrope', sans-serif", boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 100, display: 'flex', alignItems: 'center', gap: '0.4rem', animation: 'fadeIn 0.3s ease' }}>
+                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'var(--accent)', color: '#000', padding: '0.75rem 1.25rem', borderRadius: '6px', fontSize: '0.9rem', fontWeight: 600, fontFamily: "'Manrope', sans-serif", boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 100, display: 'flex', alignItems: 'center', gap: '0.4rem', animation: 'fadeIn 0.3s ease' }}>
                   <Icon icon="mdi:check-circle" width={16} />
                   {demoToast}
                 </div>
@@ -1743,24 +1739,24 @@ export default function Home() {
           </div>
 
           {/* ── Description below the demo (scrollable) ── */}
-          <div style={{ overflowY: 'auto', maxHeight: '40vh', padding: '2.5rem 0 0', borderTop: '1px solid var(--border)' }}>
+          <div style={{ overflowY: 'auto', maxHeight: '45vh', padding: '2rem 0 0', borderTop: '1px solid var(--border)' }}>
             <div style={{ maxWidth: '900px', margin: '0 auto' }}>
               {/* Intro */}
               <div style={{ marginBottom: '2rem' }}>
-                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.8rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Software a Medida</p>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>Sistema de Gestión Empresarial Integral</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.7 }}>Plataforma 100% personalizable, diseñada en Next.js con React 19, que se adapta a la operativa de cualquier empresa. Desde inventario y clientes hasta pedidos y órdenes de compra, todo funciona en tiempo real, desde cualquier dispositivo.</p>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Software a Medida</p>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>Sistema de Gestión Empresarial Integral</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.7 }}>Plataforma 100% personalizable, diseñada en Next.js con React 19, que se adapta a la operativa de cualquier empresa. Desde inventario y clientes hasta pedidos y órdenes de compra, todo funciona en tiempo real, desde cualquier dispositivo.</p>
               </div>
               {/* Caso de Éxito */}
               <div style={{ padding: '1.5rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)', marginBottom: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.75rem' }}>
                   <Icon icon="mdi:checkbox-marked-circle" width={20} style={{ color: 'var(--accent)' }} />
                   <div>
-                    <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>Caso de Éxito: Centro Logístico Frimaral V2</h4>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Plataforma productiva en uso real — <a href="https://planilladecarga.github.io/centrologisticofrimaralV2/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>Ver demo en vivo →</a></p>
+                    <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '1rem', color: 'var(--text-main)' }}>Caso de Éxito: Centro Logístico Frimaral V2</h4>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Plataforma productiva en uso real — <a href="https://planilladecarga.github.io/centrologisticofrimaralV2/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>Ver demo en vivo →</a></p>
                   </div>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', lineHeight: 1.7, marginBottom: '0.5rem' }}>Sistema completo de gestión logística con inventario por contenedores, escáner de barras, pedidos con reserva de stock, despachos con lectura de PDFs, monitoreo de temperatura, auth por roles, exportación Excel y PWA offline. La misma arquitectura se adapta a cualquier rubro: distribuidoras, tiendas, talleres, etc.</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.7, marginBottom: '0.5rem' }}>Sistema completo de gestión logística con inventario por contenedores, escáner de barras, pedidos con reserva de stock, despachos con lectura de PDFs, monitoreo de temperatura, auth por roles, exportación Excel y PWA offline. La misma arquitectura se adapta a cualquier rubro: distribuidoras, tiendas, talleres, etc.</p>
               </div>
               {/* Personalización */}
               <div style={{ marginBottom: '2rem' }}>
@@ -1781,8 +1777,8 @@ export default function Home() {
                     <div key={item.title} style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
                       <Icon icon={item.icon} width={16} style={{ color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
                       <div>
-                        <p style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.15rem' }}>{item.title}</p>
-                        <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</p>
+                        <p style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.15rem' }}>{item.title}</p>
+                        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1806,7 +1802,7 @@ export default function Home() {
                   ].map((tech) => (
                     <div key={tech.label} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 0.6rem', background: 'var(--surface-alt)', borderRadius: '4px', border: '1px solid var(--border)' }}>
                       <Icon icon={tech.icon} width={16} style={{ color: 'var(--accent)' }} />
-                      <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-main)' }}>{tech.label}</span>
+                      <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-main)' }}>{tech.label}</span>
                     </div>
                   ))}
                 </div>
@@ -1828,8 +1824,8 @@ export default function Home() {
                     <div key={item.title} style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem', background: 'var(--surface)', borderRadius: '4px', border: '1px solid var(--border)' }}>
                       <Icon icon={item.icon} width={16} style={{ color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
                       <div>
-                        <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.15rem' }}>{item.title}</p>
-                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</p>
+                        <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.15rem' }}>{item.title}</p>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1837,14 +1833,13 @@ export default function Home() {
               </div>
               {/* CTA */}
               <div style={{ textAlign: 'center', padding: '1.5rem', background: 'var(--surface-alt)', borderRadius: '6px', border: '1px solid var(--border)' }}>
-                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1rem', color: 'var(--text-main)', marginBottom: '0.5rem' }}>¿Tu empresa necesita un sistema así?</p>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>Contanos tu operación y te diseñamos una propuesta a medida. Software real que funciona desde el día uno.</p>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: 'var(--text-main)', marginBottom: '0.5rem' }}>¿Tu empresa necesita un sistema así?</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>Contanos tu operación y te diseñamos una propuesta a medida. Software real que funciona desde el día uno.</p>
                 <a href="#contacto" className="btn-primary" onClick={(e) => { e.preventDefault(); setDemoExpanded(false); setTimeout(() => document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ display: 'inline-flex', fontSize: '0.85rem', padding: '0.6rem 1.2rem' }}>
                   Solicitar Propuesta <Icon icon="mdi:arrow-right" width={16} />
                 </a>
               </div>
             </div>
-          </div>
           </div>
         </div>
       )}
