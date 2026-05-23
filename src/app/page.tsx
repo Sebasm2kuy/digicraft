@@ -33,9 +33,9 @@ const portfolioItems = [
     slug: 'tarjetas-virtuales',
     title: 'Tarjetas Virtuales Premium',
     category: 'Invitación Virtual',
-    isVideo: true,
-    height: 'row-span-2',
-    aspect: 'aspect-[9/16]',
+    isVideo: false,
+    height: '',
+    aspect: 'aspect-[4/3]',
     imageSeed: 'digicraft-tarjetas',
   },
   {
@@ -91,16 +91,6 @@ const portfolioItems = [
     height: '',
     aspect: 'aspect-[4/3]',
     imageSeed: 'digicraft-fashion',
-  },
-  {
-    slug: 'invitacion-15-anos',
-    title: 'Invitación 15 Años',
-    category: 'Invitación Virtual',
-    isVideo: true,
-    height: '',
-    aspect: 'aspect-[9/16]',
-    imageSeed: 'digicraft-quince',
-    tiktokUrl: 'https://www.tiktok.com/@laultimaesfera/video/7641569299802508562',
   },
 ];
 
@@ -1001,14 +991,7 @@ export default function Home() {
           <h2 className="heading-lg reveal reveal-delay-1">Portfolio</h2>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gridAutoRows: '280px',
-            gap: '1rem',
-          }}
-        >
+        <div className="portfolio-grid">
           {/* TikTok — Invitación 15 Años (dentro del grid) */}
           <div
             className="reveal"
@@ -1070,56 +1053,78 @@ export default function Home() {
           ))}
           {/* ── ERP Mini Card (Portfolio) ── */}
           <div
-            className="reveal"
+            className="reveal erp-card"
             onClick={() => setDemoExpanded(true)}
           style={{
             gridColumn: 'span 2',
-            gridRow: 'span 1',
+            gridRow: 'span 2',
             borderRadius: '8px',
             overflow: 'hidden',
             border: '1px solid var(--border)',
             background: 'var(--surface-alt)',
             cursor: 'pointer',
             position: 'relative',
-            transition: 'border-color 0.3s, transform 0.2s',
+            transition: 'border-color 0.3s, transform 0.3s, box-shadow 0.3s',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(212,175,55,0.15)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
         >
           {/* Mini preview */}
-          <div style={{ height: '220px', background: 'var(--surface)', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px', background: 'var(--surface-alt)', borderBottom: '1px solid var(--border)' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
-              <span style={{ marginLeft: '8px', fontSize: '0.55rem', color: 'var(--text-muted)', fontFamily: "'Manrope', sans-serif" }}>erp.digicraft.studio</span>
-            </div>
-            <div style={{ flex: 1, display: 'flex', padding: '8px 10px', gap: '8px' }}>
-              {/* Fake sidebar */}
-              <div style={{ width: '55px', background: 'var(--surface-alt)', borderRadius: '3px', padding: '6px 4px', display: 'flex', flexDirection: 'column', gap: '4px', borderRight: '1px solid var(--border)' }}>
-                {[0,1,2,3,4].map(i => (
-                  <div key={i} style={{ height: '4px', borderRadius: '2px', background: i === 0 ? 'var(--accent)' : 'var(--border)', opacity: i === 0 ? 1 : 0.5 }} />
-                ))}
+          <div style={{ flex: 1, background: 'var(--surface)', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden', minHeight: '320px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 14px', background: 'var(--surface-alt)', borderBottom: '1px solid var(--border)' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f57' }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#febc2e' }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#28c840' }} />
+              <span style={{ marginLeft: '10px', fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: "'Manrope', sans-serif" }}>erp.digicraft.studio</span>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px', padding: '2px 8px', background: 'rgba(212,175,55,0.1)', borderRadius: '3px' }}>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#D4AF37', animation: 'pulse-border 2s infinite' }} />
+                <span style={{ fontSize: '0.6rem', color: 'var(--accent)', fontWeight: 600, fontFamily: "'Syne', sans-serif" }}>LIVE</span>
               </div>
-              {/* Fake KPI grid */}
-              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
-                {[0,1,2,3,4,5].map(i => (
-                  <div key={i} style={{ background: 'var(--surface-alt)', borderRadius: '4px', padding: '6px 7px', border: '1px solid var(--border)' }}>
-                    <div style={{ height: '3px', width: '60%', borderRadius: '2px', background: 'var(--border)', marginBottom: '5px' }} />
-                    <div style={{ height: '8px', width: '80%', borderRadius: '2px', background: 'var(--accent)', opacity: 0.6 }} />
+            </div>
+            <div style={{ flex: 1, display: 'flex', padding: '12px 14px', gap: '10px' }}>
+              {/* Fake sidebar */}
+              <div style={{ width: '70px', background: 'var(--surface-alt)', borderRadius: '4px', padding: '8px 6px', display: 'flex', flexDirection: 'column', gap: '6px', borderRight: '1px solid var(--border)' }}>
+                <div style={{ height: '5px', width: '80%', borderRadius: '2px', background: 'var(--accent)', opacity: 0.8, margin: '0 auto' }} />
+                {[0,1,2,3].map(i => (
+                  <div key={i} style={{ height: '5px', borderRadius: '2px', background: 'var(--border)', opacity: 0.6, width: '70%', margin: '0 auto' }} />
+                ))}
+                <div style={{ marginTop: 'auto', height: '14px', width: '28px', borderRadius: '50%', background: 'var(--accent-dim)', margin: 'auto auto 0 auto' }} />
+              </div>
+              {/* Fake KPI grid + content */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+                  {[0,1,2].map(i => (
+                    <div key={i} style={{ background: 'var(--surface-alt)', borderRadius: '6px', padding: '10px 8px', border: '1px solid var(--border)' }}>
+                      <div style={{ height: '4px', width: '50%', borderRadius: '2px', background: 'var(--border)', marginBottom: '8px' }} />
+                      <div style={{ height: '12px', width: '70%', borderRadius: '2px', background: 'var(--accent)', opacity: 0.5 }} />
+                    </div>
+                  ))}
+                </div>
+                {/* Fake table rows */}
+                {[0,1,2,3].map(i => (
+                  <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <div style={{ height: '4px', flex: 3, borderRadius: '2px', background: i % 2 === 0 ? 'var(--border)' : 'rgba(255,255,255,0.03)', opacity: 0.5 }} />
+                    <div style={{ height: '4px', width: '50px', borderRadius: '2px', background: 'var(--border)', opacity: 0.4 }} />
+                    <div style={{ height: '18px', width: '50px', borderRadius: '3px', background: i === 0 ? 'rgba(76,175,80,0.1)' : i === 1 ? 'rgba(255,152,0,0.1)' : 'rgba(33,150,243,0.1)' }} />
                   </div>
                 ))}
               </div>
             </div>
           </div>
           {/* Info */}
-          <div style={{ padding: '0.85rem 0.75rem' }}>
-            <span style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--accent)' }}>Desarrollo Web</span>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '0.2rem', marginBottom: '0.4rem' }}>Sistema ERP a Medida</h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>Software de gestión empresarial con Next.js, Firebase y PWA. CRUD completo, roles, exportación.</p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.5rem', color: 'var(--accent)', fontSize: '0.75rem', fontWeight: 600 }}>
-              <Icon icon="mdi:arrow-right-circle" width={16} />
-              Ver Demo Interactiva
+          <div style={{ padding: '1.1rem 1rem', borderTop: '1px solid var(--border)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <span style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--accent)' }}>Software a Medida</span>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)', marginTop: '0.25rem', marginBottom: '0.4rem' }}>Sistema de Gestión ERP</h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>Plataforma 100% personalizable con Next.js, Firebase y PWA. CRUD completo, roles, exportación y más.</p>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem', color: 'var(--accent)', fontSize: '0.8rem', fontWeight: 600, flexShrink: 0, marginLeft: '1rem' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'var(--accent-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Icon icon="mdi:play" width={20} style={{ color: 'var(--accent)' }} />
+                </div>
+                <span style={{ fontSize: '0.65rem' }}>Demo</span>
+              </div>
             </div>
           </div>
         </div>
