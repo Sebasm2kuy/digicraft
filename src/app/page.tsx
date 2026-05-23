@@ -206,7 +206,18 @@ export default function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>(INITIAL_PEDIDOS);
   const [ordenesCompra, setOrdenesCompra] = useState<OrdenCompra[]>(INITIAL_ORDENES_COMPRA);
   const [activityLog, setActivityLog] = useState<ActivityEntry[]>(INITIAL_ACTIVITY);
+  const [demoExpanded, setDemoExpanded] = useState(false);
   const [demoTab, setDemoTab] = useState<'dashboard' | 'clientes' | 'productos' | 'ventas' | 'compras' | 'actividad'>('dashboard');
+  
+  /* Lock body scroll when demo is expanded */
+  useEffect(() => {
+    if (demoExpanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [demoExpanded]);
   const [showModal, setShowModal] = useState<string | null>(null);
   const [demoToast, setDemoToast] = useState('');
   const [clienteSearch, setClienteSearch] = useState('');
@@ -1057,18 +1068,87 @@ export default function Home() {
               </div>
             </a>
           ))}
-        </div>
-
-        {/* Demo Interactive Subsection - ERP Dashboard */}
-        <div className="reveal" style={{ marginTop: '5rem' }}>
-          <div style={{ border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden' }}>
-            <div className="demo-topbar">
-              <div className="demo-dot" style={{ background: '#ff5f57' }} />
-              <div className="demo-dot" style={{ background: '#febc2e' }} />
-              <div className="demo-dot" style={{ background: '#28c840' }} />
-              <div className="demo-url">erp.digicraft.studio</div>
+          {/* ── ERP Mini Card (Portfolio) ── */}
+          <div
+            className="reveal"
+            onClick={() => setDemoExpanded(true)}
+          style={{
+            gridColumn: 'span 1',
+            gridRow: 'span 1',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            border: '1px solid var(--border)',
+            background: 'var(--surface-alt)',
+            cursor: 'pointer',
+            position: 'relative',
+            transition: 'border-color 0.3s, transform 0.2s',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+        >
+          {/* Mini preview */}
+          <div style={{ height: '180px', background: 'var(--surface)', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px', background: 'var(--surface-alt)', borderBottom: '1px solid var(--border)' }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
+              <span style={{ marginLeft: '8px', fontSize: '0.55rem', color: 'var(--text-muted)', fontFamily: "'Manrope', sans-serif" }}>erp.digicraft.studio</span>
             </div>
-            <div style={{ display: 'flex', minHeight: '520px', background: 'var(--surface)', position: 'relative' }}>
+            <div style={{ flex: 1, display: 'flex', padding: '8px 10px', gap: '8px' }}>
+              {/* Fake sidebar */}
+              <div style={{ width: '55px', background: 'var(--surface-alt)', borderRadius: '3px', padding: '6px 4px', display: 'flex', flexDirection: 'column', gap: '4px', borderRight: '1px solid var(--border)' }}>
+                {[0,1,2,3,4].map(i => (
+                  <div key={i} style={{ height: '4px', borderRadius: '2px', background: i === 0 ? 'var(--accent)' : 'var(--border)', opacity: i === 0 ? 1 : 0.5 }} />
+                ))}
+              </div>
+              {/* Fake KPI grid */}
+              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
+                {[0,1,2,3,4,5].map(i => (
+                  <div key={i} style={{ background: 'var(--surface-alt)', borderRadius: '3px', padding: '4px 5px' }}>
+                    <div style={{ height: '3px', width: '60%', borderRadius: '2px', background: 'var(--border)', marginBottom: '4px' }} />
+                    <div style={{ height: '7px', width: '80%', borderRadius: '2px', background: 'var(--accent)', opacity: 0.6 }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* Info */}
+          <div style={{ padding: '0.75rem' }}>
+            <span style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--accent)' }}>Desarrollo Web</span>
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '0.2rem', marginBottom: '0.3rem' }}>Sistema ERP a Medida</h3>
+            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>Software de gestión empresarial con Next.js, Firebase y PWA. CRUD completo, roles, exportación.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.5rem', color: 'var(--accent)', fontSize: '0.75rem', fontWeight: 600 }}>
+              <Icon icon="mdi:arrow-right-circle" width={16} />
+              Ver Demo Interactiva
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+
+      {/* ── DEMO EXPANDED (Full Interactive ERP) ── */}
+      {demoExpanded && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', animation: 'fadeIn 0.25s ease' }} onClick={() => setDemoExpanded(false)} onKeyDown={(e) => { if (e.key === 'Escape') setDemoExpanded(false); }} tabIndex={-1} ref={(el) => el?.focus()}>
+          <div style={{ width: '100%', maxWidth: '1100px', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            {/* Close button */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <div>
+                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: '#fff' }}>Sistema de Gestión Empresarial — Demo Interactiva</p>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>Explorá los módulos, creá pedidos, gestioná stock — todo funciona en tiempo real</p>
+              </div>
+              <button onClick={() => setDemoExpanded(false)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', color: '#fff', cursor: 'pointer', padding: '0.5rem 1rem', fontSize: '0.8rem', fontFamily: "'Manrope', sans-serif", display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Icon icon="mdi:close" width={16} /> Cerrar
+              </button>
+            </div>
+            {/* Demo window */}
+            <div style={{ border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
+              <div className="demo-topbar">
+                <div className="demo-dot" style={{ background: '#ff5f57' }} />
+                <div className="demo-dot" style={{ background: '#febc2e' }} />
+                <div className="demo-dot" style={{ background: '#28c840' }} />
+                <div className="demo-url">erp.digicraft.studio</div>
+              </div>
+              <div style={{ display: 'flex', height: '560px', background: 'var(--surface)', position: 'relative' }}>
               {/* Mini Sidebar */}
               <div style={{ width: '200px', background: 'var(--surface-alt)', borderRight: '1px solid var(--border)', padding: '1rem 0', flexShrink: 0 }}>
                 <div style={{ padding: '0 1rem 1rem', borderBottom: '1px solid var(--border)', marginBottom: '0.75rem' }}>
@@ -1656,8 +1736,9 @@ export default function Home() {
               )}
             </div>
           </div>
+          </div>
         </div>
-      </section>
+      )}
 
       {/* ════════════════════════════════════════════════════════════════
           SOFTWARE DESCRIPTION SECTION
