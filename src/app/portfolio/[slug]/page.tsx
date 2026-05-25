@@ -9,6 +9,8 @@ const projects: Record<string, { slug: string }> = {
   'fashion-editorial': { slug: 'fashion-editorial' },
   'tarjetas-virtuales': { slug: 'tarjetas-virtuales' },
   'cuidar-contigo': { slug: 'cuidar-contigo' },
+  'frimaral-logistica': { slug: 'frimaral-logistica' },
+  'invitacion-virtual': { slug: 'invitacion-virtual' },
 };
 
 export function generateStaticParams() {

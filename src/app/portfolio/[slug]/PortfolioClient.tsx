@@ -10,6 +10,7 @@ interface PortfolioProject {
   description: string;
   category: string;
   liveUrl?: string;
+  liveLabel?: string;
 }
 
 const projects: Record<string, PortfolioProject> = {
@@ -69,13 +70,31 @@ const projects: Record<string, PortfolioProject> = {
     category: 'App Móvil',
     description: 'Aplicación de cuidado y salud personal con seguimiento de bienestar, recordatorios de medicamentos y contacto de emergencia. Diseñada para cuidadores y personas que necesitan atención personalizada.',
     liveUrl: 'https://cuidar-contigo-app.vercel.app/',
+    liveLabel: 'Ver App',
+  },
+  'frimaral-logistica': {
+    slug: 'frimaral-logistica',
+    title: 'Centro Logístico Frimaral V2',
+    icon: 'mdi:truck-delivery',
+    category: 'Software a Medida',
+    description: 'Sistema de gestión logística completa con control de inventario, despachos, monitoreo de temperatura en tiempo real, registro de contenedores y gestión de pedidos. Desarrollado para optimizar las operaciones del Centro Logístico Frimaral.',
+    liveUrl: 'https://github.com/planilladecarga/centrologisticofrimaralV2',
+    liveLabel: 'Ver Repo',
+  },
+  'invitacion-virtual': {
+    slug: 'invitacion-virtual',
+    title: 'Invitación Virtual TikTok',
+    icon: 'ic:baseline-tiktok',
+    category: 'Invitación Virtual',
+    description: 'Invitaciones digitales elegantes e interactivas para todo tipo de eventos. Nuestro trabajo de invitaciones virtuales ha sido destacado en TikTok con gran recepción del público.',
+    liveUrl: 'https://www.tiktok.com/@digicraft.studio/video/7641569299802508562',
+    liveLabel: 'Ver Video',
   },
 };
 
 export default function PortfolioClient({ slug }: { slug: string }) {
   const project = projects[slug];
 
-  // Redirect to home if slug doesn't exist
   useEffect(() => {
     if (!project) {
       window.location.href = '/digicraft/#portfolio';
@@ -87,143 +106,123 @@ export default function PortfolioClient({ slug }: { slug: string }) {
   }
 
   return (
-    <>
-      {/* Noise texture */}
-      <div className="noise" aria-hidden="true">
-        <svg>
-          <filter id="noise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noise)" />
-        </svg>
-      </div>
-
-      {/* Page background */}
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      {/* Background gradient effect */}
       <div
         style={{
-          minHeight: '100vh',
-          background: 'var(--bg)',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '800px',
+          height: '800px',
+          background: 'radial-gradient(circle, rgba(200,162,67,0.06) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+
+      {/* Content */}
+      <div
+        style={{
           position: 'relative',
-          overflow: 'hidden',
+          zIndex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          padding: '2rem 1.5rem',
+          textAlign: 'center',
         }}
       >
-        {/* Radial gradient gold effect */}
-        <div
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '800px',
-            height: '800px',
-            background: 'radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-
-        {/* Content */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            padding: '2rem 1.5rem',
-            textAlign: 'center',
-          }}
-        >
-          {/* Back to portfolio link */}
-          <div className="fade-in-up" style={{ marginBottom: '3rem' }}>
-            <a
-              href="/digicraft/#portfolio"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                color: 'var(--text-muted)',
-                fontSize: '0.85rem',
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 500,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                transition: 'color 0.3s',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
-            >
-              <Icon icon="mdi:arrow-left" width={18} />
-              Volver al Portfolio
-            </a>
-          </div>
-
-          {/* Icon */}
-          <div className="fade-in-up fade-in-up-delay-1 pulse-border" style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
-            <Icon icon={project.icon} width={36} style={{ color: 'var(--accent)' }} />
-          </div>
-
-          {/* Label */}
-          <p className="label fade-in-up fade-in-up-delay-1" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-            DigiCraft Studio — Proyecto
-          </p>
-
-          {/* Title */}
-          <h1 className="heading-lg fade-in-up fade-in-up-delay-2" style={{ color: 'var(--text-main)', marginBottom: '1.5rem', maxWidth: '600px' }}>
-            {project.title}
-          </h1>
-
-          {/* Live link or coming soon */}
-          {project.liveUrl ? (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary fade-in-up fade-in-up-delay-2"
-              style={{ marginBottom: '2rem' }}
-            >
-              Ver App en Vivo <Icon icon="mdi:open-in-new" width={18} />
-            </a>
-          ) : (
-            <p className="shimmer-text fade-in-up fade-in-up-delay-2" style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.25rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '2rem' }}>
-              Próximamente
-            </p>
-          )}
-
-          {/* Description */}
-          <p className="fade-in-up fade-in-up-delay-3" style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '550px', marginBottom: '2.5rem' }}>
-            {project.description}
-          </p>
-
-          {/* Gold divider */}
-          <div className="fade-in-up fade-in-up-delay-3" style={{ width: '60px', height: '2px', background: 'var(--accent)', marginBottom: '2.5rem' }} />
-
-          {/* Category tag */}
-          <span className="fade-in-up fade-in-up-delay-4" style={{ display: 'inline-block', padding: '0.5rem 1.25rem', border: '1px solid var(--border)', borderRadius: '4px', fontFamily: "'Syne', sans-serif", fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent)' }}>
-            {project.category}
-          </span>
+        {/* Back link */}
+        <div className="fade-in-up" style={{ marginBottom: '3rem' }}>
+          <a
+            href="/digicraft/#portfolio"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              color: 'var(--text-muted)',
+              fontSize: '0.85rem',
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              transition: 'color 0.3s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+          >
+            <Icon icon="mdi:arrow-left" width={18} />
+            Volver al Portfolio
+          </a>
         </div>
 
-        {/* Brand at bottom */}
-        <div
-          className="fade-in-up fade-in-up-delay-4"
-          style={{
-            position: 'fixed',
-            bottom: '2rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 2,
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 700,
-            fontSize: '0.9rem',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          Digi<span style={{ color: 'var(--accent)' }}>Craft</span> Studio
+        {/* Icon */}
+        <div className="fade-in-up fade-in-up-delay-1 pulse-border" style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
+          <Icon icon={project.icon} width={36} style={{ color: 'var(--accent)' }} />
         </div>
+
+        {/* Label */}
+        <p className="label fade-in-up fade-in-up-delay-1" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+          DigiCraft Studio — Proyecto
+        </p>
+
+        {/* Title */}
+        <h1 className="heading-lg fade-in-up fade-in-up-delay-2" style={{ color: 'var(--text-main)', marginBottom: '1.5rem', maxWidth: '600px' }}>
+          {project.title}
+        </h1>
+
+        {/* Live link or coming soon */}
+        {project.liveUrl ? (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary fade-in-up fade-in-up-delay-2"
+            style={{ marginBottom: '2rem' }}
+          >
+            {project.liveLabel || 'Ver en Vivo'} <Icon icon="mdi:open-in-new" width={18} />
+          </a>
+        ) : (
+          <p className="shimmer-text fade-in-up fade-in-up-delay-2" style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.25rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '2rem' }}>
+            Próximamente
+          </p>
+        )}
+
+        {/* Description */}
+        <p className="fade-in-up fade-in-up-delay-3" style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '550px', marginBottom: '2.5rem' }}>
+          {project.description}
+        </p>
+
+        {/* Divider */}
+        <div className="fade-in-up fade-in-up-delay-3" style={{ width: '60px', height: '2px', background: 'var(--accent)', marginBottom: '2.5rem' }} />
+
+        {/* Category tag */}
+        <span className="fade-in-up fade-in-up-delay-4" style={{ display: 'inline-block', padding: '0.5rem 1.25rem', border: '1px solid var(--border)', borderRadius: 'var(--radius-pill)', fontFamily: "'Syne', sans-serif", fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent)' }}>
+          {project.category}
+        </span>
       </div>
-    </>
+
+      {/* Brand at bottom */}
+      <div
+        className="fade-in-up fade-in-up-delay-4"
+        style={{
+          position: 'fixed',
+          bottom: '2rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 2,
+          fontFamily: "'Syne', sans-serif",
+          fontWeight: 700,
+          fontSize: '0.9rem',
+          letterSpacing: '-0.02em',
+        }}
+      >
+        Digi<span style={{ color: 'var(--accent)' }}>Craft</span> Studio
+      </div>
+    </div>
   );
 }
