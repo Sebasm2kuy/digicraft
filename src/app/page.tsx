@@ -51,9 +51,9 @@ const portfolioItems = [
     category: 'Software a Medida',
     icon: 'mdi:truck-delivery',
     imageSeed: 'digicraft-frimaral',
-    liveUrl: 'https://github.com/planilladecarga/centrologisticofrimaralV2',
+    liveUrl: 'https://planilladecarga.github.io/centrologisticofrimaralV2/',
     description: 'Sistema de gestión logística con control de inventario, despachos y monitoreo de temperatura en tiempo real.',
-    liveLabel: 'Ver Repo',
+    liveLabel: 'Ver App',
   },
   {
     slug: 'invitacion-virtual',
@@ -391,31 +391,6 @@ export default function Home() {
         Mensaje enviado con éxito
       </div>
 
-      {/* ─── Date + Visit Counter Bar ─── */}
-      <div className="top-info-bar">
-        <div className="top-info-left">
-          <Icon icon="mdi:calendar" width={14} style={{ color: 'var(--accent)' }} />
-          <span>{todayDate}</span>
-        </div>
-        <div className="top-info-right">
-          {visitCounts && (
-            <>
-              <div className="visit-stat">
-                <Icon icon="mdi:eye-outline" width={14} />
-                <span className="visit-label">Hoy:</span>
-                <span className="visit-number">{visitCounts.daily}</span>
-              </div>
-              <div className="visit-divider" />
-              <div className="visit-stat">
-                <Icon icon="mdi:account-group-outline" width={14} />
-                <span className="visit-label">Total:</span>
-                <span className="visit-number">{visitCounts.total}</span>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-
       {/* ─── Navbar ─── */}
       <nav id="navbar" ref={navbarRef}>
         <a href="#hero" onClick={(e) => scrollTo(e, '#hero')} style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.3rem', letterSpacing: '-0.02em' }}>
@@ -516,7 +491,7 @@ export default function Home() {
           <p className="label reveal" style={{ color: 'var(--accent)', marginBottom: '1.5rem' }}>
             Estudio Digital Creativo
           </p>
-          <h1 className="display-xl reveal reveal-delay-1" style={{ marginBottom: '2rem' }}>
+          <h1 className="display-xl reveal reveal-delay-1" style={{ marginBottom: '2rem', fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
             Creamos / Lo Digital
           </h1>
           <p className="reveal reveal-delay-2" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '550px', margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
@@ -628,7 +603,7 @@ export default function Home() {
 
             /* ── App with live embed (phone frame) ── */
             if ('liveUrl' in item && item.liveUrl && !('isTikTokEmbed' in item)) {
-              const isEmbeddable = !item.liveUrl.includes('github.com');
+              const isEmbeddable = !item.liveUrl.includes('github.com/') && !item.liveUrl.includes('github.com/repos');
               return (
                 <div key={item.slug} className={`portfolio-card app-showcase-card reveal ${delayClass}`}>
                   <div className="portfolio-card-body">
