@@ -8,7 +8,7 @@ const projects: Record<string, { slug: string }> = {
   'cafe-artesanal': { slug: 'cafe-artesanal' },
   'fashion-editorial': { slug: 'fashion-editorial' },
   'tarjetas-virtuales': { slug: 'tarjetas-virtuales' },
-  'invitacion-15-anos': { slug: 'invitacion-15-anos' },
+  'cuidar-contigo': { slug: 'cuidar-contigo' },
 };
 
 export function generateStaticParams() {

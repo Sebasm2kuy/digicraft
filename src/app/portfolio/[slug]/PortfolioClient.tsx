@@ -9,6 +9,7 @@ interface PortfolioProject {
   icon: string;
   description: string;
   category: string;
+  liveUrl?: string;
 }
 
 const projects: Record<string, PortfolioProject> = {
@@ -60,6 +61,14 @@ const projects: Record<string, PortfolioProject> = {
     icon: 'mdi:card-account-details',
     category: 'Invitación Virtual',
     description: 'Tarjetas de presentación digitales interactivas con animaciones personalizadas y diseño exclusivo.',
+  },
+  'cuidar-contigo': {
+    slug: 'cuidar-contigo',
+    title: 'Cuidar Contigo',
+    icon: 'mdi:heart-pulse',
+    category: 'App Móvil',
+    description: 'Aplicación de cuidado y salud personal con seguimiento de bienestar, recordatorios de medicamentos y contacto de emergencia. Diseñada para cuidadores y personas que necesitan atención personalizada.',
+    liveUrl: 'https://cuidar-contigo-app.vercel.app/',
   },
 };
 
@@ -166,10 +175,22 @@ export default function PortfolioClient({ slug }: { slug: string }) {
             {project.title}
           </h1>
 
-          {/* Shimmer coming soon */}
-          <p className="shimmer-text fade-in-up fade-in-up-delay-2" style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.25rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '2rem' }}>
-            Próximamente
-          </p>
+          {/* Live link or coming soon */}
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary fade-in-up fade-in-up-delay-2"
+              style={{ marginBottom: '2rem' }}
+            >
+              Ver App en Vivo <Icon icon="mdi:open-in-new" width={18} />
+            </a>
+          ) : (
+            <p className="shimmer-text fade-in-up fade-in-up-delay-2" style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.25rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '2rem' }}>
+              Próximamente
+            </p>
+          )}
 
           {/* Description */}
           <p className="fade-in-up fade-in-up-delay-3" style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '550px', marginBottom: '2.5rem' }}>

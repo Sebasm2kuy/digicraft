@@ -18,6 +18,7 @@ const searchData = [
   { title: 'Café Artesanal', section: '/digicraft/portfolio/cafe-artesanal', icon: 'mdi:coffee' },
   { title: 'Fashion Editorial', section: '/digicraft/portfolio/fashion-editorial', icon: 'mdi:hanger' },
   { title: 'Tarjetas Virtuales Premium', section: '/digicraft/portfolio/tarjetas-virtuales', icon: 'mdi:card-account-details' },
+  { title: 'Cuidar Contigo', section: '/digicraft/portfolio/cuidar-contigo', icon: 'mdi:heart-pulse' },
   { title: 'Plan Starter', section: '#precios', icon: 'mdi:rocket-launch' },
   { title: 'Plan Pro', section: '#precios', icon: 'mdi:star' },
   { title: 'Plan Premium', section: '#precios', icon: 'mdi:crown' },
@@ -91,6 +92,17 @@ const portfolioItems = [
     height: '',
     aspect: 'aspect-[4/3]',
     imageSeed: 'digicraft-fashion',
+  },
+  {
+    slug: 'cuidar-contigo',
+    title: 'Cuidar Contigo',
+    category: 'App Móvil',
+    isVideo: false,
+    height: '',
+    aspect: 'aspect-[4/3]',
+    imageSeed: 'digicraft-cuidar',
+    useLocalImage: true,
+    localImage: '/cuidar-contigo-preview.png',
   },
 ];
 
@@ -906,9 +918,12 @@ export default function Home() {
               }}
             >
               <img
-                src={`https://picsum.photos/seed/${item.imageSeed}/600/450`}
+                src={item.useLocalImage ? (item as any).localImage : `https://picsum.photos/seed/${item.imageSeed}/600/450`}
                 alt={item.title}
                 loading="lazy"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(60%) brightness(0.85)', transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.filter = 'grayscale(0%) brightness(1)'; e.currentTarget.style.transform = 'scale(1.06)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.filter = 'grayscale(60%) brightness(0.85)'; e.currentTarget.style.transform = 'scale(1)'; }}
               />
               {item.isVideo && (
                 <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(212,175,55,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2 }}>
