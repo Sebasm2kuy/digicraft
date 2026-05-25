@@ -102,7 +102,7 @@ const portfolioItems = [
     aspect: 'aspect-[4/3]',
     imageSeed: 'digicraft-cuidar',
     useLocalImage: true,
-    localImage: '/cuidar-contigo-preview.png',
+    localImage: '/digicraft/cuidar-contigo-preview.png',
   },
 ];
 
@@ -950,37 +950,20 @@ export default function Home() {
               Demo en Video
             </h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', maxWidth: '600px' }}>
-              Mira el Centro Logístico Frimaral V2 en acción. Compatible con YouTube y TikTok.
+              Mira nuestra invitación virtual en acción.
             </p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-            {/* YouTube Embed */}
-            <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)' }}>
-                <Icon icon="mdi:youtube" width={20} style={{ color: '#FF0000' }} />
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>YouTube</span>
-              </div>
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-                <iframe
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                  title="Demo Centro Logístico"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-            {/* TikTok Embed */}
+            {/* TikTok Embed - Invitación Virtual */}
             <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)' }}>
                 <Icon icon="ic:baseline-tiktok" width={20} style={{ color: '#00f2ea' }} />
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>TikTok</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', fontFamily: "'Syne', sans-serif" }}>TikTok — Invitación Virtual</span>
               </div>
-              <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '200px', textAlign: 'center' }}>
-                <Icon icon="ic:baseline-tiktok" width={48} style={{ color: 'var(--text-muted)', marginBottom: '0.75rem', opacity: 0.5 }} />
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Video de TikTok</p>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', opacity: 0.7 }}>Usa <code style={{ background: 'var(--surface)', padding: '0.1rem 0.3rem', borderRadius: '3px', fontSize: '0.6rem' }}>{'<blockquote class="tiktok-embed">'}</code> para incrustar</p>
-              </div>
+              <blockquote className="tiktok-embed" cite="https://www.tiktok.com/@digicraft.studio/video/7641569299802508562" data-video-id="7641569299802508562" style={{ maxWidth: '100%', minWidth: '280px' }}>
+                <section> </section>
+              </blockquote>
+              <script async src="https://www.tiktok.com/embed.js" />
             </div>
           </div>
         </div>
