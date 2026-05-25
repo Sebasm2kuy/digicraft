@@ -391,6 +391,31 @@ export default function Home() {
         Mensaje enviado con éxito
       </div>
 
+      {/* ─── Date + Visit Counter Bar ─── */}
+      <div className="top-info-bar">
+        <div className="top-info-left">
+          <Icon icon="mdi:calendar" width={14} style={{ color: 'var(--accent)' }} />
+          <span>{todayDate}</span>
+        </div>
+        <div className="top-info-right">
+          {visitCounts && (
+            <>
+              <div className="visit-stat">
+                <Icon icon="mdi:eye-outline" width={14} />
+                <span className="visit-label">Hoy:</span>
+                <span className="visit-number">{visitCounts.daily}</span>
+              </div>
+              <div className="visit-divider" />
+              <div className="visit-stat">
+                <Icon icon="mdi:account-group-outline" width={14} />
+                <span className="visit-label">Total:</span>
+                <span className="visit-number">{visitCounts.total}</span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
       {/* ─── Navbar ─── */}
       <nav id="navbar" ref={navbarRef}>
         <a href="#hero" onClick={(e) => scrollTo(e, '#hero')} style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.3rem', letterSpacing: '-0.02em' }}>
@@ -506,24 +531,6 @@ export default function Home() {
 
         <div className="scroll-indicator" style={{ position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 2 }}>
           <Icon icon="mdi:chevron-down" width={32} style={{ color: 'var(--accent)' }} />
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          MARQUEE STRIP
-      ═══════════════════════════════════════════════════════════ */}
-      <section style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', overflow: 'hidden', padding: '1.25rem 0', background: 'var(--surface-alt)' }} aria-hidden="true">
-        <div className="marquee-track" style={{ whiteSpace: 'nowrap' }}>
-          {[0, 1].map((set) => (
-            <span key={set} style={{ display: 'inline-flex', alignItems: 'center', gap: '2rem', paddingRight: '2rem', fontFamily: "'Syne', sans-serif", fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)' }}>
-              {['Desarrollo Web', 'Aplicaciones Móviles', 'Invitaciones Virtuales', 'Edición de Fotos', 'Edición de Videos', 'Diseño Gráfico', 'Branding'].map((text, i) => (
-                <span key={`${set}-${i}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '2rem' }}>
-                  <span>{text}</span>
-                  <span style={{ color: 'var(--accent)', fontSize: '0.6rem' }}>✦</span>
-                </span>
-              ))}
-            </span>
-          ))}
         </div>
       </section>
 
