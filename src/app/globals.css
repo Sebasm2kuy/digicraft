@@ -449,6 +449,102 @@ img, video { display: block; max-width: 100%; }
   .portfolio-card-tiktok { grid-column: span 1; }
 }
 
+/* ===== Phone Frame for Live Apps ===== */
+.phone-frame {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  background: #1a1a1a;
+  border-radius: 36px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.08);
+  position: relative;
+}
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  z-index: 2;
+}
+.phone-frame-inner {
+  width: 100%;
+  height: 480px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+}
+.phone-frame-inner iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.phone-frame-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  gap: 0.5rem;
+  z-index: 1;
+  transition: opacity 0.4s;
+}
+.phone-frame-loading.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+.phone-frame-loading .spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== App Showcase Card ===== */
+.app-showcase-card {
+  grid-column: span 1;
+}
+.app-showcase-card .portfolio-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.app-showcase-card .phone-frame {
+  max-width: 280px;
+}
+.app-showcase-card .phone-frame-inner {
+  height: 420px;
+}
+@media (max-width: 1024px) {
+  .app-showcase-card { grid-column: span 1; }
+}
+@media (max-width: 640px) {
+  .app-showcase-card .phone-frame {
+    max-width: 260px;
+  }
+  .app-showcase-card .phone-frame-inner {
+    height: 380px;
+  }
+}
+
 /* ===== Pricing Card ===== */
 .pricing-card {
   background: var(--surface);

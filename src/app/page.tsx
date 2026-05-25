@@ -626,6 +626,52 @@ export default function Home() {
               );
             }
 
+            /* ── App with live embed (phone frame) ── */
+            if ('liveUrl' in item && item.liveUrl && !('isTikTokEmbed' in item)) {
+              const isEmbeddable = !item.liveUrl.includes('github.com');
+              return (
+                <div key={item.slug} className={`portfolio-card app-showcase-card reveal ${delayClass}`}>
+                  <div className="portfolio-card-body">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', alignSelf: 'flex-start' }}>
+                      <Icon icon={item.icon || 'mdi:cellphone'} width={22} style={{ color: 'var(--accent)' }} />
+                      <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>{item.title}</span>
+                    </div>
+                    <span style={{ alignSelf: 'flex-start', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent)', background: 'var(--accent-dim)', padding: '0.2rem 0.6rem', borderRadius: '20px' }}>{item.category}</span>
+                    {isEmbeddable ? (
+                      <div className="phone-frame">
+                        <div className="phone-frame-inner">
+                          <div className="phone-frame-loading" id={`loader-${item.slug}`}>
+                            <div className="spinner" />
+                            <span>Cargando app...</span>
+                          </div>
+                          <iframe
+                            src={item.liveUrl}
+                            title={item.title}
+                            loading="lazy"
+                            onLoad={() => {
+                              const loader = document.getElementById(`loader-${item.slug}`);
+                              if (loader) loader.classList.add('loaded');
+                            }}
+                            sandbox="allow-scripts allow-same-origin allow-popups"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ textDecoration: 'none', marginTop: '0.5rem' }}>
+                        {item.liveLabel || 'Ver en Vivo'} <Icon icon="mdi:open-in-new" width={16} />
+                      </a>
+                    )}
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: 1.6, textAlign: 'center' }}>{item.description}</p>
+                    {isEmbeddable && (
+                      <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-outline btn-sm" style={{ textDecoration: 'none' }}>
+                        Abrir completa <Icon icon="mdi:open-in-new" width={14} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              );
+            }
+
             /* ── Normal card ── */
             const imgSrc = item.useLocalImage
               ? item.image
@@ -649,11 +695,6 @@ export default function Home() {
                   <span className="card-title">{item.title}</span>
                   <div className="portfolio-card-actions">
                     <a href={`/digicraft/portfolio/${item.slug}`} className="btn-outline btn-sm">Ver Detalle</a>
-                    {item.liveUrl && (
-                      <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm">
-                        {item.liveLabel || 'Ver en Vivo'} <Icon icon="mdi:open-in-new" width={14} />
-                      </a>
-                    )}
                   </div>
                 </div>
               </div>
