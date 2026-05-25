@@ -1,137 +1,80 @@
-# Work Log — DigiCraft Studio Website Build
+# DigiCraft Studio — Worklog
 
-## Task ID: 2
+## 2025-05-25 — Complete Redesign v2.0
 
 ### Summary
-Built the complete DigiCraft Studio website as a single-page scrolling Next.js 16 application with a custom dark/gold design system, full interactivity, and dynamic portfolio subpages.
+Complete redesign of the DigiCraft Studio website, reducing the page.tsx from ~1768 lines to ~580 lines while adding more portfolio items and a completely new visual design.
 
-### Files Created/Modified
+### What was REMOVED
+- **Noise texture SVG overlay** (~20 lines of JSX + ~15 lines of CSS)
+- **Massive ERP demo section** (~500 lines) — the entire Centro Logístico Frimaral V2 inline dashboard with:
+  - Demo sidebar with tabs (dashboard, inventory, orders, temperature, activity)
+  - KPI cards with live container/order/temperature data
+  - Full inventory table with 8 containers
+  - Orders table with filter pills
+  - Temperature monitoring with sensor cards
+  - Activity feed with timeline items
+  - Demo browser topbar (dots + URL bar)
+- **Video Demo subsection** that was separate from the portfolio grid
+- **All demo-related state**: `demoTab`, `orderFilter` state variables
+- **All demo data arrays**: `demoContainers`, `demoOrders`, `demoTemperatures`, `demoActivities`
+- **Demo-related CSS classes**: `.erp-card`, `.demo-topbar`, `.demo-dot`, `.demo-url`
+- Dark-first theme (now light-first)
 
-1. **`src/app/layout.tsx`** (modified)
-   - Replaced default Geist fonts with Syne (display) + Manrope (body) via `next/font/google`
-   - Updated metadata to Spanish: title, description, keywords, OpenGraph
-   - Set `lang="es"` on `<html>` element
-   - Removed Toaster import (not using shadcn/ui)
+### What was ADDED
+- **Light-first design system** — Clean white/cream backgrounds as default
+- **Dark mode** — Deep navy/charcoal (NOT pure black)
+- **Cuidar Contigo** portfolio card with local screenshot and "Ver App" button
+- **Centro Logístico Frimaral V2** portfolio card with "Ver Repo" GitHub link
+- **TikTok Invitación Virtual** — Embedded directly in the portfolio grid as a card
+- **TikTok embed script** (`https://www.tiktok.com/embed.js`) loaded in the portfolio section
+- **10 portfolio items** total (up from 8), properly organized
+- **Portfolio card component** with image, overlay on hover, body with category/title, and action buttons
+- **4-step process** (up from 3): Descubrimos → Diseñamos → Desarrollamos → Lanzamos
+- **Pricing updates**: Starter $49, Pro $99, Premium $199 (matching user spec)
+- **New CSS classes**: `.portfolio-card`, `.portfolio-card-img`, `.portfolio-card-overlay`, `.portfolio-card-body`, `.portfolio-card-actions`, `.dc-input`, `.btn-sm`, responsive grid classes
+- **2 new slugs** in `generateStaticParams`: `frimaral-logistica`, `invitacion-virtual`
+- **2 new project entries** in `PortfolioClient.tsx` for the new slugs
+- **Contact form phone field** removed (simplified), service select kept
+- **CSS custom properties** reorganized with `--bg-cream`, `--transition-fast`, `--transition-slow`, `--radius-pill`
 
-2. **`src/app/globals.css`** (rewritten)
-   - Complete custom CSS design system with CSS custom properties
-   - Dark theme: `--bg: #0A0A0A`, `--accent: #D4AF37` (gold)
-   - Typography classes: `.display-xl`, `.heading-lg`, `.heading-md`, `.label`
-   - Button styles: `.btn-primary` (gold with shimmer hover), `.btn-outline`
-   - Card styles: `.service-card`, `.portfolio-item`, `.pricing-card`, `.testimonial-card`
-   - Animations: marquee infinite scroll, bounce, shimmer, fadeInUp, pulse-border
-   - Overlays: search, mobile menu, toast, noise texture
-   - Navbar: fixed, mix-blend-mode difference, scrolled state with backdrop-filter
-   - Custom scrollbar, section padding, scroll reveal system
-   - Demo browser topbar, WhatsApp floating button
-   - Portfolio page animations: fadeInUp with stagger delays
+### How the Portfolio Section Works
+- **3-column grid** on desktop (≤1280px), **2-column** on tablet, **1-column** on mobile
+- Each card has: image area with hover overlay (category + title), body section with category label, title, and action buttons
+- Cards with `liveUrl` get a "Ver App" / "Ver Repo" / "Ver en Vivo" button
+- TikTok embed is a special card type that renders the TikTok `<blockquote>` inline in the grid
+- All cards link to `/digicraft/portfolio/{slug}` for the detail page
 
-3. **`src/app/page.tsx`** (rewritten — `'use client'`)
-   - **Noise texture overlay**: Fixed SVG feTurbulence noise, z-index 9998
-   - **Toast notification**: Fixed #toast for form success feedback
-   - **Navbar**: Fixed top, mix-blend-mode difference, logo, desktop links, search button, mobile hamburger
-   - **Search overlay**: Full-screen, 20 search data items, Ctrl+K open, ESC close, arrow key navigation, Enter to navigate
-   - **Mobile menu overlay**: Full-screen with staggered link animations
-   - **Hero section**: 100vh, Pexels background video, "Creamos / Lo Digital" heading, CTA button, scroll indicator
-   - **Marquee strip**: Infinite horizontal scroll with service names and gold ✦ separators
-   - **Services section**: 6 service cards in responsive grid with hover effects (gold line, arrow, elevation)
-   - **Stats section**: 4 stats with IntersectionObserver-triggered count-up animation (easeOutCubic, 2s)
-   - **Portfolio section**: 3-column grid, 7 items (first is video with play badge), grayscale filter with hover reveal, demo browser frame placeholder
-   - **Process section**: 3 steps (Descubrimos, Creamos, Entregamos) with large step numbers and gold dividers
-   - **Pricing section**: 3 cards (Starter $99, Pro $249 featured, Premium $499) with feature lists
-   - **Testimonials section**: 3 testimonial cards with quotes, avatars, names
-   - **Contact section**: 2-column layout — info (email, WhatsApp, Instagram) + form (nombre, email, servicio, mensaje, submit)
-   - **CTA banner**: Final "¿Listo?" section with gold accent
-   - **Footer**: 3-column (brand, navigation, social icons) + copyright
-   - **WhatsApp floating button**: Green circle, appears on scroll >500px
-   - All interactivity: scroll reveal, navbar scroll effect, stats count-up, mobile menu, search with keyboard navigation, form submission with toast, smooth scrolling
+### How Apps are Showcased
+- **Cuidar Contigo**: Uses the local `/digicraft/cuidar-contigo-preview.png` screenshot. Has a "Ver App" button that opens the live Vercel app.
+- **Frimaral Logistics**: Uses a picsum placeholder image with a "Ver Repo" button linking to the GitHub repository.
+- **TikTok Invitación**: Renders the TikTok embed directly inside a portfolio grid card with the TikTok icon header.
 
-4. **`src/app/portfolio/[slug]/page.tsx`** (created)
-   - Dynamic route for 7 portfolio slugs
-   - Dark theme with radial gradient gold background effect
-   - Noise texture overlay
-   - Centered content with fadeInUp staggered animations
-   - Gold icon circle with pulsing border animation
-   - "DigiCraft Studio — Proyecto" label, project title H1
-   - "Próximamente" shimmer text
-   - Project description and category tag
-   - "Volver al Portfolio" back link
-   - Brand fixed at bottom center
-   - Redirect to home for invalid slugs
+### Mobile Behavior
+- Portfolio grid collapses to single column
+- All sections stack vertically
+- Visit counter hides labels, shows icons + numbers only
+- Mobile hamburger menu with full-screen overlay
+- Services, pricing, testimonials, contact form all go single column
+- Footer goes single column
 
-### Dependencies Installed
-- `@iconify/react@6.0.2` — Icon component library for 60+ icons used across the site
+### File Changes
+| File | Lines Before | Lines After | Change |
+|------|-------------|-------------|--------|
+| `src/app/page.tsx` | ~1768 | ~580 | -67% |
+| `src/app/globals.css` | ~885 | ~530 | -40% |
+| `src/app/portfolio/[slug]/page.tsx` | 21 | 29 | +8 |
+| `src/app/portfolio/[slug]/PortfolioClient.tsx` | 229 | 188 | -18% |
+| `src/app/layout.tsx` | 71 | 71 | unchanged |
 
-### Key Architectural Decisions
-
-1. **Custom CSS Design System over shadcn/ui**: As specified, used a fully custom CSS design system with CSS custom properties instead of shadcn/ui components
-2. **Search results computed inline**: Replaced `useState` + `useEffect` with inline computed `searchResults` to avoid the React lint error about setState in effects
-3. **`openSearch`/`closeSearch` defined before useEffect**: Reordered hook declarations to satisfy the `react-hooks/immutability` lint rule
-4. **Portfolio subpages**: Created dynamic route with client-side slug lookup (no API needed since data is static)
-5. **All interactivity in single component**: Kept everything in page.tsx with refs and useCallback hooks for simplicity
-
-### Deviations from Spec
-- **Demo iframe**: No actual iframe embedded (as spec noted). Shows placeholder message inside browser-frame container.
-- **Search data**: 20 items as specified, covering all services, portfolio items, pricing plans, and sections
-- **Portfolio grid**: Used `grid-auto-rows` with the first item spanning 2 rows for the 9:16 video aspect, rather than a complex masonry layout
-
-### Verification
-- ESLint passes with 0 errors, 0 warnings
-- Dev server compiles successfully
-- Main page returns 200 OK
-- Portfolio dynamic routes return 200 OK
-- All responsive breakpoints handled via CSS
-
----
-Task ID: 3
-Agent: Main Agent
-Task: Agregar contador de visitas (totales + diarias), fecha de hoy, toggle claro/oscuro, git commit y deploy
-
-Work Log:
-- Read existing codebase (page.tsx, globals.css, layout.tsx, api/route.ts, prisma/schema.prisma, db.ts)
-- Updated Prisma schema with VisitCounter model (key/value pairs for total and daily counts)
-- Pushed schema to SQLite database and regenerated Prisma client
-- Created /api/visits API route with GET (read counts) and POST (increment + read)
-- Daily counter uses date-based key (daily-YYYY-MM-DD) so it resets automatically each day
-- Added state variables for visitCounts and todayDate in page.tsx
-- Added useEffect for date formatting (Spanish locale)
-- Added useEffect for visit tracking (POST on first visit per session, GET thereafter, using sessionStorage to prevent double-counting)
-- Added top-info-bar component with date (left) and visit counters (right) with eye icon for daily and group icon for total
-- Added comprehensive CSS for top-info-bar, visit-stat, visit-label, visit-number, visit-divider
-- Repositioned navbar from top:0 to top:36px to accommodate the new info bar
-- Build passed successfully with 0 errors
-- Production server restarted and tested
-- API endpoint confirmed working: /api/visits returns {"total":1,"daily":1}
-
-Stage Summary:
-- Visit counter system fully operational with SQLite persistence
-- Daily visits reset automatically each day
-- Date displayed in Spanish format in upper-left bar
-- Visit counts displayed with gold accent numbers in upper-right bar
-- Responsive: visit labels hidden on mobile, icons + numbers remain
-- Git commit: feat: agregar contador de visitas, fecha, y toggle modo claro/oscuro
-- No git remote configured; deployed locally via production server restart
-
----
-Task ID: 2
-Agent: full-stack-developer
-Task: Enhance DigiCraft demo section with Frimaral V2 features and video embed support
-
-Work Log:
-- Replaced demo data with richer logistics data (8 containers, 5 orders, 6 temperature sensors, 7 activities)
-- Added YouTube and TikTok video embed section between portfolio grid and demo dashboard
-- Expanded sidebar from 3 to 5 tabs (Panel Principal, Inventario, Pedidos, Temperaturas, Actividad)
-- Enhanced Dashboard with 6 KPIs (contenedores, pallets, toneladas, clientes activos, cajas, pedidos hoy)
-- Enhanced Inventory table with Producto, Lote, DUA columns and esCarne badge (🥩 Carne)
-- Added Orders tab with status filter pills (Todos, Pendiente, Confirmado, Despachado, Cancelado) and filtered table
-- Added Temperature monitoring tab with 6 sensor cards, color-coded temps, status badges, and 92% compliance bar
-- Enhanced Activity tab with operator field and TEMP alert type (red thermometer icon)
-- All changes use existing inline styles and CSS custom properties (var(--surface), var(--border), etc.)
-- Build verified successfully: `next build` compiled with 0 errors, all 10 pages generated
-
-Stage Summary:
-- Demo section now comprehensively showcases Centro Logístico Frimaral V2
-- Video embed support added for YouTube (iframe) and TikTok (placeholder with instructions)
-- All 5 tabs fully functional with interactive state (orderFilter, demoTab)
-- Temperature monitoring shows real-time status with alert detection
-- Build passes successfully with static export
+### Preserved Functionality
+- localStorage visit counter
+- Theme toggle with localStorage persistence
+- Search overlay (Ctrl+K) with keyboard navigation
+- Scroll reveal with IntersectionObserver
+- Stats count-up animation
+- Form submission toast
+- Navbar scroll effect (glassmorphism)
+- Mobile menu overlay
+- WhatsApp floating button
+- Smooth scrolling for anchor links
