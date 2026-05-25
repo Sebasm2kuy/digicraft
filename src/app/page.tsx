@@ -546,6 +546,19 @@ export default function Home() {
               </div>
               <h3 className="heading-md" style={{ marginBottom: '0.75rem' }}>{service.title}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.7 }}>{service.desc}</p>
+              {service.icon === 'mdi:movie-edit' && (
+                <div style={{ marginTop: '1.25rem', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+                    <iframe
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                      src="https://www.youtube.com/embed/H4Fi76JQ4D8"
+                      title="Edición de Video — DigiCraft Studio"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
